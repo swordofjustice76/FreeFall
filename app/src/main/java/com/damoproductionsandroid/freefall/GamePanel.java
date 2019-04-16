@@ -128,7 +128,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(getResources().getColor(R.color.colourBackground));
 
         player.draw(canvas);
         obstacleManager.draw(canvas);
