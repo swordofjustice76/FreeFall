@@ -16,8 +16,14 @@ public class Coin implements GameObject {
 
     public Coin(Rect rectangle, int colour) {
         this.colour = colour;
-        rectangle = new Rect(0, 0, 50, 50);
+        rectangle = new Rect(100, 100, 150, 150);
     }
+
+    public  void incrementY (float y){
+        rectangle.top += y;
+        rectangle.bottom += y;
+    }
+
 
 
     public boolean playerCollect(Player player) {

@@ -4,21 +4,24 @@ import android.graphics.Canvas;
 
 import java.util.ArrayList;
 
-public class ObstacleManager {
-    private ArrayList<Obstacle> obstacles;
-    private int playerGap;
-    private int obstacleGap;
-    private int obstacleHeight;
-    private int colour;
+public class ObstacleManager extends Gravity {
+   // private ArrayList<Obstacle> obstacles;
+    //private int playerGap;
+   // private int obstacleGap;
+   // private int obstacleHeight;
+   // private int colour;
+    private Gravity gravity;
 
     private long startTime;
     private long initTime;
 
     public ObstacleManager(int playerGap, int obstacleGap, int obstacleHeight, int colour){
+        super(playerGap, obstacleGap, obstacleHeight, colour);
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
+        this.gravity = new Gravity(playerGap, obstacleGap, obstacleHeight, colour);
 
         startTime = initTime = System.currentTimeMillis();
 
@@ -46,7 +49,9 @@ public class ObstacleManager {
     }
 
     public void update(){
-        int elapsedTime = (int)(System.currentTimeMillis() - startTime);
+
+        super.update();
+        /*  int elapsedTime = (int)(System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
         float speed = (float)(Math.sqrt(1 +(startTime - initTime)/2000.0))*Constants.SCREEN_HEIGHT/10000.0f;
         for (Obstacle ob : obstacles){
@@ -56,7 +61,7 @@ public class ObstacleManager {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
-        }
+        } */
     }
 
     public void draw(Canvas canvas){

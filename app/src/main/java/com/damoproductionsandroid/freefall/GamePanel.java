@@ -24,6 +24,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Player player;
     private Point playerPoint;
     private ObstacleManager obstacleManager;
+    private Gravity gravity;
 
     private boolean movingPlayer = false;
 
@@ -44,6 +45,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.update(playerPoint);
 
         obstacleManager = new ObstacleManager(200, 350, 75, Color.WHITE);
+        //gravity = new Gravity(200, 350, 75, Color.WHITE);
         //make gamePanel focusable so it can handle events
         setFocusable(true);
     }
@@ -52,6 +54,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
         obstacleManager = new ObstacleManager(200, 350, 75, Color.WHITE);
+        //gravity = new Gravity(200, 350, 75, Color.WHITE);
         movingPlayer = false;
     }
 
