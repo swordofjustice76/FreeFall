@@ -47,12 +47,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
 
-        player = new Player(new Rect(100, 100, 200, 200), Color.rgb(255, 0, 0));
+        player = new Player(new Rect(100, 100, 250, 250), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.WHITE);
-        itemManager = new ItemManager(350, 200, 50, Color.YELLOW);
+        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
+        itemManager = new ItemManager(400, 200, 75, Color.YELLOW);
         //gravity = new Gravity(200, 350, 75, Color.WHITE);
         //make gamePanel focusable so it can handle events
         setFocusable(true);
@@ -61,8 +61,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void reset(){
         playerPoint = new Point(Constants.SCREEN_WIDTH/2, 3*Constants.SCREEN_HEIGHT/4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.WHITE);
-        itemManager = new ItemManager(350, 200, 50, Color.YELLOW);
+        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
+        itemManager = new ItemManager(400, 200, 75, Color.YELLOW);
         //gravity = new Gravity(200, 350, 75, Color.WHITE);
         movingPlayer = false;
     }
@@ -103,7 +103,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (!gameOver && player.getRectangle().contains((int) event.getX(), (int) event.getY()))
+                if (!gameOver ) //&& player.getRectangle().contains((int) event.getX(), (int) event.getY())
                     movingPlayer = true;
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
                     reset();
@@ -112,7 +112,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!gameOver && movingPlayer)
-                    playerPoint.set((int) event.getX(), (int) event.getY());
+                    playerPoint.set((int) event.getX(),3*Constants.SCREEN_HEIGHT/4);
                 break;
             case MotionEvent.ACTION_UP:
                 movingPlayer = false;
