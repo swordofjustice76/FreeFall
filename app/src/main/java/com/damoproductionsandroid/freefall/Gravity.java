@@ -12,6 +12,7 @@ public class Gravity  {
 
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Coin> coins;
+    //Player player;
     public int playerGap;
     public int obstacleGap;
     public int obstacleHeight;

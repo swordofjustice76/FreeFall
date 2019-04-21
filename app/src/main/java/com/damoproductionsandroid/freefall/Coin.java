@@ -41,7 +41,7 @@ public class Coin implements GameObject {
 
     @Override
     public void update() {
-
+        
     }
 
 

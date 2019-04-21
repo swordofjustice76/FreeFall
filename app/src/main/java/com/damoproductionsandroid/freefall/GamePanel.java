@@ -151,6 +151,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         obstacleManager.draw(canvas);
         itemManager.draw(canvas);
 
+
         if (gameOver) {
             Paint paint = new Paint();
             paint.setTextSize(100);
@@ -160,7 +161,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         if (coinChange) {
             Paint paint = new Paint();
-            paint.setTextSize(100);
+            paint.setTextSize(75);
             paint.setColor(Color.YELLOW);
             drawCoinsText(canvas, paint, "Coins: " + coins);
         }
