@@ -14,9 +14,11 @@ public class Coin implements GameObject {
         return rectangle;
     }
 
-    public Coin(Rect rectangle, int colour) {
+
+    public Coin(int rectHeight, int colour, int startX, int startY) {
         this.colour = colour;
-        rectangle = new Rect(100, 100, 150, 150);
+        //l, t, r, b
+        rectangle = new Rect(startX, startY, startX + rectHeight, startY - rectHeight);
     }
 
     public  void incrementY (float y){

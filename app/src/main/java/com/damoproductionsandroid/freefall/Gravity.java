@@ -42,13 +42,21 @@ public class Gravity  {
         for (Obstacle ob : obstacles) {
             ob.incrementY(speed * elapsedTime);
         }
+
+
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
+
+
         }
 
+      /*  if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+            coins.add(0, new Coin(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleHeight));
+            obstacles.remove(obstacles.size() - 1);
 
+        } */
     }
-
 }
