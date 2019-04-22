@@ -32,20 +32,31 @@ public class ItemManager extends Gravity{
 
         startTime = initTime = System.currentTimeMillis();
 
-    coins = new ArrayList<>();
+
+
 
     populateCoins();
+    populateBigGapUpgrade();
     }
-
     private void populateCoins() {
         int currY = (-5*Constants.SCREEN_HEIGHT/4) - (obstacleGap/2) + (obstacleHeight + 25);
-        int spawned = 50;
         while (currY < 0){
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
             coins.add(new Coin(obstacleHeight, colour, xStart, currY - obstacleHeight));
-            currY += 75 + obstacleGap;
+            currY += obstacleHeight + obstacleGap;
         }
     }
+
+    private void populateBigGapUpgrade() {
+        int currY = (-5*Constants.SCREEN_HEIGHT/4) - (obstacleGap/2) + (obstacleHeight + 25);
+       // while (currY < 0){
+            int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
+            bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, currY - (obstacleHeight*2)));
+            currY += obstacleHeight + obstacleGap;
+       // }
+    }
+
+
 
     public boolean playerCollect(Player player){
         for (Coin coin : coins){
@@ -53,21 +64,33 @@ public class ItemManager extends Gravity{
             if(coin.playerCollect(player)){
                 spawnNew();
                 coins.remove(coin);
-
-
             }
-
                 if(coin.playerCollect(player))
 
                 return true;
             } return false;
         }
 
+    public boolean playerCollectUpgrade(Player player){
+        for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades){
+
+            if(bigGapUpgrade.playerCollectUpgrade(player)){
+
+                bigGapUpgrades.remove(bigGapUpgrade);
+            }
+            if(bigGapUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        } return false;
+    }
+
 
     public void draw(Canvas canvas){
         for (Coin coin : coins)
             coin.draw(canvas);
 
+        for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades)
+            bigGapUpgrade.draw(canvas);
     }
 
     public void update(){
@@ -82,20 +105,28 @@ public class ItemManager extends Gravity{
         for (Coin coin : coins) {
             coin.incrementY(speed * elapsedTime);
 
-
-
-            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT ) {
+            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
                 spawnNew();
 
           }
         }
-        //super.update();
+
+        for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades) {
+            bigGapUpgrade.incrementY(speed * elapsedTime);
+
+            if (bigGapUpgrades.get(bigGapUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+               // int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+               // coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
+               // coins.remove(coins.size() - 1);
+
+            }
+        }
 
     }
 
     private void spawnNew() {
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight - obstacleGap - 25));
+        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
         coins.remove(coins.size() - 1);
     }
 

@@ -12,6 +12,7 @@ public class Gravity  {
 
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Coin> coins;
+    public ArrayList<BigGapUpgrade> bigGapUpgrades;
     //Player player;
     public int playerGap;
     public int obstacleGap;
@@ -26,10 +27,9 @@ public class Gravity  {
 
         obstacles = new ArrayList<>();
         coins = new ArrayList<>();
+        bigGapUpgrades = new ArrayList<>();
 
         startTime = initTime = System.currentTimeMillis();
-
-
 
     }
 
