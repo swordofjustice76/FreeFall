@@ -143,6 +143,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             if (itemManager.playerCollectUpgrade(player)) {
                 obstacleManager.playerGap += obstacleManager.playerGap * 1.25;
+
             }
         }
     }
