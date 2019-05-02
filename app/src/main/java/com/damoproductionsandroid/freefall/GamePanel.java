@@ -1,24 +1,28 @@
 package com.damoproductionsandroid.freefall;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import static android.content.ContentValues.TAG;
+
+
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
-    public static final int WIDTH = 856;
-    public static final int HEIGHT = 480;
-    public static final int MOVESPEED = -5;
+
 
     private Rect coinsText = new Rect();
     private Rect metersText = new Rect();
+
+    MainActivity mainActivity;
+
 
     private Rect r = new Rect();
 
@@ -28,7 +32,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Point playerPoint;
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
+    private SoundManager soundManager;
     private Gravity gravity;
+    private BigGapUpgrade bigGapUpgrade;
 
     private boolean movingPlayer = false;
 
@@ -40,32 +46,42 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Canvas canvas;
 
     private int meters;
+    private boolean playing = false;
 
 
     public GamePanel(Context context) {
+
         super(context);
 
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
+        soundManager = new SoundManager(context);
 
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
-        itemManager = new ItemManager(400, 200, 75, Color.YELLOW);
+        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
+        itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
+
         //gravity = new Gravity(200, 350, 75, Color.WHITE);
         //make gamePanel focusable so it can handle events
         setFocusable(true);
+
+
+
     }
+
+
+
 
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
-        itemManager = new ItemManager(400, 200, 75, Color.YELLOW);
+        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
+        itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
         //gravity = new Gravity(200, 350, 75, Color.WHITE);
         movingPlayer = false;
         meters = 0;
@@ -95,8 +111,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
+
         thread = new MainThread(getHolder(), this);
-        //player = new Player(BitmapFactory.decodeResource(getResources(), R.drawable.helicopter), 65, 25, 3);
+
         //we can safely start the game loop
         thread.setRunning(true);
         thread.start();
@@ -112,6 +129,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
                     reset();
                     gameOver = false;
+
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -128,6 +146,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
+
+       
         if (!gameOver) {
             player.update(playerPoint);
             obstacleManager.update();
@@ -138,15 +158,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 gameOverTime = System.currentTimeMillis();
             }
             if (itemManager.playerCollect(player)) {
+                soundManager.playCoinCollectSound();
                 coins++;
                 coinSave = true;
             }
             if (itemManager.playerCollectUpgrade(player)) {
-                obstacleManager.playerGap += obstacleManager.playerGap * 1.25;
+                obstacleManager.playerGap = (int)(Constants.PLAYER_GAP * 1.5);
+                Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
 
             }
         }
     }
+
+
+
 
     @Override
     public void draw(Canvas canvas) {

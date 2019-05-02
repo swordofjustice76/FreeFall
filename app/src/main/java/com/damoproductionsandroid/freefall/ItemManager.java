@@ -1,9 +1,12 @@
 package com.damoproductionsandroid.freefall;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
 
 public class ItemManager extends Gravity {
     //  private ArrayList<Coin>coins;
@@ -15,6 +18,8 @@ public class ItemManager extends Gravity {
     private long startTime;
     private long initTime;
     ObstacleManager obstacleManager;
+    MainActivity mainActivity;
+
 
 
     public ItemManager(int obstacleGap, int playerGap, int obstacleHeight, int colour) {
@@ -73,7 +78,8 @@ public class ItemManager extends Gravity {
 
             if (bigGapUpgrade.playerCollectUpgrade(player)) {
                 bigGapUpgrades.remove(bigGapUpgrade);
-                bigGapUpgrade.powerUpTimer();
+                bigUpgradeTimer();
+
             }
             if (bigGapUpgrade.playerCollectUpgrade(player))
 
@@ -81,6 +87,19 @@ public class ItemManager extends Gravity {
         }
         return false;
     }
+
+    private void bigUpgradeTimer() {
+            Timer timer = new Timer();
+            TimerTask powerUpTimerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    //ObstacleManager obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, colour);
+                    Log.i(TAG, "YAY: " + playerGap);
+                }
+            };
+            timer.schedule(powerUpTimerTask, 5000);
+        }
+
 
 
     public void update() {

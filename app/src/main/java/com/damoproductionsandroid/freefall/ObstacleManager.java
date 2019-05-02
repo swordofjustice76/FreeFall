@@ -1,8 +1,11 @@
 package com.damoproductionsandroid.freefall;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 public class ObstacleManager extends Gravity {
    // private ArrayList<Obstacle> obstacles;
@@ -11,6 +14,7 @@ public class ObstacleManager extends Gravity {
    // private int obstacleHeight;
    // private int colour;
     private Gravity gravity;
+
 
     private long startTime;
     private long initTime;
@@ -44,6 +48,7 @@ public class ObstacleManager extends Gravity {
             int xStart = (int)(Math.random()*(Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(new Obstacle(obstacleHeight, colour, xStart, currY, playerGap));
             currY += obstacleHeight + obstacleGap;
+
         }
 
     }
@@ -68,4 +73,7 @@ public class ObstacleManager extends Gravity {
         for (Obstacle ob : obstacles)
             ob.draw(canvas);
     }
+
+
+
 }

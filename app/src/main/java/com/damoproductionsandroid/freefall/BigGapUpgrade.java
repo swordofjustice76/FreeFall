@@ -17,7 +17,11 @@ public class BigGapUpgrade implements GameObject {
     private int colour;
     Gravity gravity;
 
+
+
+
     ObstacleManager obstacleManager;
+    private int playerGap;
 
     public Rect getRectangle() {
         return rectangle;
@@ -46,19 +50,16 @@ public class BigGapUpgrade implements GameObject {
 
     }
 
-    public void powerUpTimer(){
-       Timer timer = new Timer();
-        TimerTask powerUpTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-                //Log.i(TAG, "run: " + gravity.playerGap);
-            }
-        };
-        timer.schedule(powerUpTimerTask, 5000);
-    }
+
+
 
     @Override
     public void update() {
 
     }
+
+    public void setPlayerGap(int playerGap) {
+        this.playerGap = playerGap;
+    }
+
 }

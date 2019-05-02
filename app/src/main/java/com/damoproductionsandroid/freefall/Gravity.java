@@ -1,14 +1,25 @@
 package com.damoproductionsandroid.freefall;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Canvas;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import static android.content.ContentValues.TAG;
+
 public class Gravity  {
 
-   private long initTime;
+
+    private long initTime;
    private long startTime;
+
+
 
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Coin> coins;
@@ -31,7 +42,10 @@ public class Gravity  {
 
         startTime = initTime = System.currentTimeMillis();
 
+
     }
+
+
 
     public void update() {
 
@@ -53,4 +67,9 @@ public class Gravity  {
 
         }
     }
+
+
+
+
+
 }
