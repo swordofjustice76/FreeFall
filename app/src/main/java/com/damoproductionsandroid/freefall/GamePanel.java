@@ -14,7 +14,6 @@ import android.view.SurfaceView;
 import static android.content.ContentValues.TAG;
 
 
-
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
@@ -53,12 +52,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         super(context);
 
+
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
-
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
@@ -66,15 +65,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
 
-        //gravity = new Gravity(200, 350, 75, Color.WHITE);
+
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
 
-
     }
-
-
 
 
     public void reset() {
@@ -82,7 +78,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.update(playerPoint);
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
-        //gravity = new Gravity(200, 350, 75, Color.WHITE);
+
         movingPlayer = false;
         meters = 0;
     }
@@ -142,12 +138,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
 
         return true;
-        //return super.onTouchEvent(event);
     }
 
     public void update() {
 
-       
+
+        if(!playing){
+
+            playing = true;
+            soundManager.playPowerUpSound();
+        }
+
         if (!gameOver) {
             player.update(playerPoint);
             obstacleManager.update();
@@ -156,6 +157,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
+                soundManager.playGameOver();
             }
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
@@ -163,14 +165,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 coinSave = true;
             }
             if (itemManager.playerCollectUpgrade(player)) {
-                obstacleManager.playerGap = (int)(Constants.PLAYER_GAP * 1.5);
+                obstacleManager.playerGap = (int) (Constants.PLAYER_GAP * 1.5);
+                soundManager.playPowerUpSound();
                 Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
+            }
+            if (itemManager.playerCollectDistanceUpgrade(player)){
+                soundManager.playPowerUpSound();
+                obstacleManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
+
 
             }
         }
     }
-
-
 
 
     @Override

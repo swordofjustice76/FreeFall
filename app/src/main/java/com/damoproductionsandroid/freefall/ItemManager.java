@@ -35,7 +35,9 @@ public class ItemManager extends Gravity {
 
         populateCoins();
         populateBigGapUpgrade();
+        populateObstacleDistanceUPgrade();
     }
+
 
     private void populateCoins() {
         int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
@@ -55,6 +57,17 @@ public class ItemManager extends Gravity {
             }
         };
         spawnTimer.schedule(spawnTimerTask, 2000);
+    }
+
+    private void populateObstacleDistanceUPgrade() {
+        Timer spawnTimer = new Timer();
+        TimerTask spawnTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                spawnDistanceUpgrade();
+            }
+        };
+        spawnTimer.schedule(spawnTimerTask, 1000);
     }
 
 
@@ -88,6 +101,21 @@ public class ItemManager extends Gravity {
         return false;
     }
 
+    public boolean playerCollectDistanceUpgrade(Player player) {
+        for (ObstacleDistanceUpgrade obstacleDistanceUpgrade : obstacleDistanceUpgrades) {
+
+            if (obstacleDistanceUpgrade.playerCollectUpgrade(player)) {
+                obstacleDistanceUpgrades.remove(obstacleDistanceUpgrade);
+                //bigUpgradeTimer();
+
+            }
+            if (obstacleDistanceUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        }
+        return false;
+    }
+
     private void bigUpgradeTimer() {
             Timer timer = new Timer();
             TimerTask powerUpTimerTask = new TimerTask() {
@@ -114,7 +142,6 @@ public class ItemManager extends Gravity {
 
             if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
                 spawnNewCoin();
-
             }
         }
 
@@ -124,6 +151,15 @@ public class ItemManager extends Gravity {
             if (bigGapUpgrades.get(bigGapUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
 
                 bigGapUpgrades.remove(bigGapUpgrades.size() - 1);
+            }
+        }
+
+        for (ObstacleDistanceUpgrade obstacleDistanceUpgrade : obstacleDistanceUpgrades) {
+            obstacleDistanceUpgrade.incrementY(speed * elapsedTime);
+
+            if (obstacleDistanceUpgrades.get(obstacleDistanceUpgrades.size() - 1).getRect().top >= Constants.SCREEN_HEIGHT) {
+
+                obstacleDistanceUpgrades.remove(obstacleDistanceUpgrades.size() - 1);
             }
         }
 
@@ -141,12 +177,21 @@ public class ItemManager extends Gravity {
         bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, currY - (obstacleHeight * 2)));
     }
 
+    private void spawnDistanceUpgrade(){
+        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 75);
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, currY - (obstacleHeight * 2),  colour));
+    }
+
     public void draw(Canvas canvas) {
         for (Coin coin : coins)
             coin.draw(canvas);
 
         for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades)
             bigGapUpgrade.draw(canvas);
+
+        for (ObstacleDistanceUpgrade obstacleDistanceUpgrade : obstacleDistanceUpgrades)
+            obstacleDistanceUpgrade.draw(canvas);
     }
 
 }

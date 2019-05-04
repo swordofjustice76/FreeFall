@@ -11,12 +11,17 @@ public class SoundManager {
     private static SoundPool soundPool;
     private static int coinCollect;
     private static int soundTrack;
+    private static int powerUp;
+    private static int gameOver;
 
     public SoundManager(Context context) {
 
         loadSounds();
         coinCollect = soundPool.load(context, R.raw.coin_pickup, 0);
         soundTrack = soundPool.load(context, R.raw.soundtrack, 0);
+        powerUp = soundPool.load(context, R.raw.power_up, 0);
+        gameOver = soundPool.load(context, R.raw.game_over, 0);
+
     }
 
 
@@ -28,12 +33,12 @@ public class SoundManager {
                     .build();
 
             soundPool = new SoundPool.Builder()
-                    .setMaxStreams(2)
+                    .setMaxStreams(3)
                     .setAudioAttributes(audioAttributes)
                     .build();
 
         } else {
-            soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
         }
 
     }
@@ -42,7 +47,16 @@ public class SoundManager {
         soundPool.play(coinCollect, 1, 1, 0, 0, 1);
     }
 
+    public void playPowerUpSound(){
+        soundPool.play(powerUp, 1, 1, 0, 0, 1);
+    }
+
     public void playSoundTrack(){
         soundPool.play(soundTrack, 1, 1, 0, -1, 1);
     }
+
+    public void playGameOver(){
+        soundPool.play(gameOver, 1, 1, 0, 0, 1);
+    }
+
 }
