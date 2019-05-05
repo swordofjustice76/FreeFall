@@ -173,14 +173,14 @@ public class ItemManager extends Gravity {
 
     private void spawnGapUpgrade() {
         int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
-        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
         bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, currY - (obstacleHeight * 2)));
     }
 
     private void spawnDistanceUpgrade(){
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 75);
-        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
-        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, currY - (obstacleHeight * 2),  colour));
+        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, currY, colour));
     }
 
     public void draw(Canvas canvas) {
