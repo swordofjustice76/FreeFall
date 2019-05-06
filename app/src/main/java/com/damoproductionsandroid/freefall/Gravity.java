@@ -13,40 +13,41 @@ import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
-public class Gravity  {
+public class Gravity {
 
 
     private long initTime;
-   private long startTime;
-
+    private long startTime;
 
 
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Coin> coins;
     public ArrayList<BigGapUpgrade> bigGapUpgrades;
     public ArrayList<ObstacleDistanceUpgrade> obstacleDistanceUpgrades;
+    public ArrayList<ShrinkPlayerUpgrade> shrinkPlayerUpgrades;
     //Player player;
     public int playerGap;
     public int obstacleGap;
     public int obstacleHeight;
     public int colour;
 
-    public Gravity (int playerGap, int obstacleGap, int obstacleHeight, int colour){
+
+    public Gravity(int playerGap, int obstacleGap, int obstacleHeight, int colour) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
 
+
         obstacles = new ArrayList<>();
         coins = new ArrayList<>();
         bigGapUpgrades = new ArrayList<>();
         obstacleDistanceUpgrades = new ArrayList<>();
+        shrinkPlayerUpgrades = new ArrayList<>();
 
         startTime = initTime = System.currentTimeMillis();
 
-
     }
-
 
 
     public void update() {
@@ -66,12 +67,7 @@ public class Gravity  {
             obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
 
-
         }
     }
-
-
-
-
 
 }

@@ -173,6 +173,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 soundManager.playPowerUpSound();
                 obstacleManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
 
+            }
+
+            if (itemManager.playerCollectShrinkPlayerUpgrade(player)){
+                soundManager.playPowerUpSound();
+                player.getRectangle().inset(25, 25);
 
             }
         }
