@@ -21,7 +21,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private Rect coinsText = new Rect();
-    private Rect metersText = new Rect();
+    public Rect metersText = new Rect();
 
 
 
@@ -150,6 +150,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
 
 
+
         if(!playing){
 
             playing = true;
@@ -160,7 +161,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             player.update(playerPoint);
             obstacleManager.update();
             itemManager.update();
-            //meters++;
+            //metres++;
             if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
@@ -174,13 +175,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             if (itemManager.playerCollectPlayerGapUpgrade(player)) {
                 obstacleManager.playerGap = (int) (Constants.PLAYER_GAP * 1.5);
                 soundManager.playPowerUpSound();
-                Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
+                //Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
                 bigPlayerGapUpgradeTimer();
 
             }
             if (itemManager.playerCollectDistanceUpgrade(player)){
                 soundManager.playPowerUpSound();
                 obstacleManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
+                itemManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
                 bigObstacleDistanceUpgradeTimer();
 
             }
@@ -213,6 +215,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             public void run() {
 
                 obstacleManager.obstacleGap = Constants.OBSTACLE_GAP;
+                itemManager.obstacleGap = Constants.OBSTACLE_GAP;
             }
         };
         timer.schedule(powerUpTimerTask, 4000);
@@ -256,7 +259,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             Paint metersPaint = new Paint();
             metersPaint.setTextSize(75);
             metersPaint.setColor(Color.WHITE);
-            drawMetersText(canvas, metersPaint, meters + "m");
+            //drawMetersText(canvas, metersPaint, meters + "m");
         }
 
         if (coinSave) {

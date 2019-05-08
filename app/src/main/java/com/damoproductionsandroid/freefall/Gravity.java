@@ -15,9 +15,11 @@ import static android.content.ContentValues.TAG;
 
 public class Gravity {
 
+    public float speed;
 
-    private long initTime;
-    private long startTime;
+    public long initTime;
+    public long startTime;
+    public float metres;
 
 
     public ArrayList<Obstacle> obstacles;
@@ -52,13 +54,15 @@ public class Gravity {
 
     public void update() {
 
+
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
-        float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
+        speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
 
         for (Obstacle ob : obstacles) {
             ob.incrementY(speed * elapsedTime);
+
         }
 
 
