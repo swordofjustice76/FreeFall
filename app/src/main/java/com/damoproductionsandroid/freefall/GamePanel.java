@@ -11,6 +11,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static android.content.ContentValues.TAG;
 
 
@@ -19,6 +22,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private Rect coinsText = new Rect();
     private Rect metersText = new Rect();
+
+
 
     MainActivity mainActivity;
 
@@ -32,6 +37,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
+    private ItemSpawner itemSpawner;
     private Gravity gravity;
     private BigGapUpgrade bigGapUpgrade;
 
@@ -58,11 +64,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
+        itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(255, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
 
-        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
+        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
 
 
@@ -164,23 +171,63 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 coins++;
                 coinSave = true;
             }
-            if (itemManager.playerCollectUpgrade(player)) {
+            if (itemManager.playerCollectPlayerGapUpgrade(player)) {
                 obstacleManager.playerGap = (int) (Constants.PLAYER_GAP * 1.5);
                 soundManager.playPowerUpSound();
                 Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
+                bigPlayerGapUpgradeTimer();
+
             }
             if (itemManager.playerCollectDistanceUpgrade(player)){
                 soundManager.playPowerUpSound();
                 obstacleManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
+                bigObstacleDistanceUpgradeTimer();
 
             }
 
             if (itemManager.playerCollectShrinkPlayerUpgrade(player)){
                 soundManager.playPowerUpSound();
                 player.getRectangle().inset(25, 25);
+                shrinkPlayerUpgradeTimer();
 
             }
         }
+    }
+
+    public void bigPlayerGapUpgradeTimer() {
+        Timer timer = new Timer();
+        TimerTask powerUpTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                obstacleManager.playerGap = Constants.PLAYER_GAP;
+            }
+        };
+        timer.schedule(powerUpTimerTask, 5000);
+    }
+
+    public void bigObstacleDistanceUpgradeTimer() {
+        Timer timer = new Timer();
+        TimerTask powerUpTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                obstacleManager.obstacleGap = Constants.OBSTACLE_GAP;
+            }
+        };
+        timer.schedule(powerUpTimerTask, 4000);
+    }
+
+    public void shrinkPlayerUpgradeTimer() {
+        Timer timer = new Timer();
+        TimerTask powerUpTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                player.getRectangle().inset(-25, -25);
+            }
+        };
+        timer.schedule(powerUpTimerTask, 4000);
     }
 
 

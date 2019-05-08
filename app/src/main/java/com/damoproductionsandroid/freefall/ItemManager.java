@@ -21,6 +21,7 @@ public class ItemManager extends Gravity {
 
     ObstacleManager obstacleManager;
     MainActivity mainActivity;
+    ItemSpawner itemSpawner;
 
 
 
@@ -30,6 +31,8 @@ public class ItemManager extends Gravity {
         this.playerGap = playerGap;
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
+
+
 
 
 
@@ -46,6 +49,7 @@ public class ItemManager extends Gravity {
 
 
     private void populateCoins() {
+        ObstacleManager obstacleManager = new ObstacleManager(playerGap, obstacleGap, obstacleHeight, colour);
         int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
@@ -63,7 +67,7 @@ public class ItemManager extends Gravity {
                 spawnGapUpgrade();
             }
         };
-        spawnTimer.schedule(spawnTimerTask, 2000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 2000, 15000);
     }
 
     private void populateObstacleDistanceUpgrade() {
@@ -74,7 +78,7 @@ public class ItemManager extends Gravity {
                 spawnDistanceUpgrade();
             }
         };
-        spawnTimer.schedule(spawnTimerTask, 3000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 3000, 12500);
     }
 
     private void populateShrinkPlayerUpgrade() {
@@ -85,7 +89,7 @@ public class ItemManager extends Gravity {
                 spawnShrinkPayerUpgrade();
             }
         };
-        spawnTimer.schedule(spawnTimerTask, 3000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 3000, 20000);
     }
 
 
@@ -104,12 +108,12 @@ public class ItemManager extends Gravity {
         return false;
     }
 
-    public boolean playerCollectUpgrade(Player player) {
+    public boolean playerCollectPlayerGapUpgrade(Player player) {
         for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades) {
 
             if (bigGapUpgrade.playerCollectUpgrade(player)) {
                 bigGapUpgrades.remove(bigGapUpgrade);
-                bigUpgradeTimer();
+
 
             }
             if (bigGapUpgrade.playerCollectUpgrade(player))
@@ -124,7 +128,7 @@ public class ItemManager extends Gravity {
 
             if (obstacleDistanceUpgrade.playerCollectUpgrade(player)) {
                 obstacleDistanceUpgrades.remove(obstacleDistanceUpgrade);
-                //bigUpgradeTimer();
+
 
             }
             if (obstacleDistanceUpgrade.playerCollectUpgrade(player))
@@ -149,17 +153,6 @@ public class ItemManager extends Gravity {
         return false;
     }
 
-    private void bigUpgradeTimer() {
-            Timer timer = new Timer();
-            TimerTask powerUpTimerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    //ObstacleManager obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, colour);
-                    Log.i(TAG, "YAY: " + playerGap);
-                }
-            };
-            timer.schedule(powerUpTimerTask, 5000);
-        }
 
 
 
@@ -214,21 +207,22 @@ public class ItemManager extends Gravity {
     }
 
     private void spawnGapUpgrade() {
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
-        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, currY - (obstacleHeight * 2)));
+            //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
+            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+            bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
+
     }
 
     private void spawnDistanceUpgrade(){
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
+        //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, currY, colour));
+        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
     }
 
     private void spawnShrinkPayerUpgrade(){
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
+       // int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight,colour, xStart, currY));
+        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight,colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
     }
 
 
