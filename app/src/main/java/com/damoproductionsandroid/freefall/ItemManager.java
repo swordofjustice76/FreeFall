@@ -267,7 +267,7 @@ public class ItemManager extends Gravity {
             paint.setColor(Color.WHITE);
             drawMetersText(canvas, paint, (int) metres + "m");
             setHighScore((int) metres);
-            highScoreActivity.getHighScore();
+
             
 
         }

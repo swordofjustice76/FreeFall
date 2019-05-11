@@ -16,6 +16,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -40,6 +41,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
+    private HighScore highScoreHandler;
     private ItemSpawner itemSpawner;
     private Gravity gravity;
     private BigGapUpgrade bigGapUpgrade;
@@ -77,6 +79,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
 
+        highScoreHandler = new HighScore();
+
 
         //make gamePanel focusable so it can handle events
         setFocusable(true);
@@ -92,6 +96,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.update(playerPoint);
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
+        highScoreHandler.setHighScore(getContext());
 
         movingPlayer = false;
         meters = 0;
@@ -153,6 +158,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         return true;
     }
+
 
     public void update() {
 
@@ -259,11 +265,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint.setColor(Color.GRAY);
             drawGameOverText(canvas, paint, "Game Over");
 
+            highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
 
-
-
-                String highScore = String.valueOf(itemManager.getHighScore());
+            if (itemManager.getHighScore() < highScoreHandler.highscore){
+                String highScore = String.valueOf(highScoreHandler.highscore);
                 drawHighScoreText(canvas, paint, "Highscore: " + highScore + "m");
+            } else {
+                drawHighScoreText(canvas, paint, "Highscore: " + itemManager.getHighScore() + "m");
+            }
+
+
+
 
             //Log.i(TAG, "draw: " + highScore);
 
@@ -299,7 +311,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(text, x, y, paint);
     }
 
-    private void drawHighScoreText(Canvas canvas, Paint paint, String text) {
+    public void drawHighScoreText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         paint.setTextSize(70);
         canvas.getClipBounds(highScore);
