@@ -29,6 +29,7 @@ public class Coin implements GameObject {
 
 
     public boolean playerCollect(Player player) {
+
         return Rect.intersects(rectangle, player.getRectangle());
     }
 

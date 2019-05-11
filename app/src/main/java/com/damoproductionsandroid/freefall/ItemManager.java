@@ -1,5 +1,7 @@
 package com.damoproductionsandroid.freefall;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 public class ItemManager extends Gravity {
     //  private ArrayList<Coin>coins;
@@ -21,14 +24,20 @@ public class ItemManager extends Gravity {
     private long startTime;
     private long initTime;
 
+    private int highScore;
+
+
     private Rect metersText = new Rect();
 
-    public  boolean updateScore = false;
+    public boolean updateScore = false;
 
 
     ObstacleManager obstacleManager;
     MainActivity mainActivity;
     ItemSpawner itemSpawner;
+    HighScore highScoreActivity;
+
+
 
 
 
@@ -39,8 +48,7 @@ public class ItemManager extends Gravity {
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
 
-
-
+        highScoreActivity = new HighScore();
 
 
         startTime = initTime = System.currentTimeMillis();
@@ -52,6 +60,10 @@ public class ItemManager extends Gravity {
         populateShrinkPlayerUpgrade();
 
 
+    }
+
+    public ItemManager() {
+        super();
     }
 
 
@@ -161,16 +173,14 @@ public class ItemManager extends Gravity {
     }
 
 
-
-
     public void update() {
 
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
         float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
-        metres += (((float)elapsedTime/50) * speed);
-        Log.d(TAG, "update: " + metres);
+        metres += (((float) elapsedTime / 50) * speed);
+        //Log.d(TAG, "update: " + metres);
         updateScore = true;
 
 
@@ -211,6 +221,7 @@ public class ItemManager extends Gravity {
 
     }
 
+
     private void spawnNewCoin() {
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
         coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
@@ -218,24 +229,23 @@ public class ItemManager extends Gravity {
     }
 
     private void spawnGapUpgrade() {
-            //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-            bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
+        //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
 
     }
 
-    private void spawnDistanceUpgrade(){
+    private void spawnDistanceUpgrade() {
         //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight,xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
     }
 
-    private void spawnShrinkPayerUpgrade(){
-       // int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
+    private void spawnShrinkPayerUpgrade() {
+        // int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight,colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
+        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
     }
-
 
 
     public void draw(Canvas canvas) {
@@ -251,11 +261,15 @@ public class ItemManager extends Gravity {
         for (ShrinkPlayerUpgrade shrinkPlayerUpgrade : shrinkPlayerUpgrades)
             shrinkPlayerUpgrade.draw(canvas);
 
-        if (updateScore){
+        if (updateScore) {
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
-            drawMetersText(canvas, paint, (int)metres + "m");
+            drawMetersText(canvas, paint, (int) metres + "m");
+            setHighScore((int) metres);
+            highScoreActivity.getHighScore();
+            
+
         }
 
     }
@@ -264,11 +278,17 @@ public class ItemManager extends Gravity {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(metersText);
         paint.getTextBounds(text, 0, text.length(), metersText);
-        float x = Constants.SCREEN_WIDTH - metersText.width() - 50;
+        float x = ((float) Constants.SCREEN_WIDTH / 2) - ((float) metersText.width() / 2);// - metersText.width() - 50;
         float y = 50 + metersText.height();
         canvas.drawText(text, x, y, paint);
     }
 
+    public int getHighScore() {
+        return highScore;
+    }
 
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.damoproductionsandroid.freefall;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,6 +23,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private Rect coinsText = new Rect();
     public Rect metersText = new Rect();
+
+    public Rect highScore = new Rect();
 
 
 
@@ -48,6 +51,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private boolean coinSave = false;
     private int coins;
+
     private Canvas canvas;
 
     private int meters;
@@ -57,6 +61,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public GamePanel(Context context) {
 
         super(context);
+
 
 
         //add the callback to the surfaceholder to intercept events
@@ -75,6 +80,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //make gamePanel focusable so it can handle events
         setFocusable(true);
+
+
 
 
     }
@@ -234,6 +241,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -250,6 +258,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint.setTextSize(100);
             paint.setColor(Color.GRAY);
             drawGameOverText(canvas, paint, "Game Over");
+
+
+
+
+                String highScore = String.valueOf(itemManager.getHighScore());
+                drawHighScoreText(canvas, paint, "Highscore: " + highScore + "m");
+
+            //Log.i(TAG, "draw: " + highScore);
+
+
+
         } else if (!gameOver) {
             Paint coinPaint = new Paint();
             coinPaint.setTextSize(75);
@@ -261,7 +280,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             metersPaint.setColor(Color.WHITE);
             //drawMetersText(canvas, metersPaint, meters + "m");
         }
-
         if (coinSave) {
             Paint paint = new Paint();
             paint.setTextSize(75);
@@ -281,12 +299,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(text, x, y, paint);
     }
 
+    private void drawHighScoreText(Canvas canvas, Paint paint, String text) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        paint.setTextSize(70);
+        canvas.getClipBounds(highScore);
+        int cHeight = highScore.height();
+        int cWidth = highScore.width();
+        paint.getTextBounds(text, 0, text.length(), highScore);
+        float x = cWidth / 2f - highScore.width() / 2f - highScore.left;
+        float y = cHeight / 2f + highScore.height() / 2f - highScore.bottom + r.height() + 50;
+        canvas.drawText(text, x, y, paint);
+    }
+
     public void drawCoinsText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
+        paint.setTextSize(60);
         canvas.getClipBounds(coinsText);
         paint.getTextBounds(text, 0, text.length(), coinsText);
-        float x = 50;
-        float y = 50 + coinsText.height();
+        float x = ((float)Constants.SCREEN_WIDTH/2) - ((float)coinsText.width()/2);
+        float y = 100 + coinsText.height()*2;
         canvas.drawText(text, x, y, paint);
     }
 
@@ -295,7 +326,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.getClipBounds(metersText);
         paint.getTextBounds(text, 0, text.length(), metersText);
         float x = Constants.SCREEN_WIDTH - metersText.width() - 50;
-        float y = 50 + metersText.height();
+        float y = 50 - metersText.height()*2;
         canvas.drawText(text, x, y, paint);
     }
 }

@@ -51,6 +51,10 @@ public class Gravity {
 
     }
 
+    public Gravity() {
+
+    }
+
 
     public void update() {
 
