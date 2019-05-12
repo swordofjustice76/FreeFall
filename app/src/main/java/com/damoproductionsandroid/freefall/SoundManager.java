@@ -1,10 +1,12 @@
 package com.damoproductionsandroid.freefall;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
+
 
 public class SoundManager {
 
@@ -14,9 +16,12 @@ public class SoundManager {
     private static int powerUp;
     private static int gameOver;
 
+
+
     public SoundManager(Context context) {
 
         loadSounds();
+
         coinCollect = soundPool.load(context, R.raw.coin_pickup, 0);
         soundTrack = soundPool.load(context, R.raw.soundtrack, 0);
         powerUp = soundPool.load(context, R.raw.power_up, 0);
@@ -52,7 +57,7 @@ public class SoundManager {
     }
 
     public void playSoundTrack(){
-        soundPool.play(soundTrack, 1, 1, 0, -1, 1);
+        soundPool.play(soundTrack, 1, 1, 0, 2, 1);
     }
 
     public void playGameOver(){

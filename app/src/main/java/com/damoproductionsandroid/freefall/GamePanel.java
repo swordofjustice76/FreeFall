@@ -139,7 +139,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (!gameOver) //&& player.getRectangle().contains((int) event.getX(), (int) event.getY())
+                if (!gameOver)
                     movingPlayer = true;
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
                     reset();
@@ -277,9 +277,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-            //Log.i(TAG, "draw: " + highScore);
-
-
 
         } else if (!gameOver) {
             Paint coinPaint = new Paint();
@@ -290,7 +287,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             Paint metersPaint = new Paint();
             metersPaint.setTextSize(75);
             metersPaint.setColor(Color.WHITE);
-            //drawMetersText(canvas, metersPaint, meters + "m");
+
         }
         if (coinSave) {
             Paint paint = new Paint();
@@ -333,12 +330,4 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(text, x, y, paint);
     }
 
-    public void drawMetersText(Canvas canvas, Paint paint, String text) {
-        paint.setTextAlign(Paint.Align.LEFT);
-        canvas.getClipBounds(metersText);
-        paint.getTextBounds(text, 0, text.length(), metersText);
-        float x = Constants.SCREEN_WIDTH - metersText.width() - 50;
-        float y = 50 - metersText.height()*2;
-        canvas.drawText(text, x, y, paint);
-    }
 }

@@ -25,15 +25,7 @@ public class HighScore extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        itemManager = new ItemManager();
-
         setHighScore(getApplicationContext());
-        //getHighScore();
-        //SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        //SharedPreferences.Editor editor = pref.edit();
-
-        //SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        //SharedPreferences.Editor editor = pref.edit();
 
     }
 

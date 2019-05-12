@@ -1,27 +1,11 @@
 package com.damoproductionsandroid.freefall;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.Log;
-
 import java.util.ArrayList;
 
-import static android.content.ContentValues.TAG;
+
 
 public class ObstacleManager extends Gravity {
-    // private ArrayList<Obstacle> obstacles;
-    //private int playerGap;
-    // private int obstacleGap;
-    // private int obstacleHeight;
-    // private int colour;
-    private Gravity gravity;
-    private ItemSpawner itemSpawner;
-
-    public Rect metersText = new Rect();
-
-    private boolean metresSave = false;
 
 
     private long startTime;
@@ -33,7 +17,7 @@ public class ObstacleManager extends Gravity {
         this.obstacleGap = obstacleGap;
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
-        this.gravity = new Gravity(playerGap, obstacleGap, obstacleHeight, colour);
+
 
 
         startTime = initTime = System.currentTimeMillis();

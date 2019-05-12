@@ -8,12 +8,7 @@ import android.graphics.Rect;
 public class ShrinkPlayerUpgrade implements GameObject {
 
     private Rect rectangle;
-    private int colour;
-    Gravity gravity;
 
-
-    ObstacleManager obstacleManager;
-    private int playerGap;
 
     public Rect getRectangle() {
         return rectangle;
@@ -21,7 +16,7 @@ public class ShrinkPlayerUpgrade implements GameObject {
 
     public ShrinkPlayerUpgrade(int rectHeight, int colour, int startX, int startY) {
 
-        this.colour = colour;
+        int colour1 = colour;
         rectangle = new Rect(startX, startY, startX + rectHeight, startY + rectHeight);
     }
 
@@ -48,7 +43,5 @@ public class ShrinkPlayerUpgrade implements GameObject {
 
     }
 
-    public void setPlayerGap(int playerGap) {
-        this.playerGap = playerGap;
-    }
+
 }

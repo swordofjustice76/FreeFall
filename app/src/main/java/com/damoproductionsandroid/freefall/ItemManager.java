@@ -1,25 +1,18 @@
 package com.damoproductionsandroid.freefall;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
+
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.content.ContentValues.TAG;
-import static android.content.Context.MODE_PRIVATE;
+
 
 public class ItemManager extends Gravity {
-    //  private ArrayList<Coin>coins;
-    // private int obstacleGap;
-    // private int obstacleHeight;
-    //private int playerGap;
-    // private  int colour;
 
     private long startTime;
     private long initTime;
@@ -32,9 +25,6 @@ public class ItemManager extends Gravity {
     public boolean updateScore = false;
 
 
-    ObstacleManager obstacleManager;
-    MainActivity mainActivity;
-    ItemSpawner itemSpawner;
     HighScore highScoreActivity;
 
 
@@ -60,10 +50,6 @@ public class ItemManager extends Gravity {
         populateShrinkPlayerUpgrade();
 
 
-    }
-
-    public ItemManager() {
-        super();
     }
 
 
