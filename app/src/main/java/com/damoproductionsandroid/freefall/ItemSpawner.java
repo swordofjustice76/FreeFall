@@ -7,28 +7,13 @@ import java.util.TimerTask;
 
 import static android.content.ContentValues.TAG;
 
-public class ItemSpawner extends ItemManager {
+public class ItemSpawner extends ItemManager{
 
 
-
-
-    public ItemSpawner(int playerGap, int obstacleGap,  int obstacleHeight, int colour) {
-
-        super(playerGap, obstacleGap, obstacleHeight, colour);
-        //this.playerGap = playerGap;
-
-
+    public ItemSpawner(int obstacleGap, int playerGap, int obstacleHeight, int colour) {
+        super(obstacleGap, playerGap, obstacleHeight, colour);
     }
 
-    public void bigUpgradeTimer() {
-        Timer timer = new Timer();
-        TimerTask powerUpTimerTask = new TimerTask() {
-            @Override
-            public void run() {
-               // playerGap = Constants.PLAYER_GAP;
-                //Log.d(TAG, "YAY: " + obstacleManager.obstacleGap);
-            }
-        };
-        timer.schedule(powerUpTimerTask, 5000);
-    }
+
+
 }

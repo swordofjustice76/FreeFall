@@ -17,7 +17,6 @@ public class SoundManager {
     private static int gameOver;
 
 
-
     public SoundManager(Context context) {
 
         loadSounds();
@@ -31,7 +30,7 @@ public class SoundManager {
 
 
     private void loadSounds() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
                     .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -48,19 +47,19 @@ public class SoundManager {
 
     }
 
-    public void playCoinCollectSound(){
+    public void playCoinCollectSound() {
         soundPool.play(coinCollect, 1, 1, 0, 0, 1);
     }
 
-    public void playPowerUpSound(){
+    public void playPowerUpSound() {
         soundPool.play(powerUp, 1, 1, 0, 0, 1);
     }
 
-    public void playSoundTrack(){
+    public void playSoundTrack() {
         soundPool.play(soundTrack, 1, 1, 0, 2, 1);
     }
 
-    public void playGameOver(){
+    public void playGameOver() {
         soundPool.play(gameOver, 1, 1, 0, 0, 1);
     }
 

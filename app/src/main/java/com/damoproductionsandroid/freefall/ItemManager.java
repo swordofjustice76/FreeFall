@@ -11,14 +11,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-
-public class ItemManager extends Gravity {
+public class ItemManager extends ObjectLogic {
 
     private long startTime;
     private long initTime;
 
     private int highScore;
-
 
     private Rect metersText = new Rect();
 
@@ -26,7 +24,6 @@ public class ItemManager extends Gravity {
 
 
     HighScore highScoreActivity;
-
 
 
 
@@ -41,11 +38,13 @@ public class ItemManager extends Gravity {
         highScoreActivity = new HighScore();
 
 
+
         startTime = initTime = System.currentTimeMillis();
 
 
         populateCoins();
         populateBigGapUpgrade();
+
         populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
 
@@ -57,7 +56,7 @@ public class ItemManager extends Gravity {
 
         int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
         while (currY < 0) {
-            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
+            int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
             coins.add(new Coin(obstacleHeight, colour, xStart, currY - obstacleHeight));
             currY += obstacleHeight + obstacleGap;
 
@@ -69,7 +68,7 @@ public class ItemManager extends Gravity {
         TimerTask spawnTimerTask = new TimerTask() {
             @Override
             public void run() {
-                spawnGapUpgrade();
+               spawnGapUpgrade();
             }
         };
         spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 15000);
@@ -134,7 +133,6 @@ public class ItemManager extends Gravity {
             if (obstacleDistanceUpgrade.playerCollectUpgrade(player)) {
                 obstacleDistanceUpgrades.remove(obstacleDistanceUpgrade);
 
-
             }
             if (obstacleDistanceUpgrade.playerCollectUpgrade(player))
 
@@ -148,7 +146,6 @@ public class ItemManager extends Gravity {
 
             if (shrinkPlayerUpgrade.playerCollectUpgrade(player)) {
                 shrinkPlayerUpgrades.remove(shrinkPlayerUpgrade);
-                //bigUpgradeTimer();
 
             }
             if (shrinkPlayerUpgrade.playerCollectUpgrade(player))
@@ -166,15 +163,16 @@ public class ItemManager extends Gravity {
 
         float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
         metres += (((float) elapsedTime / 50) * speed);
-        //Log.d(TAG, "update: " + metres);
+
         updateScore = true;
 
 
         for (Coin coin : coins) {
             coin.incrementY(speed * elapsedTime);
 
-            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
-                spawnNewCoin();
+            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT)
+            {
+               spawnNewCoin();
             }
         }
 
@@ -190,7 +188,7 @@ public class ItemManager extends Gravity {
         for (ObstacleDistanceUpgrade obstacleDistanceUpgrade : obstacleDistanceUpgrades) {
             obstacleDistanceUpgrade.incrementY(speed * elapsedTime);
 
-            if (obstacleDistanceUpgrades.get(obstacleDistanceUpgrades.size() - 1).getRect().top >= Constants.SCREEN_HEIGHT) {
+            if (obstacleDistanceUpgrades.get(obstacleDistanceUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
 
                 obstacleDistanceUpgrades.remove(obstacleDistanceUpgrades.size() - 1);
             }
@@ -208,13 +206,15 @@ public class ItemManager extends Gravity {
     }
 
 
-    private void spawnNewCoin() {
+    public void spawnNewCoin() {
+
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
         coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
         coins.remove(coins.size() - 1);
     }
 
-    private void spawnGapUpgrade() {
+
+    public void spawnGapUpgrade() {
         //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
         bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
@@ -253,8 +253,6 @@ public class ItemManager extends Gravity {
             paint.setColor(Color.WHITE);
             drawMetersText(canvas, paint, (int) metres + "m");
             setHighScore((int) metres);
-
-            
 
         }
 

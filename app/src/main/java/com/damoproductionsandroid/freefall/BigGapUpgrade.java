@@ -4,18 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static android.content.ContentValues.TAG;
 
 public class BigGapUpgrade implements GameObject {
 
     private Rect rectangle;
     private int colour;
-    Gravity gravity;
+    ObjectLogic gravity;
 
 
 

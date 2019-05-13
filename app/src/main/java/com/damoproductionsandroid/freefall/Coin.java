@@ -44,6 +44,4 @@ public class Coin implements GameObject {
     public void update() {
         
     }
-
-
 }

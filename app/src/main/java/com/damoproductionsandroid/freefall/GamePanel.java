@@ -1,22 +1,17 @@
 package com.damoproductionsandroid.freefall;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.content.ContentValues.TAG;
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -43,7 +38,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private SoundManager soundManager;
     private HighScore highScoreHandler;
     private ItemSpawner itemSpawner;
-    private Gravity gravity;
+    private ObjectLogic gravity;
     private BigGapUpgrade bigGapUpgrade;
 
     private boolean movingPlayer = false;

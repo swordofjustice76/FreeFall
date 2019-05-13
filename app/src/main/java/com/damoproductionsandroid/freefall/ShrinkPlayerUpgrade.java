@@ -37,7 +37,6 @@ public class ShrinkPlayerUpgrade implements GameObject {
 
     }
 
-
     @Override
     public void update() {
 
