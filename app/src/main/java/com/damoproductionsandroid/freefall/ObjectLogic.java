@@ -13,6 +13,8 @@ public class ObjectLogic {
     public long startTime;
     public float metres;
 
+    public static int SPAWN_REFERENCE_POINT;
+
 
     public ArrayList<Obstacle> obstacles;
     public ArrayList<Coin> coins;
@@ -34,7 +36,7 @@ public class ObjectLogic {
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
 
-
+        SPAWN_REFERENCE_POINT = 0 - obstacleHeight;
 
         obstacles = new ArrayList<>();
         coins = new ArrayList<>();
@@ -59,14 +61,13 @@ public class ObjectLogic {
 
         }
 
+
+
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
-
-
         }
-
 
     }
 

@@ -72,7 +72,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         player.update(playerPoint);
 
         obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
-        itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
+        itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
 
         highScoreHandler = new HighScore();
 

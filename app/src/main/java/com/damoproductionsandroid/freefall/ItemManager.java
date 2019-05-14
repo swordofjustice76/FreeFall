@@ -45,7 +45,7 @@ public class ItemManager extends ObjectLogic {
         populateCoins();
         populateBigGapUpgrade();
 
-        populateObstacleDistanceUpgrade();
+        //populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
 
 
@@ -54,13 +54,13 @@ public class ItemManager extends ObjectLogic {
 
     private void populateCoins() {
 
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
+        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap/2) + (obstacleHeight/2);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-            coins.add(new Coin(obstacleHeight, colour, xStart, currY - obstacleHeight));
+            coins.add(new Coin(obstacleHeight, colour, xStart, currY));
             currY += obstacleHeight + obstacleGap;
-
         }
+        
     }
 
     private void populateBigGapUpgrade() {

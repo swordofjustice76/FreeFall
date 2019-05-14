@@ -37,7 +37,7 @@ public class ObstacleManager extends ObjectLogic {
     }
 
     private void populateObstacles() {
-        int currY = -5 * Constants.SCREEN_HEIGHT / 4;
+        int currY = (-5 * Constants.SCREEN_HEIGHT / 4);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(new Obstacle(obstacleHeight, colour, xStart, currY, playerGap));
