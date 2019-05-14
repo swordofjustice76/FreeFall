@@ -12,6 +12,8 @@ public class ObjectLogic {
     public long initTime;
     public long startTime;
     public float metres;
+    public float mps;
+    public int mpsMultiplier = 1;
 
     public static int SPAWN_REFERENCE_POINT;
 

@@ -95,7 +95,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         highScoreHandler.setHighScore(getContext());
 
         movingPlayer = false;
-        meters = 0;
     }
 
     @Override
@@ -284,9 +283,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             if (itemManager.getHighScore() < highScoreHandler.highscore){
                 String highScore = String.valueOf(highScoreHandler.highscore);
-                drawHighScoreText(canvas, paint, "Highscore: " + highScore + "m");
+                drawHighScoreText(canvas, paint, "Highscore: " + highScore);
             } else {
-                drawHighScoreText(canvas, paint, "Highscore: " + itemManager.getHighScore() + "m");
+                drawHighScoreText(canvas, paint, "Highscore: " + itemManager.getHighScore());
             }
 
 

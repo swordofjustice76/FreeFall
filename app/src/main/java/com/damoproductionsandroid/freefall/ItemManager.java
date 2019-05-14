@@ -19,6 +19,7 @@ public class ItemManager extends ObjectLogic {
 
     private long startTime;
     private long initTime;
+    private int elapsedTime;
 
     private int highScore;
 
@@ -28,7 +29,6 @@ public class ItemManager extends ObjectLogic {
 
 
     HighScore highScoreActivity;
-
 
 
 
@@ -52,6 +52,8 @@ public class ItemManager extends ObjectLogic {
         //populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
         populateDoubleCoinsUpgrade();
+
+
 
     }
 
@@ -177,7 +179,6 @@ public class ItemManager extends ObjectLogic {
 
             if (doubleCoinsUpgrade.playerCollectUpgrade(player)) {
                 doubleCoinsUpgrades.remove(doubleCoinsUpgrade);
-                Log.i(TAG, "playerCollectDoubleCoinsUpgrade: ");
 
             }
             if (doubleCoinsUpgrade.playerCollectUpgrade(player))
@@ -190,11 +191,12 @@ public class ItemManager extends ObjectLogic {
 
     public void update() {
 
-        int elapsedTime = (int) (System.currentTimeMillis() - startTime);
+        elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
-        float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
-        metres += (((float) elapsedTime / 50) * speed);
+        speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
+        mps = (((float) elapsedTime / 50) * speed * (mpsMultiplier));
+        metres += (mps);
 
         updateScore = true;
 
@@ -303,7 +305,7 @@ public class ItemManager extends ObjectLogic {
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
-            drawMetersText(canvas, paint, (int) metres + "m");
+            drawMetersText(canvas, paint, String.valueOf((int) metres));
             setHighScore((int) metres);
 
         }
