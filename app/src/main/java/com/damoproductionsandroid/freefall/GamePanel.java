@@ -48,6 +48,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private boolean coinSave = false;
     private int coins;
+    private int collectAmount = 1;
 
     private Canvas canvas;
 
@@ -177,7 +178,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
-                coins++;
+                coins += collectAmount;
                 coinSave = true;
             }
             if (itemManager.playerCollectPlayerGapUpgrade(player)) {
@@ -199,10 +200,16 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 soundManager.playPowerUpSound();
                 player.getRectangle().inset(25, 25);
                 shrinkPlayerUpgradeTimer();
+            }
 
+            if (itemManager.playerCollectDoubleCoinsUpgrade(player)){
+                soundManager.playPowerUpSound();
+                collectAmount*=2;
+                doubleCoinsUpgradeTimer();
             }
         }
     }
+
 
     public void bigPlayerGapUpgradeTimer() {
         Timer timer = new Timer();
@@ -240,6 +247,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         };
         timer.schedule(powerUpTimerTask, 4000);
     }
+
+    private void doubleCoinsUpgradeTimer() {
+        Timer timer = new Timer();
+        TimerTask powerUpTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                collectAmount/=2;
+            }
+        };
+        timer.schedule(powerUpTimerTask, 10000);
+    }
+
 
 
 

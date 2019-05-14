@@ -5,10 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ItemManager extends ObjectLogic {
@@ -47,9 +51,10 @@ public class ItemManager extends ObjectLogic {
 
         //populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
-
+        populateDoubleCoinsUpgrade();
 
     }
+
 
 
     private void populateCoins() {
@@ -95,6 +100,18 @@ public class ItemManager extends ObjectLogic {
         };
         spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 20000);
     }
+
+    private void populateDoubleCoinsUpgrade() {
+        Timer spawnTimer = new Timer();
+        TimerTask spawnTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                spawnDoubleCoinsUpgrade();
+            }
+        };
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 2000, 20000);
+    }
+
 
 
     public boolean playerCollect(Player player) {
@@ -155,6 +172,21 @@ public class ItemManager extends ObjectLogic {
         return false;
     }
 
+    public boolean playerCollectDoubleCoinsUpgrade(Player player) {
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades) {
+
+            if (doubleCoinsUpgrade.playerCollectUpgrade(player)) {
+                doubleCoinsUpgrades.remove(doubleCoinsUpgrade);
+                Log.i(TAG, "playerCollectDoubleCoinsUpgrade: ");
+
+            }
+            if (doubleCoinsUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        }
+        return false;
+    }
+
 
     public void update() {
 
@@ -203,6 +235,15 @@ public class ItemManager extends ObjectLogic {
             }
         }
 
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades) {
+            doubleCoinsUpgrade.incrementY(speed * elapsedTime);
+
+            if (doubleCoinsUpgrades.get(doubleCoinsUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+
+                doubleCoinsUpgrades.remove(doubleCoinsUpgrades.size() - 1);
+            }
+        }
+
     }
 
 
@@ -233,6 +274,13 @@ public class ItemManager extends ObjectLogic {
         shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
     }
 
+    private void spawnDoubleCoinsUpgrade() {
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight,  xStart,coins.get(0).getRectangle().top - obstacleHeight, colour));
+
+    }
+
+
 
     public void draw(Canvas canvas) {
         for (Coin coin : coins)
@@ -246,6 +294,10 @@ public class ItemManager extends ObjectLogic {
 
         for (ShrinkPlayerUpgrade shrinkPlayerUpgrade : shrinkPlayerUpgrades)
             shrinkPlayerUpgrade.draw(canvas);
+
+
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades)
+            doubleCoinsUpgrade.draw(canvas);
 
         if (updateScore) {
             Paint paint = new Paint();
