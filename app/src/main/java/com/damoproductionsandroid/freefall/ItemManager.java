@@ -31,7 +31,6 @@ public class ItemManager extends ObjectLogic {
     HighScore highScoreActivity;
 
 
-
     public ItemManager(int obstacleGap, int playerGap, int obstacleHeight, int colour) {
         super(obstacleGap, playerGap, obstacleHeight, colour);
         this.obstacleGap = obstacleGap;
@@ -40,7 +39,6 @@ public class ItemManager extends ObjectLogic {
         this.colour = colour;
 
         highScoreActivity = new HighScore();
-
 
 
         startTime = initTime = System.currentTimeMillis();
@@ -52,22 +50,21 @@ public class ItemManager extends ObjectLogic {
         //populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
         populateDoubleCoinsUpgrade();
-
+        populateDoubleScoreUpgrade();
 
 
     }
 
 
-
     private void populateCoins() {
 
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap/2) + (obstacleHeight/2);
+        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight / 2);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
             coins.add(new Coin(obstacleHeight, colour, xStart, currY));
             currY += obstacleHeight + obstacleGap;
         }
-        
+
     }
 
     private void populateBigGapUpgrade() {
@@ -75,10 +72,10 @@ public class ItemManager extends ObjectLogic {
         TimerTask spawnTimerTask = new TimerTask() {
             @Override
             public void run() {
-               spawnGapUpgrade();
+                spawnGapUpgrade();
             }
         };
-        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 15000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 3000, 15000);
     }
 
     private void populateObstacleDistanceUpgrade() {
@@ -100,7 +97,7 @@ public class ItemManager extends ObjectLogic {
                 spawnShrinkPayerUpgrade();
             }
         };
-        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 20000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 7500, 20000);
     }
 
     private void populateDoubleCoinsUpgrade() {
@@ -111,9 +108,19 @@ public class ItemManager extends ObjectLogic {
                 spawnDoubleCoinsUpgrade();
             }
         };
-        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 2000, 20000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 10000, 25000);
     }
 
+    private void populateDoubleScoreUpgrade() {
+        Timer spawnTimer = new Timer();
+        TimerTask spawnTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                spawnDoubleScoreUpgrade();
+            }
+        };
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 12500, 20000);
+    }
 
 
     public boolean playerCollect(Player player) {
@@ -188,6 +195,20 @@ public class ItemManager extends ObjectLogic {
         return false;
     }
 
+    public boolean playerCollectDoubleScoreUpgrade(Player player) {
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades) {
+
+            if (doubleScoreUpgrade.playerCollectUpgrade(player)) {
+                doubleScoreUpgrades.remove(doubleScoreUpgrade);
+
+            }
+            if (doubleScoreUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        }
+        return false;
+    }
+
 
     public void update() {
 
@@ -204,9 +225,8 @@ public class ItemManager extends ObjectLogic {
         for (Coin coin : coins) {
             coin.incrementY(speed * elapsedTime);
 
-            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT)
-            {
-               spawnNewCoin();
+            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+                spawnNewCoin();
             }
         }
 
@@ -246,6 +266,15 @@ public class ItemManager extends ObjectLogic {
             }
         }
 
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades) {
+            doubleScoreUpgrade.incrementY(speed * elapsedTime);
+
+            if (doubleScoreUpgrades.get(doubleScoreUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+
+                doubleScoreUpgrades.remove(doubleScoreUpgrades.size() - 1);
+            }
+        }
+
     }
 
 
@@ -278,11 +307,14 @@ public class ItemManager extends ObjectLogic {
 
     private void spawnDoubleCoinsUpgrade() {
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight,  xStart,coins.get(0).getRectangle().top - obstacleHeight, colour));
+        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
 
     }
 
-
+    private void spawnDoubleScoreUpgrade() {
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        doubleScoreUpgrades.add(new DoubleScoreUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+    }
 
     public void draw(Canvas canvas) {
         for (Coin coin : coins)
@@ -300,6 +332,9 @@ public class ItemManager extends ObjectLogic {
 
         for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades)
             doubleCoinsUpgrade.draw(canvas);
+
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades)
+            doubleScoreUpgrade.draw(canvas);
 
         if (updateScore) {
             Paint paint = new Paint();

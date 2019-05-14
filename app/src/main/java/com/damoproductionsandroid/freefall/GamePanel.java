@@ -206,6 +206,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 collectAmount*=2;
                 doubleCoinsUpgradeTimer();
             }
+
+            if (itemManager.playerCollectDoubleScoreUpgrade(player)){
+                soundManager.playPowerUpSound();
+                itemManager.mpsMultiplier*=2;
+                doubleScoreUpgradeTimer();
+            }
         }
     }
 
@@ -257,6 +263,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         };
         timer.schedule(powerUpTimerTask, 10000);
+    }
+
+    private void doubleScoreUpgradeTimer() {
+        Timer timer = new Timer();
+        TimerTask powerUpTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                itemManager.mpsMultiplier/=2;
+            }
+        };
+        timer.schedule(powerUpTimerTask, 5000);
     }
 
 

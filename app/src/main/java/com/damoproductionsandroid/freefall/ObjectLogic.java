@@ -24,6 +24,7 @@ public class ObjectLogic {
     public ArrayList<ObstacleDistanceUpgrade> obstacleDistanceUpgrades;
     public ArrayList<ShrinkPlayerUpgrade> shrinkPlayerUpgrades;
     public ArrayList<DoubleCoinsUpgrade> doubleCoinsUpgrades;
+    public ArrayList<DoubleScoreUpgrade> doubleScoreUpgrades;
 
 
 
@@ -47,6 +48,7 @@ public class ObjectLogic {
         obstacleDistanceUpgrades = new ArrayList<>();
         shrinkPlayerUpgrades = new ArrayList<>();
         doubleCoinsUpgrades = new ArrayList<>();
+        doubleScoreUpgrades = new ArrayList<>();
 
 
         startTime = initTime = System.currentTimeMillis();
