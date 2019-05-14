@@ -5,43 +5,55 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
-public class Coin implements GameObject {
+public class BigGapUpgrade implements GameObject {
 
     private Rect rectangle;
     private int colour;
+    ObjectLogic gravity;
+
+
+
+
+    ObstacleManager obstacleManager;
+    private int playerGap;
 
     public Rect getRectangle() {
         return rectangle;
     }
 
+    public BigGapUpgrade (int rectHeight, int colour, int startX, int startY){
 
-    public Coin(int rectHeight, int colour, int startX, int startY) {
         this.colour = colour;
-        //l, t, r, b
-        rectangle = new Rect(startX, startY, startX + rectHeight, startY - rectHeight);
+        rectangle = new Rect(startX, startY, startX + rectHeight, startY + rectHeight);
     }
+
+   public boolean playerCollectUpgrade(Player player){
+        return Rect.intersects(rectangle, player.getRectangle());
+   }
 
     public  void incrementY (float y){
         rectangle.top += y;
         rectangle.bottom += y;
     }
 
-
-
-    public boolean playerCollect(Player player) {
-
-        return Rect.intersects(rectangle, player.getRectangle());
-    }
-
     @Override
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor(colour);
+        paint.setColor(Color.BLUE);
         canvas.drawRect(rectangle, paint);
+
     }
+
+
+
 
     @Override
     public void update() {
-        
+
     }
+
+    public void setPlayerGap(int playerGap) {
+        this.playerGap = playerGap;
+    }
+
 }
