@@ -34,6 +34,7 @@ public class ObjectLogic {
     public int colour;
 
 
+
     public ObjectLogic(int playerGap, int obstacleGap, int obstacleHeight, int colour) {
         this.playerGap = playerGap;
         this.obstacleGap = obstacleGap;
@@ -51,6 +52,8 @@ public class ObjectLogic {
         doubleScoreUpgrades = new ArrayList<>();
 
 
+
+
         startTime = initTime = System.currentTimeMillis();
 
     }
@@ -65,7 +68,6 @@ public class ObjectLogic {
 
         for (Obstacle ob : obstacles) {
             ob.incrementY(speed * elapsedTime);
-
         }
 
 

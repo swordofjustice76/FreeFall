@@ -21,6 +21,8 @@ public class ItemManager extends ObjectLogic {
     private long initTime;
     private int elapsedTime;
 
+
+
     private int highScore;
 
     private Rect metersText = new Rect();
@@ -124,11 +126,12 @@ public class ItemManager extends ObjectLogic {
 
 
     public boolean playerCollect(Player player) {
+
         for (Coin coin : coins) {
 
             if (coin.playerCollect(player)) {
                 int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-                coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
+                coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight - obstacleGap));
                 coins.remove(coin);
             }
             if (coin.playerCollect(player))
@@ -281,8 +284,9 @@ public class ItemManager extends ObjectLogic {
     public void spawnNewCoin() {
 
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
+        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight - obstacleGap));
         coins.remove(coins.size() - 1);
+
     }
 
 
