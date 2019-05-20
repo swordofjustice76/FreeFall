@@ -68,7 +68,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
-        player = new Player(new Rect(100, 100, 250, 250), Color.rgb(255, 0, 0));
+        player = new Player(new Rect(100, 100, 250, 250), Color.rgb(216, 0, 0));
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
 
