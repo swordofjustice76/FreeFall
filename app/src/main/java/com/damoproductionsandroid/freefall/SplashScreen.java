@@ -84,6 +84,13 @@ public class SplashScreen extends Activity {
             }
         });
 
+        shopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SplashScreen.this, Shop.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shop_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colourBackground"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/shop_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/coins_txt"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/pixel_font"
+        android:text="SHOP"
+        android:textColor="#ffffff"
+        android:textSize="60dp" />
+
+    <TextView
+        android:id="@+id/coins_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:fontFamily="@font/pixel_font"
+        android:text="Coins: 20"
+        android:textColor="#fcd904"
+        android:textSize="25dp" />
+
+    <TableLayout
+        android:id="@+id/column_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shop_txt"
+        android:layout_marginTop="20sp"
+        android:weightSum="100">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/upgrade_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="50"
+                android:fontFamily="@font/pixel_font"
+                android:text="UPGRADE"
+                android:textColor="#ffff"
+                android:textSize="35dp"
+                />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:fontFamily="@font/pixel_font"
+                android:text="COST"
+                android:textColor="#fcd904"
+                android:textSize="35dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="25"
+                android:fontFamily="@font/pixel_font"
+                android:text="LEVEL"
+                android:textColor="#ffffff"
+                android:textSize="35dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/upgradebox1_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/column_desc"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/upgrade_style"
+        android:padding="20sp"
+        >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/upgrade1_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:fontFamily="@font/pixel_font"
+
+                    android:text="Smaller Player"
+                    android:textColor="#ffff"
+                    android:textSize="30dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="20"
+                    android:textColor="#fcd904"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="1/5"
+                    android:textColor="#ffffff"
+                    android:textSize="30dp" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/upgradebox2_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upgradebox1_txt"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/upgrade_style"
+        android:padding="20sp"
+        >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/upgrade2_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:fontFamily="@font/pixel_font"
+
+                    android:text="Passive Multiplier"
+                    android:textColor="#ffff"
+                    android:textSize="30dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="500"
+                    android:textColor="#fcd904"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="1/10"
+                    android:textColor="#ffffff"
+                    android:textSize="30dp" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/upgradebox2_txt"
+        android:layout_marginTop="20sp"
+        android:background="@drawable/upgrade_style"
+        android:padding="20sp"
+        >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="100">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/upgrade3_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="50"
+                    android:fontFamily="@font/pixel_font"
+
+                    android:text="Death Bonus"
+                    android:textColor="#ffff"
+                    android:textSize="30dp"
+
+                    />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="1k"
+                    android:textColor="#fcd904"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="1/3"
+                    android:textColor="#ffffff"
+                    android:textSize="30dp" />
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </RelativeLayout>
+</RelativeLayout>
