@@ -2,7 +2,9 @@ package com.damoproductionsandroid.freefall;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -11,11 +13,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class SplashScreen extends Activity {
 
     Button playBtn;
     Button shopBtn;
+    TextView playTxt;
 
 
     @Override
@@ -29,6 +33,10 @@ public class SplashScreen extends Activity {
         playBtn = findViewById(R.id.play_btn);
         shopBtn = findViewById(R.id.shop_btn);
 
+        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
+        playBtn.setTypeface(typeface);
+        shopBtn.setTypeface(typeface);
+
         Animation buttonAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_shrink);
         //playBtn.startAnimation(buttonAnimation);
 
@@ -38,7 +46,7 @@ public class SplashScreen extends Activity {
         growAnim.setDuration(250);
         shrinkAnim.setDuration(250);
 
-        playBtn.setAnimation(growAnim);
+        //playBtn.setAnimation(growAnim);
         //shopBtn.setAnimation(growAnim);
         growAnim.start();
 
