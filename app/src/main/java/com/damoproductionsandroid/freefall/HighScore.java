@@ -33,7 +33,7 @@ public class HighScore extends Activity {
         SharedPreferences prefs = context.getSharedPreferences(HIGH_SCORE, MODE_PRIVATE);
 
         highscore = prefs.getInt("highscore", 0); //0 is the default value.
-        Log.i(TAG, "setHighScore: " + highscore);
+        //Log.i(TAG, "setHighScore: " + highscore);
 
     }
 
@@ -46,10 +46,10 @@ public class HighScore extends Activity {
             editor.apply();
         }
 
-        Log.i(TAG, "getCurrentScore: " + currentScore);
+       // Log.i(TAG, "getCurrentScore: " + currentScore);
 
         if (currentScore > highscore) {
-            Log.d(TAG, "YOU BEAT YOUR HIGHSCORE");
+            //Log.d(TAG, "YOU BEAT YOUR HIGHSCORE");
         }
 
 

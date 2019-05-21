@@ -37,8 +37,6 @@ public class SplashScreen extends Activity {
         playBtn.setTypeface(typeface);
         shopBtn.setTypeface(typeface);
 
-        Animation buttonAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_shrink);
-        //playBtn.startAnimation(buttonAnimation);
 
         final ScaleAnimation growAnim = new ScaleAnimation(1.0f, 1.15f, 1.0f, 1.15f, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
         final ScaleAnimation shrinkAnim = new ScaleAnimation(1.15f, 1.0f, 1.15f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);

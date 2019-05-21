@@ -17,8 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".ObjectLogic"/>
         <activity android:name=".Shop"/>
-
         <activity android:name=".HighScore"
             />
 

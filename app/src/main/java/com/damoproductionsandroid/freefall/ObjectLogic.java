@@ -1,11 +1,16 @@
 package com.damoproductionsandroid.freefall;
 
 
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 
 
-public class ObjectLogic {
+public class ObjectLogic extends AppCompatActivity {
 
     public float speed;
 
@@ -53,8 +58,11 @@ public class ObjectLogic {
 
 
 
-
         startTime = initTime = System.currentTimeMillis();
+
+    }
+
+    public ObjectLogic() {
 
     }
 

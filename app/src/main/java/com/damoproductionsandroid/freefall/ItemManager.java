@@ -1,14 +1,19 @@
 package com.damoproductionsandroid.freefall;
 
 
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +29,7 @@ public class ItemManager extends ObjectLogic {
 
 
     private int highScore;
+    private ObjectLogic objectLogic;
 
     private Rect metersText = new Rect();
 
@@ -41,6 +47,7 @@ public class ItemManager extends ObjectLogic {
         this.colour = colour;
 
         highScoreActivity = new HighScore();
+        objectLogic = new ObjectLogic();
 
 
         startTime = initTime = System.currentTimeMillis();
@@ -53,7 +60,6 @@ public class ItemManager extends ObjectLogic {
         populateShrinkPlayerUpgrade();
         populateDoubleCoinsUpgrade();
         populateDoubleScoreUpgrade();
-
 
     }
 
@@ -321,6 +327,8 @@ public class ItemManager extends ObjectLogic {
     }
 
     public void draw(Canvas canvas) {
+
+
         for (Coin coin : coins)
             coin.draw(canvas);
 
@@ -341,9 +349,11 @@ public class ItemManager extends ObjectLogic {
             doubleScoreUpgrade.draw(canvas);
 
         if (updateScore) {
+
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
+            //paint.setTypeface(typeface);
             drawMetersText(canvas, paint, String.valueOf((int) metres));
             setHighScore((int) metres);
 

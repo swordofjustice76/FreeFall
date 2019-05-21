@@ -1,24 +1,37 @@
 package com.damoproductionsandroid.freefall;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
+
+
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
+
     private Rect coinsText = new Rect();
     public Rect metersText = new Rect();
+    public Rect shopText = new Rect();
 
     public Rect highScore = new Rect();
 
@@ -33,10 +46,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private Player player;
     private Point playerPoint;
+    private Point shopButtonPoint;
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
     private HighScore highScoreHandler;
+    private ShopButton shopButton;
     private ItemSpawner itemSpawner;
     private ObjectLogic gravity;
     private BigGapUpgrade bigGapUpgrade;
@@ -69,8 +84,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         soundManager = new SoundManager(context);
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(216, 0, 0));
+        //shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
+        //shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
         player.update(playerPoint);
+        //shopButton.update(shopButtonPoint);
 
         obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
@@ -83,8 +101,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
 
-
     }
+
 
 
     public void reset() {
@@ -133,12 +151,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
+
             case MotionEvent.ACTION_DOWN:
+                int touchX = (int)event.getX();
+                int touchY = (int)event.getY();
+
                 if (!gameOver)
                     movingPlayer = true;
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
-                    reset();
-                    gameOver = false;
+
+                    //reset();
+                    //gameOver = false;
+
+                    if (gameOver && shopText.contains((int)event.getX(), (int)event.getY())){
+                        Intent intent = new Intent(getContext(), Shop.class);
+                        getContext().startActivity(intent);
+                    }
+
 
                 }
                 break;
@@ -286,6 +315,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         canvas.drawColor(getResources().getColor(R.color.colourBackground));
 
+        Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.pixel_font);
+
         player.draw(canvas);
         obstacleManager.draw(canvas);
         itemManager.draw(canvas);
@@ -295,7 +326,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.GRAY);
+            paint.setTypeface(typeface);
+
+            Paint paint2 = new Paint();
+            paint2.setTextSize(150);
+            paint2.setColor(Color.GRAY);
+            paint2.setTypeface(typeface);
+
             drawGameOverText(canvas, paint, "Game Over");
+            drawShopText(canvas, paint2, "SHOP");
+            //shopButton.draw(canvas);
+
+
 
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
 
@@ -314,17 +356,21 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             Paint coinPaint = new Paint();
             coinPaint.setTextSize(75);
             coinPaint.setColor(Color.YELLOW);
+            coinPaint.setTypeface(typeface);
             drawCoinsText(canvas, coinPaint, "Coins: " + coins);
 
             Paint metersPaint = new Paint();
             metersPaint.setTextSize(75);
+            metersPaint.setTypeface(typeface);
             metersPaint.setColor(Color.WHITE);
 
         }
         if (coinSave) {
+
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.YELLOW);
+            paint.setTypeface(typeface);
             drawCoinsText(canvas, paint, "Coins: " + coins);
         }
     }
@@ -332,6 +378,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private void drawGameOverText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
+        paint.setTextSize(100);
         int cHeight = r.height();
         int cWidth = r.width();
         paint.getTextBounds(text, 0, text.length(), r);
@@ -359,6 +406,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint.getTextBounds(text, 0, text.length(), coinsText);
         float x = ((float)Constants.SCREEN_WIDTH/2) - ((float)coinsText.width()/2);
         float y = 100 + coinsText.height()*2;
+        canvas.drawText(text, x, y, paint);
+    }
+
+
+
+    private void drawShopText(Canvas canvas, Paint paint, String text) {
+        paint.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(shopText);
+        paint.setTextSize(150);
+        paint.getTextBounds(text, 0, text.length(), shopText);
+        int x = (Constants.SCREEN_WIDTH / 2) -
+                (shopText.width()/2);
+        int y = 6 * Constants.SCREEN_HEIGHT / 9;
         canvas.drawText(text, x, y, paint);
     }
 
