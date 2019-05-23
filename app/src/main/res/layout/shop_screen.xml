@@ -27,6 +27,19 @@
         android:textColor="#fcd904"
         android:textSize="25dp" />
 
+    <ImageButton
+        android:id="@+id/back_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:background="@color/colourBackground"
+        android:padding="8dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_btn"
+        android:scaleY="1.5"
+        android:scaleX="1.5"/>
+
     <TableLayout
         android:id="@+id/column_desc"
         android:layout_width="match_parent"

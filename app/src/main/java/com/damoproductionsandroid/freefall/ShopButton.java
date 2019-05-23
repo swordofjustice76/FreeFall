@@ -22,6 +22,7 @@ public class ShopButton implements GameObject{
     public void draw(Canvas canvas){
         Paint paint = new Paint();
         paint.setColor(colour);
+        paint.setAlpha(0);
         canvas.drawRect(rectangle, paint);
     }
 

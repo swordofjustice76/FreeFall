@@ -3,11 +3,14 @@ package com.damoproductionsandroid.freefall;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -34,9 +37,10 @@ public class ItemManager extends ObjectLogic {
     private Rect metersText = new Rect();
 
     public boolean updateScore = false;
-
+    Typeface typeface;
 
     HighScore highScoreActivity;
+
 
 
     public ItemManager(int obstacleGap, int playerGap, int obstacleHeight, int colour) {
@@ -349,11 +353,10 @@ public class ItemManager extends ObjectLogic {
             doubleScoreUpgrade.draw(canvas);
 
         if (updateScore) {
-
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
-            //paint.setTypeface(typeface);
+
             drawMetersText(canvas, paint, String.valueOf((int) metres));
             setHighScore((int) metres);
 
@@ -362,7 +365,9 @@ public class ItemManager extends ObjectLogic {
     }
 
     public void drawMetersText(Canvas canvas, Paint paint, String text) {
+
         paint.setTextAlign(Paint.Align.LEFT);
+
         canvas.getClipBounds(metersText);
         paint.getTextBounds(text, 0, text.length(), metersText);
         float x = ((float) Constants.SCREEN_WIDTH / 2) - ((float) metersText.width() / 2);// - metersText.width() - 50;

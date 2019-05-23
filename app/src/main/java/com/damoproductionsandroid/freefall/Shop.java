@@ -1,10 +1,21 @@
 package com.damoproductionsandroid.freefall;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import static android.content.ContentValues.TAG;
 
 public class Shop extends Activity {
 
@@ -29,17 +40,37 @@ public class Shop extends Activity {
     TextView upgrade3LevelTextView;
     TextView upgrade3DescTextView;
 
+    ImageButton backBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.shop_screen);
+
 
         inializeView();
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
+                startActivity(intent);
+
+                Log.d(TAG, "onClick: ");
+            }
+        });
 
     }
 
+
+
+
     private void inializeView() {
+
+
+
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
 
         shopTextView = findViewById(R.id.shop_txt);
@@ -63,6 +94,8 @@ public class Shop extends Activity {
         upgrade3LevelTextView = findViewById(R.id.upgrade3_level_txt);
         upgrade3DescTextView = findViewById(R.id.upgrade3_desc_txt);
 
+        backBtn = (ImageButton) findViewById(R.id.back_btn);
+
         shopTextView.setTypeface(typeface);
         coinsTextView.setTypeface(typeface);
         upgradeTextView.setTypeface(typeface);
@@ -84,5 +117,8 @@ public class Shop extends Activity {
         upgrade3LevelTextView.setTypeface(typeface);
         upgrade3DescTextView.setTypeface(typeface);
 
+
+
     }
 }
+

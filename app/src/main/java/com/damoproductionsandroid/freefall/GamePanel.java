@@ -1,5 +1,6 @@
 package com.damoproductionsandroid.freefall;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.SystemClock;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,13 +22,12 @@ import android.widget.LinearLayout;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+
 import static android.content.ContentValues.TAG;
 
 
-
-
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
-
 
 
     private Rect coinsText = new Rect();
@@ -35,8 +36,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public Rect highScore = new Rect();
 
-
-
+MainThread mainThread;
     MainActivity mainActivity;
 
 
@@ -76,7 +76,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super(context);
 
 
-
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
@@ -84,11 +83,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         soundManager = new SoundManager(context);
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(216, 0, 0));
-        //shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
+        shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
-        //shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
+        shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
         player.update(playerPoint);
-        //shopButton.update(shopButtonPoint);
+        shopButton.update(shopButtonPoint);
 
         obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
@@ -96,13 +95,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         highScoreHandler = new HighScore();
 
 
+
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
 
-
     }
-
 
 
     public void reset() {
@@ -123,7 +121,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
-        while (true) {
+        //while (true) {
             try {
                 thread.setRunning(false);
                 thread.join();
@@ -134,7 +132,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             retry = false;
         }
 
-    }
+   // }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -143,33 +141,36 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         thread = new MainThread(getHolder(), this);
 
         //we can safely start the game loop
-        thread.setRunning(true);
-        thread.start();
 
+            thread.setRunning(true);
+            thread.start();
+            thread.setStop(false);
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean  onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
-                int touchX = (int)event.getX();
-                int touchY = (int)event.getY();
+                int touchX = (int) event.getX();
+                int touchY = (int) event.getY();
 
                 if (!gameOver)
                     movingPlayer = true;
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
 
-                    //reset();
-                    //gameOver = false;
-
-                    if (gameOver && shopText.contains((int)event.getX(), (int)event.getY())){
-                        Intent intent = new Intent(getContext(), Shop.class);
-                        getContext().startActivity(intent);
-                    }
-
-
+                    reset();
+                    gameOver = false;
                 }
+
+                if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
+
+                  //  thread.setRunning(false);
+                    surfaceDestroyed(getHolder());
+                    Intent intent = new Intent(getContext(), Shop.class);
+                    getContext().startActivity(intent);
+                }
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 if (!gameOver && movingPlayer)
@@ -187,8 +188,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
 
 
-
-        if(!playing){
+        if (!playing) {
 
             playing = true;
             soundManager.playPowerUpSound();
@@ -216,29 +216,29 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 bigPlayerGapUpgradeTimer();
 
             }
-            if (itemManager.playerCollectDistanceUpgrade(player)){
+            if (itemManager.playerCollectDistanceUpgrade(player)) {
                 soundManager.playPowerUpSound();
-                obstacleManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
-                itemManager.obstacleGap = (int)(Constants.OBSTACLE_GAP * 1.5);
+                obstacleManager.obstacleGap = (int) (Constants.OBSTACLE_GAP * 1.5);
+                itemManager.obstacleGap = (int) (Constants.OBSTACLE_GAP * 1.5);
                 bigObstacleDistanceUpgradeTimer();
 
             }
 
-            if (itemManager.playerCollectShrinkPlayerUpgrade(player)){
+            if (itemManager.playerCollectShrinkPlayerUpgrade(player)) {
                 soundManager.playPowerUpSound();
                 player.getRectangle().inset(25, 25);
                 shrinkPlayerUpgradeTimer();
             }
 
-            if (itemManager.playerCollectDoubleCoinsUpgrade(player)){
+            if (itemManager.playerCollectDoubleCoinsUpgrade(player)) {
                 soundManager.playPowerUpSound();
-                collectAmount*=2;
+                collectAmount *= 2;
                 doubleCoinsUpgradeTimer();
             }
 
-            if (itemManager.playerCollectDoubleScoreUpgrade(player)){
+            if (itemManager.playerCollectDoubleScoreUpgrade(player)) {
                 soundManager.playPowerUpSound();
-                itemManager.mpsMultiplier*=2;
+                itemManager.mpsMultiplier *= 2;
                 doubleScoreUpgradeTimer();
             }
         }
@@ -288,7 +288,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             @Override
             public void run() {
 
-                collectAmount/=2;
+                collectAmount /= 2;
             }
         };
         timer.schedule(powerUpTimerTask, 10000);
@@ -300,13 +300,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             @Override
             public void run() {
 
-                itemManager.mpsMultiplier/=2;
+                itemManager.mpsMultiplier /= 2;
             }
         };
         timer.schedule(powerUpTimerTask, 5000);
     }
-
-
 
 
     @Override
@@ -335,21 +333,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             drawGameOverText(canvas, paint, "Game Over");
             drawShopText(canvas, paint2, "SHOP");
-            //shopButton.draw(canvas);
-
+            shopButton.draw(canvas);
 
 
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
 
-            if (itemManager.getHighScore() < highScoreHandler.highscore){
+            if (itemManager.getHighScore() < highScoreHandler.highscore) {
                 String highScore = String.valueOf(highScoreHandler.highscore);
                 drawHighScoreText(canvas, paint, "Highscore: " + highScore);
             } else {
                 drawHighScoreText(canvas, paint, "Highscore: " + itemManager.getHighScore());
             }
-
-
-
 
 
         } else if (!gameOver) {
@@ -404,11 +398,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(60);
         canvas.getClipBounds(coinsText);
         paint.getTextBounds(text, 0, text.length(), coinsText);
-        float x = ((float)Constants.SCREEN_WIDTH/2) - ((float)coinsText.width()/2);
-        float y = 100 + coinsText.height()*2;
+        float x = ((float) Constants.SCREEN_WIDTH / 2) - ((float) coinsText.width() / 2);
+        float y = 100 + coinsText.height() * 2;
         canvas.drawText(text, x, y, paint);
     }
-
 
 
     private void drawShopText(Canvas canvas, Paint paint, String text) {
@@ -417,7 +410,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint.setTextSize(150);
         paint.getTextBounds(text, 0, text.length(), shopText);
         int x = (Constants.SCREEN_WIDTH / 2) -
-                (shopText.width()/2);
+                (shopText.width() / 2);
         int y = 6 * Constants.SCREEN_HEIGHT / 9;
         canvas.drawText(text, x, y, paint);
     }

@@ -44,7 +44,7 @@ public class SplashScreen extends Activity {
         growAnim.setDuration(250);
         shrinkAnim.setDuration(250);
 
-        //playBtn.setAnimation(growAnim);
+       // playBtn.setAnimation(growAnim);
         //shopBtn.setAnimation(growAnim);
         growAnim.start();
 
@@ -93,7 +93,8 @@ public class SplashScreen extends Activity {
         shopBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SplashScreen.this, Shop.class);
+
+                Intent intent = new Intent(getApplicationContext(), Shop.class);
                 startActivity(intent);
             }
         });
