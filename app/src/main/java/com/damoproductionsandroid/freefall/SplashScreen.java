@@ -30,12 +30,15 @@ public class SplashScreen extends Activity {
 
         setContentView(R.layout.splash_screen);
 
+
+
         playBtn = findViewById(R.id.play_btn);
         shopBtn = findViewById(R.id.shop_btn);
 
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
         playBtn.setTypeface(typeface);
         shopBtn.setTypeface(typeface);
+
 
 
         final ScaleAnimation growAnim = new ScaleAnimation(1.0f, 1.15f, 1.0f, 1.15f, Animation.RELATIVE_TO_SELF, 0.5F, Animation.RELATIVE_TO_SELF, 0.5F);
@@ -47,6 +50,8 @@ public class SplashScreen extends Activity {
        // playBtn.setAnimation(growAnim);
         //shopBtn.setAnimation(growAnim);
         growAnim.start();
+
+
 
         growAnim.setAnimationListener(new Animation.AnimationListener()
         {

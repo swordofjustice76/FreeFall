@@ -21,6 +21,7 @@
         <activity android:name=".Shop"/>
         <activity android:name=".HighScore"
             />
+        <activity android:name=".SoundtrackManager" />
 
 
     </application>

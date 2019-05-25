@@ -52,6 +52,7 @@ MainThread mainThread;
     private SoundManager soundManager;
     private HighScore highScoreHandler;
     private ShopButton shopButton;
+    private SoundtrackManager soundtrackManager;
     private ItemSpawner itemSpawner;
     private ObjectLogic gravity;
     private BigGapUpgrade bigGapUpgrade;
@@ -81,6 +82,10 @@ MainThread mainThread;
 
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
+        soundtrackManager = new SoundtrackManager(context);
+
+
+
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(100, 100, 250, 250), Color.rgb(216, 0, 0));
         shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
@@ -109,7 +114,7 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
-
+        soundManager.playSoundTrack();
         movingPlayer = false;
     }
 
@@ -157,10 +162,12 @@ MainThread mainThread;
 
                 if (!gameOver)
                     movingPlayer = true;
+
                 if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
 
                     reset();
                     gameOver = false;
+
                 }
 
                 if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
@@ -191,19 +198,27 @@ MainThread mainThread;
         if (!playing) {
 
             playing = true;
-            soundManager.playPowerUpSound();
+            soundtrackManager.mediaPlayer.start();
+            //soundManager.playPowerUpSound();
         }
+
+
+
 
         if (!gameOver) {
             player.update(playerPoint);
             obstacleManager.update();
             itemManager.update();
+
             //metres++;
             if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
                 soundManager.playGameOver();
+                soundtrackManager.mediaPlayer.stop();
+                soundtrackManager.mediaPlayer.release();
             }
+
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
                 coins += collectAmount;

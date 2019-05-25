@@ -55,7 +55,7 @@ public class Shop extends Activity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), SplashScreen.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
 
                 Log.d(TAG, "onClick: ");
