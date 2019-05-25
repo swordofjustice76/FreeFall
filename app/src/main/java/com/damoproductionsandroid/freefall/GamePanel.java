@@ -98,6 +98,8 @@ MainThread mainThread;
         itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
 
         highScoreHandler = new HighScore();
+        highScoreHandler.setCoinAmount(getContext());
+
 
 
 
@@ -114,6 +116,7 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
+        highScoreHandler.setCoinAmount(getContext());
         soundManager.playSoundTrack();
         movingPlayer = false;
     }
@@ -173,6 +176,7 @@ MainThread mainThread;
                 if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
 
                   //  thread.setRunning(false);
+
                     surfaceDestroyed(getHolder());
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
@@ -201,9 +205,6 @@ MainThread mainThread;
             soundtrackManager.mediaPlayer.start();
             //soundManager.playPowerUpSound();
         }
-
-
-
 
         if (!gameOver) {
             player.update(playerPoint);
@@ -352,6 +353,7 @@ MainThread mainThread;
 
 
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
+            highScoreHandler.getCoinAmount(getContext(), coins);
 
             if (itemManager.getHighScore() < highScoreHandler.highscore) {
                 String highScore = String.valueOf(highScoreHandler.highscore);

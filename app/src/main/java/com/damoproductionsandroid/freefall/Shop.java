@@ -19,6 +19,8 @@ import static android.content.ContentValues.TAG;
 
 public class Shop extends Activity {
 
+    HighScore highScore;
+
     TextView shopTextView;
     TextView coinsTextView;
     TextView upgradeTextView;
@@ -42,6 +44,7 @@ public class Shop extends Activity {
 
     ImageButton backBtn;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class Shop extends Activity {
 
         inializeView();
 
+        highScore = new HighScore();
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -61,6 +66,8 @@ public class Shop extends Activity {
                 Log.d(TAG, "onClick: ");
             }
         });
+        int coins = highScore.setCoinAmount(getApplicationContext());
+        coinsTextView.setText("Coins: " + String.valueOf(coins));
 
     }
 
