@@ -56,18 +56,20 @@ public class Shop extends Activity {
         inializeView();
 
         highScore = new HighScore();
+        final int coins = highScore.setCoinAmount(getApplicationContext());
+        coinsTextView.setText("Coins: " + String.valueOf(coins));
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
+                //highScore.getCoinAmount(getApplicationContext(), coins);
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                Log.i(TAG, "onClick: " + coins);
 
-                Log.d(TAG, "onClick: ");
+                //Log.d(TAG, "onClick: ");
             }
         });
-        int coins = highScore.setCoinAmount(getApplicationContext());
-        coinsTextView.setText("Coins: " + String.valueOf(coins));
+
 
     }
 

@@ -33,13 +33,14 @@ public class HighScore extends Activity {
       return coins;
     }
 
-    public void getCoinAmount(Context context, int currentCoin) {
+    public int getCoinAmount(Context context, int currentCoin) {
 
         SharedPreferences pref = context.getSharedPreferences(HIGH_SCORE, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putInt("coins", currentCoin);
         editor.apply();
+        return coins;
     }
 
 

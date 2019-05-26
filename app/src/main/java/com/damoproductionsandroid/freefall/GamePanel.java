@@ -59,11 +59,11 @@ MainThread mainThread;
 
     private boolean movingPlayer = false;
 
-    private boolean gameOver = false;
+    public boolean gameOver = false;
     private long gameOverTime;
 
     private boolean coinSave = false;
-    private int coins;
+    public int coins;
     private int collectAmount = 1;
 
     private Canvas canvas;
@@ -98,8 +98,9 @@ MainThread mainThread;
         itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
 
         highScoreHandler = new HighScore();
+        highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
-
+        coins = highScoreHandler.setCoinAmount(getContext());
 
 
 
@@ -116,7 +117,7 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
-        highScoreHandler.setCoinAmount(getContext());
+        //highScoreHandler.getCoinAmount(getContext(), coins);
         soundManager.playSoundTrack();
         movingPlayer = false;
     }
@@ -180,6 +181,7 @@ MainThread mainThread;
                     surfaceDestroyed(getHolder());
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
+                    Log.i(TAG, "onTouchEvent: " + coins);
                 }
 
                 break;
@@ -203,19 +205,21 @@ MainThread mainThread;
 
             playing = true;
             soundtrackManager.mediaPlayer.start();
-            //soundManager.playPowerUpSound();
+
         }
 
         if (!gameOver) {
             player.update(playerPoint);
             obstacleManager.update();
             itemManager.update();
+            coinSave = true;
 
             //metres++;
             if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
                 soundManager.playGameOver();
+                highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
                 soundtrackManager.mediaPlayer.stop();
                 soundtrackManager.mediaPlayer.release();
             }
@@ -223,12 +227,13 @@ MainThread mainThread;
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
                 coins += collectAmount;
+                highScoreHandler.getCoinAmount(getContext(), coins);
+                highScoreHandler.setCoinAmount(getContext());
                 coinSave = true;
             }
             if (itemManager.playerCollectPlayerGapUpgrade(player)) {
                 obstacleManager.playerGap = (int) (Constants.PLAYER_GAP * 1.5);
                 soundManager.playPowerUpSound();
-                //Log.i(TAG, "setPlayerGap: " + obstacleManager.playerGap);
                 bigPlayerGapUpgradeTimer();
 
             }
@@ -368,7 +373,7 @@ MainThread mainThread;
             coinPaint.setTextSize(75);
             coinPaint.setColor(Color.YELLOW);
             coinPaint.setTypeface(typeface);
-            drawCoinsText(canvas, coinPaint, "Coins: " + coins);
+            drawCoinsText(canvas, coinPaint, "Coins: " + highScoreHandler.setCoinAmount(getContext()));
 
             Paint metersPaint = new Paint();
             metersPaint.setTextSize(75);
@@ -382,7 +387,7 @@ MainThread mainThread;
             paint.setTextSize(75);
             paint.setColor(Color.YELLOW);
             paint.setTypeface(typeface);
-            drawCoinsText(canvas, paint, "Coins: " + coins);
+            drawCoinsText(canvas, paint, "Coins: " + (highScoreHandler.setCoinAmount(getContext())));
         }
     }
 

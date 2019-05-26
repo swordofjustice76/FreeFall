@@ -28,19 +28,15 @@ public class ItemManager extends ObjectLogic {
     private long startTime;
     private long initTime;
     private int elapsedTime;
-
-
-
     private int highScore;
-    private ObjectLogic objectLogic;
     public int currY;
 
     private Rect metersText = new Rect();
 
     public boolean updateScore = false;
-    Typeface typeface;
 
     HighScore highScoreActivity;
+    private ObjectLogic objectLogic;
 
 
 
@@ -65,6 +61,7 @@ public class ItemManager extends ObjectLogic {
         populateShrinkPlayerUpgrade();
         populateDoubleCoinsUpgrade();
         populateDoubleScoreUpgrade();
+
 
     }
 
@@ -362,7 +359,6 @@ public class ItemManager extends ObjectLogic {
 
             drawMetersText(canvas, paint, String.valueOf((int) metres));
             setHighScore((int) metres);
-
         }
 
     }
