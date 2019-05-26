@@ -6,20 +6,18 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import static android.content.ContentValues.TAG;
 
 public class Shop extends Activity {
 
-    HighScore highScore;
+    Preferences highScore;
 
     TextView shopTextView;
     TextView coinsTextView;
@@ -29,12 +27,12 @@ public class Shop extends Activity {
 
     TextView upgrade1TextView;
     TextView upgrade1CostTextView;
-    TextView upgrade1LevelTextView;
+    Button upgrade1LevelBtn;
     TextView upgrade1DescTextView;
 
     TextView upgrade2TextView;
     TextView upgrade2CostTextView;
-    TextView upgrade2LevelTextView;
+    Button upgrade2LevelBtn;
     TextView upgrade2DescTextView;
 
     TextView upgrade3TextView;
@@ -44,6 +42,9 @@ public class Shop extends Activity {
 
     ImageButton backBtn;
 
+    GamePanel gamePanel;
+    ItemManager itemManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,12 @@ public class Shop extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.shop_screen);
 
+        gamePanel = new GamePanel(getApplicationContext());
+
 
         inializeView();
 
-        highScore = new HighScore();
+        highScore = new Preferences();
         final int coins = highScore.setCoinAmount(getApplicationContext());
         coinsTextView.setText("Coins: " + String.valueOf(coins));
 
@@ -73,11 +76,7 @@ public class Shop extends Activity {
 
     }
 
-
-
-
     private void inializeView() {
-
 
 
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
@@ -89,18 +88,23 @@ public class Shop extends Activity {
         levelTextView = findViewById(R.id.level_txt);
 
         upgrade1TextView = findViewById(R.id.upgrade1_txt);
+
         upgrade1CostTextView = findViewById(R.id.upgrade1_cost_txt);
-        upgrade1LevelTextView = findViewById(R.id.upgrade1_level_txt);
+        upgrade1CostTextView.setText(String.valueOf(Constants.PERK_1_COST));
+        upgrade1LevelBtn = findViewById(R.id.upgrade1_level_btn);
+        upgrade1LevelBtn.setText(String.valueOf(Constants.PERK_1_LVL+ "/" + Constants.PERK_1_MAX_LVL));
         upgrade1DescTextView = findViewById(R.id.upgrade1_desc_txt);
 
         upgrade2TextView = findViewById(R.id.upgrade2_txt);
         upgrade2CostTextView = findViewById(R.id.upgrade2_cost_txt);
-        upgrade2LevelTextView = findViewById(R.id.upgrade2_level_txt);
+        upgrade2CostTextView.setText(String.valueOf(Constants.PERK_2_COST));
+        upgrade2LevelBtn = findViewById(R.id.upgrade2_level_btn);
+        upgrade2LevelBtn.setText(String.valueOf(Constants.PERK_2_LVL+ "/" + Constants.PERK_2_MAX_LVL));
         upgrade2DescTextView = findViewById(R.id.upgrade2_desc_txt);
 
         upgrade3TextView = findViewById(R.id.upgrade3_txt);
         upgrade3CostTextView = findViewById(R.id.upgrade3_cost_txt);
-        upgrade3LevelTextView = findViewById(R.id.upgrade3_level_txt);
+        upgrade3LevelTextView = findViewById(R.id.upgrade3_level_btn);
         upgrade3DescTextView = findViewById(R.id.upgrade3_desc_txt);
 
         backBtn = (ImageButton) findViewById(R.id.back_btn);
@@ -113,12 +117,12 @@ public class Shop extends Activity {
 
         upgrade1TextView.setTypeface(typeface);
         upgrade1CostTextView.setTypeface(typeface);
-        upgrade1LevelTextView.setTypeface(typeface);
+        upgrade1LevelBtn.setTypeface(typeface);
         upgrade1DescTextView.setTypeface(typeface);
 
         upgrade2TextView.setTypeface(typeface);
         upgrade2CostTextView.setTypeface(typeface);
-        upgrade2LevelTextView.setTypeface(typeface);
+        upgrade2LevelBtn.setTypeface(typeface);
         upgrade2DescTextView.setTypeface(typeface);
 
         upgrade3TextView.setTypeface(typeface);
@@ -126,8 +130,47 @@ public class Shop extends Activity {
         upgrade3LevelTextView.setTypeface(typeface);
         upgrade3DescTextView.setTypeface(typeface);
 
-
+        initialiseOnClick();
 
     }
+
+    private void initialiseOnClick() {
+        upgrade1LevelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (highScore.setCoinAmount(getApplicationContext()) > Constants.PERK_1_COST && Constants.PERK_1_LVL < Constants.PERK_1_MAX_LVL){
+                    Constants.PLAYER_SIZE -= (Constants.PLAYER_SIZE/100)*2.5;
+                    Constants.PERK_1_COST *= 1.5;
+                    Constants.PERK_1_LVL ++;
+                    upgrade1CostTextView.setText(String.valueOf(Constants.PERK_1_COST));
+                    upgrade1LevelBtn.setText(String.valueOf(Constants.PERK_1_LVL+ "/" + Constants.PERK_1_MAX_LVL));
+                    Log.i(TAG, "onClick: " + Constants.PLAYER_SIZE);
+                }
+
+
+            }
+        });
+
+        upgrade2LevelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (highScore.setCoinAmount(getApplicationContext()) > Constants.PERK_2_COST && Constants.PERK_2_LVL < Constants.PERK_2_MAX_LVL){
+                    Constants.MPS_MULTIPLIER *= 1.1;
+                    Constants.PERK_2_COST *= 1.5;
+                    Constants.PERK_2_LVL ++;
+                    upgrade2CostTextView.setText(String.valueOf(Constants.PERK_2_COST));
+                    upgrade2LevelBtn.setText(String.valueOf(Constants.PERK_2_LVL+ "/" + Constants.PERK_2_MAX_LVL));
+                    Log.i(TAG, "onClick: " + Constants.MPS_MULTIPLIER);
+
+                }
+            }
+        });
+    }
+
+
 }
+    
+
+
+
 

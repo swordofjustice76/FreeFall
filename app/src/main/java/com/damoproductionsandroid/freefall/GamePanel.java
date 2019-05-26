@@ -1,6 +1,5 @@
 package com.damoproductionsandroid.freefall;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -9,15 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.os.SystemClock;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,7 +45,7 @@ MainThread mainThread;
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
-    private HighScore highScoreHandler;
+    private Preferences highScoreHandler;
     private ShopButton shopButton;
     private SoundtrackManager soundtrackManager;
     private ItemSpawner itemSpawner;
@@ -87,7 +82,7 @@ MainThread mainThread;
 
 
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
-        player = new Player(new Rect(100, 100, 250, 250), Color.rgb(216, 0, 0));
+        player = new Player(new Rect(0, 0, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE), Color.rgb(216, 0, 0));
         shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
@@ -97,7 +92,7 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
 
-        highScoreHandler = new HighScore();
+        highScoreHandler = new Preferences();
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
         coins = highScoreHandler.setCoinAmount(getContext());
@@ -259,7 +254,7 @@ MainThread mainThread;
 
             if (itemManager.playerCollectDoubleScoreUpgrade(player)) {
                 soundManager.playPowerUpSound();
-                itemManager.mpsMultiplier *= 2;
+                Constants.MPS_MULTIPLIER *= 2;
                 doubleScoreUpgradeTimer();
             }
         }
@@ -321,7 +316,7 @@ MainThread mainThread;
             @Override
             public void run() {
 
-                itemManager.mpsMultiplier /= 2;
+                Constants.MPS_MULTIPLIER /= 2;
             }
         };
         timer.schedule(powerUpTimerTask, 5000);

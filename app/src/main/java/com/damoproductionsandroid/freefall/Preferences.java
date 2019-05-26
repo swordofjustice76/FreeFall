@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 
-public class HighScore extends Activity {
+public class Preferences extends Activity {
 
     ItemManager itemManager;
     public static final String HIGH_SCORE = "MyPrefsFile";

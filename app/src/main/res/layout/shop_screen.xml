@@ -97,6 +97,8 @@
         android:padding="20sp"
         >
 
+
+
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -127,13 +129,14 @@
                     android:textColor="#fcd904"
                     android:textSize="30dp" />
 
-                <TextView
-                    android:id="@+id/upgrade1_level_txt"
+                <Button
+                    android:id="@+id/upgrade1_level_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
-                    android:text="1/5"
+                    android:text="0/10"
+                    android:background="#1Affffff"
                     android:textColor="#ffffff"
                     android:textSize="30dp" />
 
@@ -147,7 +150,7 @@
                 android:layout_marginTop="20sp"
                 android:layout_weight="25"
                 android:fontFamily="@font/pixel_font"
-                android:text="Makes your player smaller by 1%"
+                android:text="Makes your player smaller by 2.5%"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -155,6 +158,7 @@
 
 
         </TableLayout>
+
 
     </RelativeLayout>
 
@@ -194,18 +198,19 @@
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
-                    android:text="500"
+                    android:text="250"
                     android:textColor="#fcd904"
                     android:textSize="30dp" />
 
-                <TextView
-                    android:id="@+id/upgrade2_level_txt"
+                <Button
+                    android:id="@+id/upgrade2_level_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
-                    android:text="1/10"
+                    android:text="1/5"
                     android:textColor="#ffffff"
+                    android:background="#1Affffff"
                     android:textSize="30dp" />
 
             </TableRow>
@@ -220,6 +225,7 @@
                     android:fontFamily="@font/pixel_font"
                     android:text="Increase score multiplier by 0.5%"
                     android:textColor="#ffffff"
+
                     android:textSize="20dp" />
 
             </TableRow>
@@ -267,13 +273,14 @@
                     android:textColor="#fcd904"
                     android:textSize="30dp" />
 
-                <TextView
-                    android:id="@+id/upgrade3_level_txt"
+                <Button
+                    android:id="@+id/upgrade3_level_btn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
                     android:text="1/3"
+                    android:background="#1Affffff"
                     android:textColor="#ffffff"
                     android:textSize="30dp" />
 

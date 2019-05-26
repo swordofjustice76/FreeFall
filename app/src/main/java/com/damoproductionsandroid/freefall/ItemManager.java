@@ -1,22 +1,13 @@
 package com.damoproductionsandroid.freefall;
 
 
-import android.app.Application;
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.res.ResourcesCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
 
-import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,7 +26,7 @@ public class ItemManager extends ObjectLogic {
 
     public boolean updateScore = false;
 
-    HighScore highScoreActivity;
+    Preferences highScoreActivity;
     private ObjectLogic objectLogic;
 
 
@@ -47,7 +38,7 @@ public class ItemManager extends ObjectLogic {
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
 
-        highScoreActivity = new HighScore();
+        highScoreActivity = new Preferences();
         objectLogic = new ObjectLogic();
 
 
@@ -228,7 +219,7 @@ public class ItemManager extends ObjectLogic {
         startTime = System.currentTimeMillis();
 
         speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
-        mps = (((float) elapsedTime / 50) * speed * (mpsMultiplier));
+        mps = (((float) elapsedTime / 50) * speed * (Constants.MPS_MULTIPLIER));
         metres += (mps);
 
         updateScore = true;
