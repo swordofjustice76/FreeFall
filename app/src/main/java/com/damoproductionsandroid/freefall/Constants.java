@@ -15,9 +15,16 @@ public class Constants {
     public static int PERK_1_COST= 20;
     public static int PERK_1_LVL = 0;
     public static int PERK_1_MAX_LVL = 10;
+    public static double PERK_1_STACK = 0;
 
 
     public static int PERK_2_COST= 150;
     public static int PERK_2_LVL = 0;
     public static int PERK_2_MAX_LVL = 5;
+    public static int PERK_2_STACK = 0;
+
+    public static int PERK_3_COST= 1000;
+    public static int PERK_3_LVL = 0;
+    public static int PERK_3_MAX_LVL = 3;
+    public static int PERK_3_STACK = 0;
 }

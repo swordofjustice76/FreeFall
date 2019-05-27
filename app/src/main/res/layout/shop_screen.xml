@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
 
         android:fontFamily="@font/pixel_font"
-        android:text="Coins: 20"
+        android:text="Coins: --"
         android:textColor="#fcd904"
         android:textSize="25dp" />
 
@@ -113,7 +113,7 @@
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
 
-                    android:text="Smaller Player"
+                    android:text="Shrink Drink"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
@@ -136,7 +136,8 @@
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
                     android:text="0/10"
-                    android:background="#1Affffff"
+                    android:textAlignment="center"
+                    android:background="@drawable/shop_lvl_btn_style"
                     android:textColor="#ffffff"
                     android:textSize="30dp" />
 
@@ -148,9 +149,21 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20sp"
-                android:layout_weight="25"
+                android:layout_weight="75"
                 android:fontFamily="@font/pixel_font"
                 android:text="Makes your player smaller by 2.5%"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/upgrade1_stack_txt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textAlignment="center"
+                android:layout_marginTop="20sp"
+                android:layout_weight="25"
+                android:fontFamily="@font/pixel_font"
+                android:text="Stack: 0%"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -186,7 +199,7 @@
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
 
-                    android:text="Passive Multiplier"
+                    android:text="Compound Interest"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
@@ -208,9 +221,10 @@
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
-                    android:text="1/5"
+                    android:text="0/5"
+                    android:textAlignment="center"
                     android:textColor="#ffffff"
-                    android:background="#1Affffff"
+                    android:background="@drawable/shop_lvl_btn_style"
                     android:textSize="30dp" />
 
             </TableRow>
@@ -221,11 +235,23 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="20sp"
-                    android:layout_weight="25"
+                    android:layout_weight="75"
                     android:fontFamily="@font/pixel_font"
-                    android:text="Increase score multiplier by 0.5%"
+                    android:text="Increase score multiplier by 1%"
                     android:textColor="#ffffff"
 
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/upgrade2_stack_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:layout_marginTop="20sp"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="Stack: 0%"
+                    android:textColor="#ffffff"
                     android:textSize="20dp" />
 
             </TableRow>
@@ -257,7 +283,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
-                    android:text="Death Bonus"
+                    android:text="Death Insurance"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
@@ -279,8 +305,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:fontFamily="@font/pixel_font"
-                    android:text="1/3"
-                    android:background="#1Affffff"
+                    android:text="0/3"
+                    android:background="@drawable/shop_lvl_btn_style"
                     android:textColor="#ffffff"
                     android:textSize="30dp" />
 
@@ -292,9 +318,21 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="20sp"
-                    android:layout_weight="25"
+                    android:layout_weight="75"
                     android:fontFamily="@font/pixel_font"
                     android:text="After you die, + 10 Coins"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/upgrade3_stack_txt"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:textAlignment="center"
+                    android:layout_marginTop="20sp"
+                    android:layout_weight="25"
+                    android:fontFamily="@font/pixel_font"
+                    android:text="Stack: 0%"
                     android:textColor="#ffffff"
                     android:textSize="20dp" />
 
