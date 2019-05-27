@@ -224,7 +224,7 @@ public class Shop extends Activity {
         upgrade3LevelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (highScore.setCoinAmount(getApplicationContext()) > Constants.PERK_3_COST && Constants.PERK_3_LVL < Constants.PERK_3_MAX_LVL) {
+                if (highScore.setCoinAmount(getApplicationContext()) > 111 && Constants.PERK_3_LVL < Constants.PERK_3_MAX_LVL) {
                     Constants.PERK_3_COST *= 1.5;
                     String formattedCost = format(Constants.PERK_3_COST);
                     Constants.PERK_3_LVL++;

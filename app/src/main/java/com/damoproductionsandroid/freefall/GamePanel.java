@@ -112,9 +112,11 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
         itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
-        //highScoreHandler.getCoinAmount(getContext(), coins);
-        soundManager.playSoundTrack();
+        highScoreHandler.setCoinAmount(getContext());
+
+        //soundManager.playSoundTrack();
         movingPlayer = false;
+
     }
 
     @Override
@@ -211,12 +213,16 @@ MainThread mainThread;
 
             //metres++;
             if (obstacleManager.playerCollide(player)) {
+                Log.i(TAG, "update: " + coins);
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
                 soundManager.playGameOver();
                 highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
-                soundtrackManager.mediaPlayer.stop();
-                soundtrackManager.mediaPlayer.release();
+                //soundtrackManager.mediaPlayer.stop();
+                //soundtrackManager.mediaPlayer.release();
+
+                coins += Constants.PERK_3_STACK;
+                Log.i(TAG, "update: " + coins);
             }
 
             if (itemManager.playerCollect(player)) {
@@ -337,6 +343,7 @@ MainThread mainThread;
 
 
         if (gameOver) {
+
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.GRAY);

@@ -27,4 +27,5 @@ public class Constants {
     public static int PERK_3_LVL = 0;
     public static int PERK_3_MAX_LVL = 3;
     public static int PERK_3_STACK = 0;
+
 }

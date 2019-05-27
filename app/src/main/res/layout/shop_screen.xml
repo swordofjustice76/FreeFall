@@ -90,7 +90,7 @@
     <RelativeLayout
         android:id="@+id/upgradebox1_txt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_below="@+id/column_desc"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
@@ -112,8 +112,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
-
-                    android:text="Shrink Drink"
+                    android:textAlignment="viewStart"
+                    android:text="@string/perk_1"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
@@ -178,7 +178,7 @@
     <RelativeLayout
         android:id="@+id/upgradebox2_txt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_below="@+id/upgradebox1_txt"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
@@ -198,8 +198,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
-
-                    android:text="Compound Interest"
+                    android:textAlignment="viewStart"
+                    android:text="@string/perk_2"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
@@ -263,7 +263,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_below="@+id/upgradebox2_txt"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
@@ -283,7 +283,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="50"
                     android:fontFamily="@font/pixel_font"
-                    android:text="Death Insurance"
+                    android:textAlignment="viewStart"
+                    android:text="@string/perk_3"
                     android:textColor="#ffff"
                     android:textSize="30dp"
 
