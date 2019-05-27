@@ -86,12 +86,28 @@
 
     </TableLayout>
 
+    <ScrollView
+        android:layout_below="@+id/column_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        >
+
+    <RelativeLayout
+        android:layout_below="@+id/column_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       >
+
+
+
+
 
     <RelativeLayout
         android:id="@+id/upgradebox1_txt"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@+id/column_desc"
+        android:layout_height="175dp"
+
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
         android:padding="20sp"
@@ -178,7 +194,7 @@
     <RelativeLayout
         android:id="@+id/upgradebox2_txt"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="175dp"
         android:layout_below="@+id/upgradebox1_txt"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
@@ -262,8 +278,9 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/upgradebox3_txt"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="175dp"
         android:layout_below="@+id/upgradebox2_txt"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
@@ -342,5 +359,187 @@
         </TableLayout>
 
     </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/upgradebox4_txt"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:layout_below="@+id/upgradebox3_txt"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/upgrade_style"
+            android:padding="20sp"
+            >
+
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="100">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/upgrade4_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:fontFamily="@font/pixel_font"
+                        android:textAlignment="viewStart"
+                        android:text="@string/perk_4"
+                        android:textColor="#ffff"
+                        android:textSize="30dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/upgrade4_cost_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="2.5k"
+                        android:textColor="#fcd904"
+                        android:textSize="30dp" />
+
+                    <Button
+                        android:id="@+id/upgrade4_level_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="0/5"
+                        android:textAlignment="center"
+                        android:background="@drawable/shop_lvl_btn_style"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/upgrade4_desc_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="75"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="After you die, get 1% of your total coins credited to your account"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/upgrade4_stack_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="Stack: 0%"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/upgradebox5_txt"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:layout_below="@+id/upgradebox4_txt"
+
+            android:layout_marginTop="20sp"
+            android:background="@drawable/upgrade_style"
+            android:padding="20sp"
+            >
+
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="100">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/upgrade5_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:fontFamily="@font/pixel_font"
+                        android:textAlignment="viewStart"
+                        android:text="@string/perk_5"
+                        android:textColor="#ffff"
+                        android:textSize="30dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/upgrade5_cost_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="10k"
+                        android:textColor="#fcd904"
+                        android:textSize="30dp" />
+
+                    <Button
+                        android:id="@+id/upgrade5_level_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="0/4"
+                        android:textAlignment="center"
+                        android:background="@drawable/shop_lvl_btn_style"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/upgrade5_desc_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="75"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="Jack open to obstacles to create a bigger gap, make the gap 2.5% wider"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/upgrade5_stack_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="Stack: 0%"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+</ScrollView>
 
 </RelativeLayout>

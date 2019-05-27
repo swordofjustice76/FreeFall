@@ -28,4 +28,13 @@ public class Constants {
     public static int PERK_3_MAX_LVL = 3;
     public static int PERK_3_STACK = 0;
 
+    public static int PERK_4_COST= 2500;
+    public static int PERK_4_LVL = 0;
+    public static int PERK_4_MAX_LVL = 5;
+    public static int PERK_4_STACK = 0;
+
+    public static int PERK_5_COST= 10000;
+    public static int PERK_5_LVL = 0;
+    public static int PERK_5_MAX_LVL = 4;
+    public static double PERK_5_STACK = 0;
 }

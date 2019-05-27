@@ -18,6 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+import javax.crypto.Cipher;
 
 import static android.content.ContentValues.TAG;
 
@@ -89,8 +90,8 @@ MainThread mainThread;
         player.update(playerPoint);
         shopButton.update(shopButtonPoint);
 
-        obstacleManager = new ObstacleManager(325, 400, 75, Color.WHITE);
-        itemManager = new ItemManager(400, 325, 75, Color.YELLOW);
+        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
+        itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
 
         highScoreHandler = new Preferences();
         highScoreHandler.setHighScore(getContext());
@@ -109,8 +110,8 @@ MainThread mainThread;
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, 400, 75, Color.WHITE);
-        itemManager = new ItemManager(400, Constants.PLAYER_GAP, 75, Color.YELLOW);
+        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
+        itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
 
@@ -222,6 +223,7 @@ MainThread mainThread;
                 //soundtrackManager.mediaPlayer.release();
 
                 coins += Constants.PERK_3_STACK;
+                coins += (coins/100)* Constants.PERK_4_LVL;
                 Log.i(TAG, "update: " + coins);
             }
 

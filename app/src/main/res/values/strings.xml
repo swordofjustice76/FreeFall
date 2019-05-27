@@ -3,8 +3,12 @@
 
     <string name="perk_1">"Shrink
 Drink"</string>
-    <string name="perk_2">"Compound
-Interest"</string>
+    <string name="perk_2">"Gotta Go
+Fast"</string>
     <string name="perk_3">"Death
 Insurance"</string>
+    <string name="perk_4">"Compound
+Interest"</string>
+    <string name="perk_5">"Big
+Jack"</string>
 </resources>
