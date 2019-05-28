@@ -62,10 +62,12 @@ public class ItemManager extends ObjectLogic {
         currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight / 2);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-            coins.add(new Coin(obstacleHeight, colour, xStart, currY));
+            coins.add( new Coin(obstacleHeight, colour, xStart, currY));
+
             currY += obstacleHeight + obstacleGap;
             Log.i(TAG, "populateCoins: " + currY);
         }
+
 
     }
 
@@ -130,8 +132,11 @@ public class ItemManager extends ObjectLogic {
         for (Coin coin : coins) {
 
             if (coin.playerCollect(player)) {
+               //spawnNewCoin();
+                int yStart = getSpawnPoint();
                 int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-                coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - 475 - 7));
+                coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top- Constants.OBSTACLE_GAP - Constants.OBSTACLE_HEIGHT));// - (Constants.OBSTACLE_HEIGHT/10)));
+
                 coins.remove(coin);
             }
             if (coin.playerCollect(player))
@@ -284,9 +289,10 @@ public class ItemManager extends ObjectLogic {
     public void spawnNewCoin() {
 
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - 475 - 7));
+        int yStart = getSpawnPoint();
+        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - Constants.OBSTACLE_GAP - Constants.OBSTACLE_HEIGHT));// - (Constants.OBSTACLE_HEIGHT/10)));
         coins.remove(coins.size() - 1);
-
+        //Log.i(TAG, "update: " + obstacles.get(0).getRectangle().top);
 
     }
 
