@@ -1,13 +1,17 @@
 package com.damoproductionsandroid.freefall;
 
+import android.app.Activity;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.support.v7.app.AppCompatActivity;
 
-public class ShopButton implements GameObject{
+public class ShopButton implements GameObject {
     private Rect rectangle;
     private int colour;
+
 
     public Rect getRectangle(){
         return rectangle;
@@ -21,8 +25,8 @@ public class ShopButton implements GameObject{
     @Override
     public void draw(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(colour);
-        paint.setAlpha(0);
+        paint.setColor(Color.WHITE);
+        paint.setAlpha(20);
         canvas.drawRect(rectangle, paint);
     }
 
@@ -32,10 +36,18 @@ public class ShopButton implements GameObject{
     }
 
     public void update(Point point) {
-        rectangle.set(point.x - rectangle.width()/2,
-                point.y - rectangle.height()/2,
-                point.x + rectangle.width()/2,
-                point.y + rectangle.height()/2);
+        int x = (Constants.SCREEN_WIDTH / 2) - (288 / 2);
+        int y = 6 * Constants.SCREEN_HEIGHT / 9;
+
+        rectangle.set(x - 40,
+                y - (65 + 40),
+                x + (288 + 40),
+                y + 40);
+
+       // 288 65
+
+
+        //canvas.drawRect(, shopButtonPoint.y - (float)(shopText.height() + 40), , y + 40, myPaint);
     }
 
 

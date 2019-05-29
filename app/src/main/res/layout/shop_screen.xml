@@ -168,6 +168,7 @@
                 android:layout_weight="75"
                 android:fontFamily="@font/pixel_font"
                 android:text="Makes your player smaller by 2.5%"
+                android:paddingRight="10dp"
                 android:textColor="#ffffff"
                 android:textSize="20dp" />
 
@@ -191,11 +192,100 @@
 
     </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/upgradebox6_txt"
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+             android:layout_below="@+id/upgradebox1_txt"
+            android:layout_marginTop="20sp"
+            android:background="@drawable/upgrade_style"
+            android:padding="20sp"
+            >
+
+
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="100">
+
+                <TableRow>
+
+                    <TextView
+                        android:id="@+id/upgrade6_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="50"
+                        android:fontFamily="@font/pixel_font"
+                        android:textAlignment="viewStart"
+                        android:text="@string/perk_6"
+                        android:textColor="#ffff"
+                        android:textSize="30dp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/upgrade6_cost_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="100"
+                        android:textColor="#fcd904"
+                        android:textSize="30dp" />
+
+                    <Button
+                        android:id="@+id/upgrade6_level_btn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="0/5"
+                        android:textAlignment="center"
+                        android:background="@drawable/shop_lvl_btn_style"
+                        android:textColor="#ffffff"
+                        android:textSize="30dp" />
+
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/upgrade6_desc_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="75"
+                        android:fontFamily="@font/pixel_font"
+                        android:paddingRight="10dp"
+                        android:text="Every coin you pick up is worth +1 more"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/upgrade6_stack_txt"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAlignment="center"
+                        android:layout_marginTop="20sp"
+                        android:layout_weight="25"
+                        android:fontFamily="@font/pixel_font"
+                        android:text="Stack: +0"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp" />
+
+                </TableRow>
+
+
+            </TableLayout>
+
+
+        </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/upgradebox2_txt"
         android:layout_width="match_parent"
         android:layout_height="175dp"
-        android:layout_below="@+id/upgradebox1_txt"
+        android:layout_below="@+id/upgradebox6_txt"
         android:layout_marginTop="20sp"
         android:background="@drawable/upgrade_style"
         android:padding="20sp"
@@ -255,7 +345,7 @@
                     android:fontFamily="@font/pixel_font"
                     android:text="Increase score multiplier by 1%"
                     android:textColor="#ffffff"
-
+                    android:paddingRight="10dp"
                     android:textSize="20dp" />
 
                 <TextView
@@ -339,6 +429,7 @@
                     android:layout_weight="75"
                     android:fontFamily="@font/pixel_font"
                     android:text="After you die, + 10 Coins"
+                    android:paddingRight="10dp"
                     android:textColor="#ffffff"
                     android:textSize="20dp" />
 
@@ -426,6 +517,7 @@
                         android:fontFamily="@font/pixel_font"
                         android:text="After you die, get 1% of your total coins credited to your account"
                         android:textColor="#ffffff"
+                        android:paddingRight="10dp"
                         android:textSize="20dp" />
 
                     <TextView
@@ -515,6 +607,7 @@
                         android:fontFamily="@font/pixel_font"
                         android:text="Jack open to obstacles to create a bigger gap, make the gap 2.5% wider"
                         android:textColor="#ffffff"
+                        android:paddingRight="10dp"
                         android:textSize="20dp" />
 
                     <TextView

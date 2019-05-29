@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
@@ -60,7 +61,7 @@ MainThread mainThread;
 
     private boolean coinSave = false;
     public int coins;
-    private int collectAmount = 1;
+
 
     private Canvas canvas;
 
@@ -97,6 +98,7 @@ MainThread mainThread;
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
         coins = highScoreHandler.setCoinAmount(getContext());
+
 
 
 
@@ -205,6 +207,7 @@ MainThread mainThread;
             playing = true;
             soundtrackManager.mediaPlayer.start();
 
+
         }
 
         if (!gameOver) {
@@ -230,7 +233,7 @@ MainThread mainThread;
 
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
-                coins += collectAmount;
+                coins += Constants.COLLECT_AMOUNT;
                 highScoreHandler.getCoinAmount(getContext(), coins);
                 highScoreHandler.setCoinAmount(getContext());
                 coinSave = true;
@@ -257,7 +260,7 @@ MainThread mainThread;
 
             if (itemManager.playerCollectDoubleCoinsUpgrade(player)) {
                 soundManager.playPowerUpSound();
-                collectAmount *= 2;
+                Constants.COLLECT_AMOUNT *= 2;
                 doubleCoinsUpgradeTimer();
             }
 
@@ -313,7 +316,7 @@ MainThread mainThread;
             @Override
             public void run() {
 
-                collectAmount /= 2;
+                Constants.COLLECT_AMOUNT /= 2;
             }
         };
         timer.schedule(powerUpTimerTask, 10000);
@@ -356,6 +359,7 @@ MainThread mainThread;
             paint2.setTextSize(150);
             paint2.setColor(Color.GRAY);
             paint2.setTypeface(typeface);
+
 
             drawGameOverText(canvas, paint, "Game Over");
             drawShopText(canvas, paint2, "SHOP");
@@ -436,10 +440,14 @@ MainThread mainThread;
         canvas.getClipBounds(shopText);
         paint.setTextSize(150);
         paint.getTextBounds(text, 0, text.length(), shopText);
-        int x = (Constants.SCREEN_WIDTH / 2) -
-                (shopText.width() / 2);
+        int x = (Constants.SCREEN_WIDTH / 2) - (shopText.width() / 2);
         int y = 6 * Constants.SCREEN_HEIGHT / 9;
+
         canvas.drawText(text, x, y, paint);
+
+
+
+
     }
 
 }
