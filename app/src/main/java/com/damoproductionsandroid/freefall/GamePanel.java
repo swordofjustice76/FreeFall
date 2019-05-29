@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
@@ -30,6 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Rect coinsText = new Rect();
     public Rect metersText = new Rect();
     public Rect shopText = new Rect();
+    public Rect retryText = new Rect();
 
     public Rect highScore = new Rect();
 
@@ -49,6 +51,7 @@ MainThread mainThread;
     private SoundManager soundManager;
     private Preferences highScoreHandler;
     private ShopButton shopButton;
+    private RetryButton retryButton;
     private SoundtrackManager soundtrackManager;
     private ItemSpawner itemSpawner;
     private ObjectLogic gravity;
@@ -85,11 +88,13 @@ MainThread mainThread;
 
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(0, 0, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE), Color.rgb(216, 0, 0));
-        shopButton = new ShopButton(new Rect(0, 0, 450, 150), Color.BLACK);
+        shopButton = new ShopButton(new RectF(0, 0, 450, 150), Color.BLACK);
+        retryButton = new RetryButton(new RectF(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
-        shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
+        //shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
         player.update(playerPoint);
-        shopButton.update(shopButtonPoint);
+        shopButton.update();
+        retryButton.update();
 
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
         itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
@@ -167,13 +172,6 @@ MainThread mainThread;
                 if (!gameOver)
                     movingPlayer = true;
 
-                if (gameOver && System.currentTimeMillis() - gameOverTime >= 2000) {
-
-                    reset();
-                    gameOver = false;
-
-                }
-
                 if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
 
                   //  thread.setRunning(false);
@@ -182,6 +180,14 @@ MainThread mainThread;
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
                     Log.i(TAG, "onTouchEvent: " + coins);
+                }
+
+                if (gameOver && retryButton.getRectangle().contains(touchX, touchY)) {
+
+                    //  thread.setRunning(false);
+
+                   reset();
+                    gameOver = false;
                 }
 
                 break;
@@ -351,7 +357,7 @@ MainThread mainThread;
         if (gameOver) {
 
             Paint paint = new Paint();
-            paint.setTextSize(100);
+            paint.setTextSize(150);
             paint.setColor(Color.GRAY);
             paint.setTypeface(typeface);
 
@@ -360,10 +366,18 @@ MainThread mainThread;
             paint2.setColor(Color.GRAY);
             paint2.setTypeface(typeface);
 
+            Paint paint3 = new Paint();
+            paint3.setTextSize(75);
+            paint3.setColor(Color.GRAY);
+            paint3.setTypeface(typeface);
+
 
             drawGameOverText(canvas, paint, "Game Over");
             drawShopText(canvas, paint2, "SHOP");
+            drawRetryText(canvas, paint2, "RETRY");
             shopButton.draw(canvas);
+            retryButton.draw(canvas);
+
 
 
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
@@ -371,9 +385,9 @@ MainThread mainThread;
 
             if (itemManager.getHighScore() < highScoreHandler.highscore) {
                 String highScore = String.valueOf(highScoreHandler.highscore);
-                drawHighScoreText(canvas, paint, "Highscore: " + highScore);
+                drawHighScoreText(canvas, paint3, "Highscore: " + highScore);
             } else {
-                drawHighScoreText(canvas, paint, "Highscore: " + itemManager.getHighScore());
+                drawHighScoreText(canvas, paint3, "Highscore: " + itemManager.getHighScore());
             }
 
 
@@ -400,27 +414,42 @@ MainThread mainThread;
         }
     }
 
+    private void drawRetryText(Canvas canvas, Paint paint2, String text) {
+        paint2.setTextAlign(Paint.Align.LEFT);
+        canvas.getClipBounds(retryText);
+        paint2.setTextSize(150);
+        paint2.getTextBounds(text, 0, text.length(), retryText);
+        int x = (Constants.SCREEN_WIDTH / 2) - (retryText.width() / 2);
+        int y = 6 * Constants.SCREEN_HEIGHT / 9 -200;
+
+        Log.d(TAG, "drawRetryText: '" + retryText.width() + retryText.height());
+        canvas.drawText(text, x, y, paint2);
+
+
+
+    }
+
     private void drawGameOverText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(r);
-        paint.setTextSize(100);
+
         int cHeight = r.height();
         int cWidth = r.width();
         paint.getTextBounds(text, 0, text.length(), r);
         float x = cWidth / 2f - r.width() / 2f - r.left;
-        float y = cHeight / 2f + r.height() / 2f - r.bottom;
+        int y = Constants.SCREEN_HEIGHT/3;//cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
 
     public void drawHighScoreText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
-        paint.setTextSize(70);
+
         canvas.getClipBounds(highScore);
         int cHeight = highScore.height();
         int cWidth = highScore.width();
         paint.getTextBounds(text, 0, text.length(), highScore);
         float x = cWidth / 2f - highScore.width() / 2f - highScore.left;
-        float y = cHeight / 2f + highScore.height() / 2f - highScore.bottom + r.height() + 50;
+        int y = 3*Constants.SCREEN_HEIGHT/7;
         canvas.drawText(text, x, y, paint);
     }
 

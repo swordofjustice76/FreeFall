@@ -6,18 +6,19 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
 
 public class ShopButton implements GameObject {
-    private Rect rectangle;
+    private RectF rectangle;
     private int colour;
 
 
-    public Rect getRectangle(){
+    public RectF getRectangle(){
         return rectangle;
     }
 
-    public ShopButton(Rect rectangle, int colour){
+    public ShopButton(RectF rectangle, int colour){
         this.rectangle = rectangle;
         this.colour = colour;
     }
@@ -27,15 +28,12 @@ public class ShopButton implements GameObject {
         Paint paint = new Paint();
         paint.setColor(Color.WHITE);
         paint.setAlpha(20);
-        canvas.drawRect(rectangle, paint);
+        canvas.drawRoundRect(rectangle, 10, 10, paint);
     }
 
-    @Override
+
+
     public void update() {
-
-    }
-
-    public void update(Point point) {
         int x = (Constants.SCREEN_WIDTH / 2) - (288 / 2);
         int y = 6 * Constants.SCREEN_HEIGHT / 9;
 
