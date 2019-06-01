@@ -53,6 +53,7 @@ MainThread mainThread;
     private ShopButton shopButton;
     private RetryButton retryButton;
     private SoundtrackManager soundtrackManager;
+
     private ItemSpawner itemSpawner;
     private ObjectLogic gravity;
     private BigGapUpgrade bigGapUpgrade;
@@ -80,9 +81,11 @@ MainThread mainThread;
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
+        Constants.CURRENT_CONTEXT = context;
+
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
-        soundtrackManager = new SoundtrackManager(context);
+        //soundtrackManager = new SoundtrackManager(context);
 
 
 
@@ -92,6 +95,8 @@ MainThread mainThread;
         retryButton = new RetryButton(new RectF(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         //shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
+        //bM = new bm(getContext());
+
         player.update(playerPoint);
         shopButton.update();
         retryButton.update();
@@ -179,7 +184,6 @@ MainThread mainThread;
                     surfaceDestroyed(getHolder());
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
-                    Log.i(TAG, "onTouchEvent: " + coins);
                 }
 
                 if (gameOver && retryButton.getRectangle().contains(touchX, touchY)) {
@@ -224,7 +228,6 @@ MainThread mainThread;
 
             //metres++;
             if (obstacleManager.playerCollide(player)) {
-                Log.i(TAG, "update: " + coins);
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
                 soundManager.playGameOver();
@@ -234,7 +237,7 @@ MainThread mainThread;
 
                 coins += Constants.PERK_3_STACK;
                 coins += (coins/100)* Constants.PERK_4_LVL;
-                Log.i(TAG, "update: " + coins);
+
             }
 
             if (itemManager.playerCollect(player)) {
@@ -377,6 +380,7 @@ MainThread mainThread;
             drawRetryText(canvas, paint2, "RETRY");
             shopButton.draw(canvas);
             retryButton.draw(canvas);
+            //bM.draw(canvas);
 
 
 
@@ -422,7 +426,6 @@ MainThread mainThread;
         int x = (Constants.SCREEN_WIDTH / 2) - (retryText.width() / 2);
         int y = 6 * Constants.SCREEN_HEIGHT / 9 -200;
 
-        Log.d(TAG, "drawRetryText: '" + retryText.width() + retryText.height());
         canvas.drawText(text, x, y, paint2);
 
 

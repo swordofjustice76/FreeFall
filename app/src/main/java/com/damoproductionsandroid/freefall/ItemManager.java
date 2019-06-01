@@ -1,6 +1,7 @@
 package com.damoproductionsandroid.freefall;
 
 
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -333,6 +334,7 @@ public class ItemManager extends ObjectLogic {
 
         for (Coin coin : coins)
             coin.draw(canvas);
+
 
         for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades)
             bigGapUpgrade.draw(canvas);
