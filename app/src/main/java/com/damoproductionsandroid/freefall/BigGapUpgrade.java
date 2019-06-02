@@ -1,5 +1,7 @@
 package com.damoproductionsandroid.freefall;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,7 +11,8 @@ public class BigGapUpgrade implements GameObject {
 
     private Rect rectangle;
     private int colour;
-    ObjectLogic gravity;
+    public Upgrade1Animation animation;
+    private AnimationManager animManager;
 
 
 
@@ -25,6 +28,13 @@ public class BigGapUpgrade implements GameObject {
 
         this.colour = colour;
         rectangle = new Rect(startX, startY, startX + rectHeight, startY + rectHeight);
+
+        BitmapFactory bf = new BitmapFactory();
+        Bitmap frame1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.upgrade_frame_1);
+
+        animation = new Upgrade1Animation(new Bitmap[]{frame1}, 0.2f);
+
+        animManager = new AnimationManager(new CoinAnimation[]{}, new Upgrade1Animation[]{animation});
     }
 
    public boolean playerCollectUpgrade(Player player){
@@ -38,18 +48,19 @@ public class BigGapUpgrade implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-        Paint paint = new Paint();
-        paint.setColor(Color.BLUE);
-        canvas.drawRect(rectangle, paint);
+       // Paint paint = new Paint();
+       // paint.setColor(Color.BLUE);
+        //canvas.drawRect(rectangle, paint);
+       animManager.draw(canvas, rectangle);
 
     }
 
 
-
-
     @Override
     public void update() {
-
+       int state = 1;
+       animManager.playAnim(state);
+       animManager.update();
     }
 
     public void setPlayerGap(int playerGap) {

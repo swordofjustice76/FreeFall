@@ -16,6 +16,7 @@ public class Coin implements GameObject {
     private int colour;
      private CoinAnimation animation;
      private AnimationManager animManager;
+     //private BigGapUpgrade bigGapUpgrade;
 
 
      public Rect getRectangle() {
@@ -38,9 +39,9 @@ public class Coin implements GameObject {
         Bitmap frame8 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.coin_frame_8);
 
 
-        animation = new CoinAnimation(new Bitmap[]{frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8}, 2f);
+        animation = new CoinAnimation(new Bitmap[]{frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{animation});
+        animManager = new AnimationManager(new CoinAnimation[]{animation}, new Upgrade1Animation[]{});
 
     }
 
@@ -61,16 +62,15 @@ public class Coin implements GameObject {
        // Paint paint = new Paint();
        // paint.setColor(colour);
        // canvas.drawRect(rectangle, paint);
-        animManager.draw(canvas, rectangle);
+        animManager.draw2(canvas, rectangle);
     }
 
 
     @Override
     public void update() {
 
-         int state = 0;
+         int state = 1;
         animManager.playAnim(state);
         animManager.update();
-
     }
 }

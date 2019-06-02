@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 
 import static android.content.ContentValues.TAG;
 
-public class CoinAnimation extends Animation {
+public class Upgrade1Animation extends Animation {
     private Bitmap[] frames;
     private int frameIndex;
 
@@ -34,7 +34,7 @@ public class CoinAnimation extends Animation {
 
     private long lastFrame;
 
-    public CoinAnimation(Bitmap[] frames, float animTime) {
+    public Upgrade1Animation(Bitmap[] frames, float animTime) {
         this.frames = frames;
         frameIndex = 0;
 
@@ -59,14 +59,13 @@ public class CoinAnimation extends Animation {
         if (rect.top > rect.height())
             rect.left = rect.right - (int) (rect.height() * (whRatio));
         else
-        rect.top = rect.bottom - (int) (rect.width() * (1/whRatio));
+            rect.top = rect.bottom - (int) (rect.width() * (1/whRatio));
     }
 
     public void update() {
         if (!isPlaying) {
             return;
         }
-
 
         if (System.currentTimeMillis() - lastFrame > frameTime * 1000) {
             frameIndex++;
