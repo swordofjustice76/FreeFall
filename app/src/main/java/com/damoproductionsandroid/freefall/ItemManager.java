@@ -1,30 +1,34 @@
 package com.damoproductionsandroid.freefall;
 
 
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ItemManager extends ObjectLogic {
 
     private long startTime;
     private long initTime;
-
+    private int elapsedTime;
     private int highScore;
+    public int currY;
 
     private Rect metersText = new Rect();
 
     public boolean updateScore = false;
 
-
-    HighScore highScoreActivity;
-
+    Preferences highScoreActivity;
+    private ObjectLogic objectLogic;
 
 
 
@@ -35,8 +39,8 @@ public class ItemManager extends ObjectLogic {
         this.obstacleHeight = obstacleHeight;
         this.colour = colour;
 
-        highScoreActivity = new HighScore();
-
+        highScoreActivity = new Preferences();
+        objectLogic = new ObjectLogic();
 
 
         startTime = initTime = System.currentTimeMillis();
@@ -47,6 +51,8 @@ public class ItemManager extends ObjectLogic {
 
         //populateObstacleDistanceUpgrade();
         populateShrinkPlayerUpgrade();
+        populateDoubleCoinsUpgrade();
+        populateDoubleScoreUpgrade();
 
 
     }
@@ -54,13 +60,16 @@ public class ItemManager extends ObjectLogic {
 
     private void populateCoins() {
 
-        int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap/2) + (obstacleHeight/2);
+        currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight);
         while (currY < 0) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-            coins.add(new Coin(obstacleHeight, colour, xStart, currY));
+            coins.add( new Coin(obstacleHeight, colour, xStart, currY));
+
             currY += obstacleHeight + obstacleGap;
+            Log.i(TAG, "populateCoins: " + currY);
         }
-        
+
+
     }
 
     private void populateBigGapUpgrade() {
@@ -68,10 +77,10 @@ public class ItemManager extends ObjectLogic {
         TimerTask spawnTimerTask = new TimerTask() {
             @Override
             public void run() {
-               spawnGapUpgrade();
+                spawnGapUpgrade();
             }
         };
-        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 15000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 3000, 15000);
     }
 
     private void populateObstacleDistanceUpgrade() {
@@ -93,17 +102,44 @@ public class ItemManager extends ObjectLogic {
                 spawnShrinkPayerUpgrade();
             }
         };
-        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 5000, 20000);
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 7500, 20000);
+    }
+
+    private void populateDoubleCoinsUpgrade() {
+        Timer spawnTimer = new Timer();
+        TimerTask spawnTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                spawnDoubleCoinsUpgrade();
+            }
+        };
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 10000, 25000);
+    }
+
+    private void populateDoubleScoreUpgrade() {
+        Timer spawnTimer = new Timer();
+        TimerTask spawnTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                spawnDoubleScoreUpgrade();
+            }
+        };
+        spawnTimer.scheduleAtFixedRate(spawnTimerTask, 12500, 20000);
     }
 
 
     public boolean playerCollect(Player player) {
+
         for (Coin coin : coins) {
 
             if (coin.playerCollect(player)) {
-                int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-                coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
-                coins.remove(coin);
+
+                spawnNewCoin();
+               // int yStart = getSpawnPoint();
+                //int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+                //coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top- Constants.OBSTACLE_GAP - Constants.OBSTACLE_HEIGHT));// - (Constants.OBSTACLE_HEIGHT/10)));
+
+                //
             }
             if (coin.playerCollect(player))
 
@@ -155,14 +191,43 @@ public class ItemManager extends ObjectLogic {
         return false;
     }
 
+    public boolean playerCollectDoubleCoinsUpgrade(Player player) {
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades) {
+
+            if (doubleCoinsUpgrade.playerCollectUpgrade(player)) {
+                doubleCoinsUpgrades.remove(doubleCoinsUpgrade);
+
+            }
+            if (doubleCoinsUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        }
+        return false;
+    }
+
+    public boolean playerCollectDoubleScoreUpgrade(Player player) {
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades) {
+
+            if (doubleScoreUpgrade.playerCollectUpgrade(player)) {
+                doubleScoreUpgrades.remove(doubleScoreUpgrade);
+
+            }
+            if (doubleScoreUpgrade.playerCollectUpgrade(player))
+
+                return true;
+        }
+        return false;
+    }
+
 
     public void update() {
 
-        int elapsedTime = (int) (System.currentTimeMillis() - startTime);
+        elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
-        float speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
-        metres += (((float) elapsedTime / 50) * speed);
+        speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
+        mps = (((float) elapsedTime / 50) * speed * (Constants.MPS_MULTIPLIER));
+        metres += (mps);
 
         updateScore = true;
 
@@ -170,9 +235,8 @@ public class ItemManager extends ObjectLogic {
         for (Coin coin : coins) {
             coin.incrementY(speed * elapsedTime);
 
-            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT)
-            {
-               spawnNewCoin();
+            if (coins.get(coins.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+                spawnNewCoin();
             }
         }
 
@@ -203,14 +267,35 @@ public class ItemManager extends ObjectLogic {
             }
         }
 
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades) {
+            doubleCoinsUpgrade.incrementY(speed * elapsedTime);
+
+            if (doubleCoinsUpgrades.get(doubleCoinsUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+
+                doubleCoinsUpgrades.remove(doubleCoinsUpgrades.size() - 1);
+            }
+        }
+
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades) {
+            doubleScoreUpgrade.incrementY(speed * elapsedTime);
+
+            if (doubleScoreUpgrades.get(doubleScoreUpgrades.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
+
+                doubleScoreUpgrades.remove(doubleScoreUpgrades.size() - 1);
+            }
+        }
+
     }
 
 
     public void spawnNewCoin() {
 
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleGap - obstacleHeight));
+        int yStart = getSpawnPoint();
+        coins.add(0, new Coin(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - Constants.OBSTACLE_GAP + Constants.OBSTACLE_HEIGHT));
         coins.remove(coins.size() - 1);
+        //Log.i(TAG, "update: " + obstacles.get(0).getRectangle().top);
+
     }
 
 
@@ -233,10 +318,23 @@ public class ItemManager extends ObjectLogic {
         shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
     }
 
+    private void spawnDoubleCoinsUpgrade() {
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+
+    }
+
+    private void spawnDoubleScoreUpgrade() {
+        int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
+        doubleScoreUpgrades.add(new DoubleScoreUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+    }
 
     public void draw(Canvas canvas) {
+
+
         for (Coin coin : coins)
             coin.draw(canvas);
+
 
         for (BigGapUpgrade bigGapUpgrade : bigGapUpgrades)
             bigGapUpgrade.draw(canvas);
@@ -247,19 +345,28 @@ public class ItemManager extends ObjectLogic {
         for (ShrinkPlayerUpgrade shrinkPlayerUpgrade : shrinkPlayerUpgrades)
             shrinkPlayerUpgrade.draw(canvas);
 
+
+        for (DoubleCoinsUpgrade doubleCoinsUpgrade : doubleCoinsUpgrades)
+            doubleCoinsUpgrade.draw(canvas);
+
+        for (DoubleScoreUpgrade doubleScoreUpgrade : doubleScoreUpgrades)
+            doubleScoreUpgrade.draw(canvas);
+
         if (updateScore) {
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
-            drawMetersText(canvas, paint, (int) metres + "m");
-            setHighScore((int) metres);
 
+            drawMetersText(canvas, paint, String.valueOf((int) metres));
+            setHighScore((int) metres);
         }
 
     }
 
     public void drawMetersText(Canvas canvas, Paint paint, String text) {
+
         paint.setTextAlign(Paint.Align.LEFT);
+
         canvas.getClipBounds(metersText);
         paint.getTextBounds(text, 0, text.length(), metersText);
         float x = ((float) Constants.SCREEN_WIDTH / 2) - ((float) metersText.width() / 2);// - metersText.width() - 50;

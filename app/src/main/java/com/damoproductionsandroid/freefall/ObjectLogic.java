@@ -1,17 +1,29 @@
 package com.damoproductionsandroid.freefall;
 
 
+import android.app.Activity;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import java.util.ArrayList;
 
 
 
-public class ObjectLogic {
+public class ObjectLogic extends AppCompatActivity {
 
+    private static final String TAG = "";
     public float speed;
+    public float speedBuffer;
+
+    public int spawnPoint = -250;
 
     public long initTime;
     public long startTime;
     public float metres;
+    public float mps;
+    public int mpsMultiplier = 1;
 
     public static int SPAWN_REFERENCE_POINT;
 
@@ -21,6 +33,8 @@ public class ObjectLogic {
     public ArrayList<BigGapUpgrade> bigGapUpgrades;
     public ArrayList<ObstacleDistanceUpgrade> obstacleDistanceUpgrades;
     public ArrayList<ShrinkPlayerUpgrade> shrinkPlayerUpgrades;
+    public ArrayList<DoubleCoinsUpgrade> doubleCoinsUpgrades;
+    public ArrayList<DoubleScoreUpgrade> doubleScoreUpgrades;
 
 
 
@@ -28,6 +42,7 @@ public class ObjectLogic {
     public int obstacleGap;
     public int obstacleHeight;
     public int colour;
+
 
 
     public ObjectLogic(int playerGap, int obstacleGap, int obstacleHeight, int colour) {
@@ -43,9 +58,25 @@ public class ObjectLogic {
         bigGapUpgrades = new ArrayList<>();
         obstacleDistanceUpgrades = new ArrayList<>();
         shrinkPlayerUpgrades = new ArrayList<>();
+        doubleCoinsUpgrades = new ArrayList<>();
+        doubleScoreUpgrades = new ArrayList<>();
+
+
 
         startTime = initTime = System.currentTimeMillis();
 
+    }
+
+    public ObjectLogic() {
+
+    }
+
+    public int getSpawnPoint() {
+        return spawnPoint;
+    }
+
+    public void setSpawnPoint(int spawnPoint) {
+        this.spawnPoint = spawnPoint;
     }
 
     public void update() {
@@ -53,7 +84,7 @@ public class ObjectLogic {
 
         int elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
-
+        setSpawnPoint(obstacles.get(0).getRectangle().top);
         speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
 
         for (Obstacle ob : obstacles) {
@@ -62,12 +93,17 @@ public class ObjectLogic {
         }
 
 
-
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
             obstacles.remove(obstacles.size() - 1);
+
+
+            Log.i(TAG, "update: " + getSpawnPoint());
+
+
         }
+
 
     }
 

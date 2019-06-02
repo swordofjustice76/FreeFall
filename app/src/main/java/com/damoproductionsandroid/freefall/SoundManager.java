@@ -56,7 +56,7 @@ public class SoundManager {
     }
 
     public void playSoundTrack() {
-        soundPool.play(soundTrack, 1, 1, 0, 2, 1);
+        soundPool.play(soundTrack, 1, 1, 0, 0, 1);
     }
 
     public void playGameOver() {
