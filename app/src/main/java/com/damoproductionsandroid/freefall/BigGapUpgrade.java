@@ -32,7 +32,7 @@ public class BigGapUpgrade implements GameObject {
 
         animation = new BigGapAnimation(new Bitmap[]{frame1}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{animation}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{});
+        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{animation}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{}, new DoubleScoreAnimation[]{});
     }
 
    public boolean playerCollectUpgrade(Player player){

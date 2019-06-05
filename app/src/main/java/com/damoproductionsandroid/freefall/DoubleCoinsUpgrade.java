@@ -27,7 +27,7 @@ public class DoubleCoinsUpgrade implements GameObject {
 
         animation = new DoubleCoinsAnimation(new Bitmap[]{frame1}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{animation});
+        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{animation}, new DoubleScoreAnimation[]{});
     }
 
 

@@ -26,7 +26,7 @@ public class ShrinkPlayerUpgrade implements GameObject {
 
         animation = new ShrinkPlayerAnimation(new Bitmap[]{frame1}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{}, new ShrinkPlayerAnimation[]{animation}, new DoubleCoinsAnimation[]{});
+        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{}, new ShrinkPlayerAnimation[]{animation}, new DoubleCoinsAnimation[]{}, new DoubleScoreAnimation[]{});
     }
 
     public boolean playerCollectUpgrade(Player player) {

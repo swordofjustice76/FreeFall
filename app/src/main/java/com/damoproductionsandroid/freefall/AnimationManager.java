@@ -8,17 +8,22 @@ public class AnimationManager {
     private BigGapAnimation[] animationsUpgrade1;
     private ShrinkPlayerAnimation[] shrinkPlayerAnimation;
     private DoubleCoinsAnimation[] doubleCoinsAnimation;
+    private DoubleScoreAnimation[] doubleScoreAnimation;
     private int animationIndex = 0;
     private int animationIndexUpgrade1 = 0;
     private int shrinkPlayerAnimationIndex = 0;
-   private int doubleCoinAnimationIndex = 0;
+    private int doubleCoinAnimationIndex = 0;
+    private int doubleScoreAnimationIndex = 0;
 
 
-    public AnimationManager(CoinAnimation[] animations, BigGapAnimation[] animationsUpgrade1, ShrinkPlayerAnimation[] shrinkPlayerAnimation, DoubleCoinsAnimation[] doubleCoinsAnimation) {
+    public AnimationManager(CoinAnimation[] animations, BigGapAnimation[] animationsUpgrade1,
+                            ShrinkPlayerAnimation[] shrinkPlayerAnimation, DoubleCoinsAnimation[] doubleCoinsAnimation, DoubleScoreAnimation[] doubleScoreAnimation) {
+
         this.animations = animations;
         this.animationsUpgrade1 = animationsUpgrade1;
         this.shrinkPlayerAnimation = shrinkPlayerAnimation;
         this.doubleCoinsAnimation = doubleCoinsAnimation;
+        this.doubleScoreAnimation = doubleScoreAnimation;
 
     }
 
@@ -62,6 +67,16 @@ public class AnimationManager {
                 doubleCoinsAnimation[r].stop();
         }
         doubleCoinAnimationIndex = index;
+
+        for (int g = 0; g < doubleScoreAnimation.length; g++) {
+            if (index == g) {
+                if (!doubleScoreAnimation[index].isPlaying())
+
+                    doubleScoreAnimation[g].play();
+            } else
+                doubleScoreAnimation[g].stop();
+        }
+        doubleScoreAnimationIndex = index;
     }
 
 
@@ -71,7 +86,7 @@ public class AnimationManager {
             animationsUpgrade1[animationIndexUpgrade1].draw(canvas, rect);
 
         // if (animations[animationIndex].isPlaying())
-       //      animations[animationIndex].draw(canvas, rect);
+        //      animations[animationIndex].draw(canvas, rect);
 
     }
 
@@ -79,7 +94,7 @@ public class AnimationManager {
 
 
         // if (animations[animationIndex].isPlaying())
-            animations[animationIndex].draw(canvas, rect);
+        animations[animationIndex].draw(canvas, rect);
 
     }
 
@@ -96,6 +111,13 @@ public class AnimationManager {
 
         // if (animations[animationIndex].isPlaying())
         doubleCoinsAnimation[doubleCoinAnimationIndex].draw(canvas, rect);
+    }
+
+    public void drawDoubleScore(Canvas canvas, Rect rect) {
+
+
+        // if (animations[animationIndex].isPlaying())
+        doubleScoreAnimation[doubleScoreAnimationIndex].draw(canvas, rect);
 
     }
 
@@ -107,11 +129,14 @@ public class AnimationManager {
             animationsUpgrade1[animationIndexUpgrade1].update();
         }
         if (shrinkPlayerAnimation[shrinkPlayerAnimationIndex].isPlaying()) {
-           shrinkPlayerAnimation[shrinkPlayerAnimationIndex].update();
+            shrinkPlayerAnimation[shrinkPlayerAnimationIndex].update();
         }
 
         if (doubleCoinsAnimation[doubleCoinAnimationIndex].isPlaying()) {
             doubleCoinsAnimation[doubleCoinAnimationIndex].update();
+        }
+        if (doubleScoreAnimation[doubleScoreAnimationIndex].isPlaying()) {
+            doubleScoreAnimation[doubleScoreAnimationIndex].update();
         }
     }
 
