@@ -6,4 +6,6 @@
     <color name="colourBackground">#332f2f</color>
 
     <color name="colourUpgrade1">#3626a7</color>
+
+    <color name="colourButton">#989898</color>
 </resources>

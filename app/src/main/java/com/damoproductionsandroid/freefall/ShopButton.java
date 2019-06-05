@@ -26,8 +26,9 @@ public class ShopButton implements GameObject {
     @Override
     public void draw(Canvas canvas){
         Paint paint = new Paint();
-        paint.setColor(Color.WHITE);
-        paint.setAlpha(20);
+        paint.setARGB(0,203, 203, 203);
+        //paint.setColor(R.color.colourButton);
+        //paint.setAlpha(20);
         canvas.drawRoundRect(rectangle, 10, 10, paint);
     }
 

@@ -167,16 +167,42 @@ public class Shop extends Activity {
         upgrade1CostTextView.setTypeface(typeface);
         upgrade1LevelBtn.setTypeface(typeface);
         upgrade1DescTextView.setTypeface(typeface);
+        upgrade1StackTextView.setTypeface(typeface);
 
         upgrade2TextView.setTypeface(typeface);
         upgrade2CostTextView.setTypeface(typeface);
         upgrade2LevelBtn.setTypeface(typeface);
         upgrade2DescTextView.setTypeface(typeface);
+        upgrade2StackTextView.setTypeface(typeface);
+
 
         upgrade3TextView.setTypeface(typeface);
         upgrade3CostTextView.setTypeface(typeface);
         upgrade3LevelBtn.setTypeface(typeface);
         upgrade3DescTextView.setTypeface(typeface);
+        upgrade3StackTextView.setTypeface(typeface);
+
+
+        upgrade4TextView.setTypeface(typeface);
+        upgrade4CostTextView.setTypeface(typeface);
+        upgrade4LevelBtn.setTypeface(typeface);
+        upgrade4DescTextView.setTypeface(typeface);
+        upgrade4StackTextView.setTypeface(typeface);
+
+
+        upgrade5TextView.setTypeface(typeface);
+        upgrade5CostTextView.setTypeface(typeface);
+        upgrade5LevelBtn.setTypeface(typeface);
+        upgrade5DescTextView.setTypeface(typeface);
+        upgrade5StackTextView.setTypeface(typeface);
+
+
+        upgrade6TextView.setTypeface(typeface);
+        upgrade6CostTextView.setTypeface(typeface);
+        upgrade6LevelBtn.setTypeface(typeface);
+        upgrade6DescTextView.setTypeface(typeface);
+        upgrade6StackTextView.setTypeface(typeface);
+
 
         initialiseOnClick();
 

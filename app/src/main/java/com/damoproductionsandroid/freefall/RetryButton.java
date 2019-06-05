@@ -23,8 +23,8 @@ public class RetryButton implements GameObject {
         @Override
         public void draw(Canvas canvas){
             Paint paint = new Paint();
-            paint.setColor(Color.WHITE);
-            paint.setAlpha(20);
+            paint.setARGB(0,152, 152, 152);
+            //paint.setAlpha(20);
             canvas.drawRoundRect(rectangle, 10, 10, paint);
         }
 
