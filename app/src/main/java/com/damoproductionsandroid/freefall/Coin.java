@@ -3,12 +3,7 @@ package com.damoproductionsandroid.freefall;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
-import android.view.animation.Animation;
-
-import static android.content.ContentValues.TAG;
 
 public class Coin implements GameObject {
 
@@ -41,7 +36,7 @@ public class Coin implements GameObject {
 
         animation = new CoinAnimation(new Bitmap[]{frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{animation}, new Upgrade1Animation[]{});
+        animManager = new AnimationManager(new CoinAnimation[]{animation}, new BigGapAnimation[]{}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{});
 
     }
 

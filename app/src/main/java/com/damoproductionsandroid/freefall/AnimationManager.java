@@ -5,20 +5,26 @@ import android.graphics.Rect;
 
 public class AnimationManager {
     private CoinAnimation[] animations;
-    private Upgrade1Animation[] animationsUpgrade1;
+    private BigGapAnimation[] animationsUpgrade1;
+    private ShrinkPlayerAnimation[] shrinkPlayerAnimation;
+    private DoubleCoinsAnimation[] doubleCoinsAnimation;
     private int animationIndex = 0;
     private int animationIndexUpgrade1 = 0;
+    private int shrinkPlayerAnimationIndex = 0;
+   private int doubleCoinAnimationIndex = 0;
 
 
-    public AnimationManager(CoinAnimation[] animations, Upgrade1Animation[] animationsUpgrade1) {
+    public AnimationManager(CoinAnimation[] animations, BigGapAnimation[] animationsUpgrade1, ShrinkPlayerAnimation[] shrinkPlayerAnimation, DoubleCoinsAnimation[] doubleCoinsAnimation) {
         this.animations = animations;
         this.animationsUpgrade1 = animationsUpgrade1;
+        this.shrinkPlayerAnimation = shrinkPlayerAnimation;
+        this.doubleCoinsAnimation = doubleCoinsAnimation;
 
     }
 
     public void playAnim(int index) {
-        for (int i = 0; 1 < animations.length; i++) {
-            if (index == 1) {
+        for (int i = 0; i < animations.length; i++) {
+            if (i == index) {
                 if (!animations[i].isPlaying())
 
                     animations[i].play();
@@ -27,8 +33,8 @@ public class AnimationManager {
         }
         animationIndex = index;
 
-        for (int d = 0; 1 < animationsUpgrade1.length; d++) {
-            if (index == 1) {
+        for (int d = 0; d < animationsUpgrade1.length; d++) {
+            if (index == d) {
                 if (!animationsUpgrade1[d].isPlaying())
 
                     animationsUpgrade1[d].play();
@@ -36,6 +42,26 @@ public class AnimationManager {
                 animationsUpgrade1[d].stop();
         }
         animationIndexUpgrade1 = index;
+
+        for (int e = 0; e < shrinkPlayerAnimation.length; e++) {
+            if (index == e) {
+                if (!shrinkPlayerAnimation[index].isPlaying())
+
+                    shrinkPlayerAnimation[e].play();
+            } else
+                shrinkPlayerAnimation[e].stop();
+        }
+        shrinkPlayerAnimationIndex = index;
+
+        for (int r = 0; r < doubleCoinsAnimation.length; r++) {
+            if (index == r) {
+                if (!doubleCoinsAnimation[index].isPlaying())
+
+                    doubleCoinsAnimation[r].play();
+            } else
+                doubleCoinsAnimation[r].stop();
+        }
+        doubleCoinAnimationIndex = index;
     }
 
 
@@ -57,12 +83,35 @@ public class AnimationManager {
 
     }
 
+    public void draw3(Canvas canvas, Rect rect) {
+
+
+        // if (animations[animationIndex].isPlaying())
+        shrinkPlayerAnimation[shrinkPlayerAnimationIndex].draw(canvas, rect);
+
+    }
+
+    public void drawDoubleCoins(Canvas canvas, Rect rect) {
+
+
+        // if (animations[animationIndex].isPlaying())
+        doubleCoinsAnimation[doubleCoinAnimationIndex].draw(canvas, rect);
+
+    }
+
     public void update() {
         if (animations[animationIndex].isPlaying()) {
             animations[animationIndex].update();
         }
         if (animationsUpgrade1[animationIndexUpgrade1].isPlaying()) {
             animationsUpgrade1[animationIndexUpgrade1].update();
+        }
+        if (shrinkPlayerAnimation[shrinkPlayerAnimationIndex].isPlaying()) {
+           shrinkPlayerAnimation[shrinkPlayerAnimationIndex].update();
+        }
+
+        if (doubleCoinsAnimation[doubleCoinAnimationIndex].isPlaying()) {
+            doubleCoinsAnimation[doubleCoinAnimationIndex].update();
         }
     }
 

@@ -3,15 +3,13 @@ package com.damoproductionsandroid.freefall;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class BigGapUpgrade implements GameObject {
 
     private Rect rectangle;
     private int colour;
-    public Upgrade1Animation animation;
+    public BigGapAnimation animation;
     private AnimationManager animManager;
 
 
@@ -32,9 +30,9 @@ public class BigGapUpgrade implements GameObject {
         BitmapFactory bf = new BitmapFactory();
         Bitmap frame1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.upgrade_frame_1);
 
-        animation = new Upgrade1Animation(new Bitmap[]{frame1}, 0.2f);
+        animation = new BigGapAnimation(new Bitmap[]{frame1}, 0.2f);
 
-        animManager = new AnimationManager(new CoinAnimation[]{}, new Upgrade1Animation[]{animation});
+        animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{animation}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{});
     }
 
    public boolean playerCollectUpgrade(Player player){

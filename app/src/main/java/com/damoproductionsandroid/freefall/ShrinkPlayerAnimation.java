@@ -9,7 +9,7 @@ import android.view.animation.Animation;
 
 import static android.content.ContentValues.TAG;
 
-public class Upgrade1Animation extends Animation {
+public class ShrinkPlayerAnimation extends Animation {
     private Bitmap[] frames;
     private int frameIndex;
 
@@ -34,7 +34,7 @@ public class Upgrade1Animation extends Animation {
 
     private long lastFrame;
 
-    public Upgrade1Animation(Bitmap[] frames, float animTime) {
+    public ShrinkPlayerAnimation(Bitmap[] frames, float animTime) {
         this.frames = frames;
         frameIndex = 0;
 

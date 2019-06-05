@@ -302,31 +302,31 @@ public class ItemManager extends ObjectLogic {
     public void spawnGapUpgrade() {
         //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
+        bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top));
 
     }
 
     private void spawnDistanceUpgrade() {
         //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+        obstacleDistanceUpgrades.add(new ObstacleDistanceUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top, colour));
     }
 
     private void spawnShrinkPayerUpgrade() {
         // int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);  //FIX LATER
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top - obstacleHeight));
+        shrinkPlayerUpgrades.add(new ShrinkPlayerUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top));
     }
 
     private void spawnDoubleCoinsUpgrade() {
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+        doubleCoinsUpgrades.add(new DoubleCoinsUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top, colour));
 
     }
 
     private void spawnDoubleScoreUpgrade() {
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        doubleScoreUpgrades.add(new DoubleScoreUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top - obstacleHeight, colour));
+        doubleScoreUpgrades.add(new DoubleScoreUpgrade(obstacleHeight, xStart, coins.get(0).getRectangle().top, colour));
     }
 
     public void draw(Canvas canvas) {
