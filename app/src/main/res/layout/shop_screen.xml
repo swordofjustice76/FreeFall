@@ -101,8 +101,6 @@
 
 
 
-
-
     <RelativeLayout
         android:id="@+id/upgradebox1_txt"
         android:layout_width="match_parent"

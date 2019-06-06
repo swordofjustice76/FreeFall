@@ -22,6 +22,7 @@
         <activity android:name=".Preferences"
             />
         <activity android:name=".PassivePerkManager"/>
+        <activity android:name=".ShopItemsFragment"/>
         <activity android:name=".SoundtrackManager" />
         <activity android:name=".ShopButton" />
 

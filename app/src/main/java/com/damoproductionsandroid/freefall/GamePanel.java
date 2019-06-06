@@ -8,21 +8,14 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-
-import javax.crypto.Cipher;
-
-import static android.content.ContentValues.TAG;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
