@@ -17,6 +17,9 @@ public class PassivePerkManager extends Activity {
     public int perk_2_cost;
 
     public int perk_3_lvl;
+    public int perk_3_stack;
+    public int perk_3_cost;
+
     public int perk_4_lvl;
     public int perk_5_lvl;
     public int perk_6_lvl;
@@ -120,12 +123,52 @@ public class PassivePerkManager extends Activity {
         return perk_2_cost;
     }
 
-    public int getPerk_3_lvl() {
+    public int getPerk_3_lvl(Context context, int perk_3_lvl) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_3_lvl", Constants.PERK_3_LVL);
+        editor.apply();
         return perk_3_lvl;
     }
 
-    public void setPerk_3_lvl(int perk_3_lvl) {
-        this.perk_3_lvl = perk_3_lvl;
+    public int setPerk_3_lvl(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_3_lvl = pref.getInt("perk_3_lvl", 0);
+
+        return perk_3_lvl;
+    }
+
+    public int getPerk_3_stack(Context context, int perk_3_stack) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_3_stack", Constants.PERK_3_STACK);
+        editor.apply();
+        return perk_3_stack;
+    }
+
+    public int setPerk_3_stack(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_3_stack = pref.getInt("perk_3_stack", 0);
+
+        return perk_3_stack;
+    }
+
+    public int getPerk_3_cost(Context context, int perk_3_cost) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_3_cost", Constants.PERK_3_COST);
+        editor.apply();
+        return perk_3_cost;
+    }
+
+    public int setPerk_3_cost(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_3_cost = pref.getInt("perk_3_cost", Constants.PERK_3_COST);
+
+        return perk_3_cost;
     }
 
     public int getPerk_4_lvl() {
