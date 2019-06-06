@@ -35,7 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public Rect highScore = new Rect();
 
-MainThread mainThread;
+    MainThread mainThread;
     MainActivity mainActivity;
 
 
@@ -49,9 +49,12 @@ MainThread mainThread;
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
-    private Preferences highScoreHandler;
     private ShopButton shopButton;
     private RetryButton retryButton;
+
+    private Preferences highScoreHandler;
+    private PassivePerkManager perkManager;
+
     private SoundtrackManager soundtrackManager;
 
     private ObjectLogic gravity;
@@ -81,7 +84,8 @@ MainThread mainThread;
         getHolder().addCallback(this);
 
         Constants.CURRENT_CONTEXT = context;
-
+        highScoreHandler = new Preferences();
+        perkManager = new PassivePerkManager();
         thread = new MainThread(getHolder(), this);
         soundManager = new SoundManager(context);
         //soundtrackManager = new SoundtrackManager(context);
@@ -89,7 +93,7 @@ MainThread mainThread;
 
 
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
-        player = new Player(new Rect(0, 0, Constants.PLAYER_SIZE, Constants.PLAYER_SIZE), Color.rgb(216, 0, 0));
+        player = new Player(new Rect(0, 0, perkManager.setPerk_1_player_size(context), perkManager.setPerk_1_player_size(context)), Color.rgb(216, 0, 0));
         shopButton = new ShopButton(new RectF(0, 0, 450, 150), Color.BLACK);
         retryButton = new RetryButton(new RectF(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
@@ -103,7 +107,7 @@ MainThread mainThread;
         obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
         itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
 
-        highScoreHandler = new Preferences();
+
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
         coins = highScoreHandler.setCoinAmount(getContext());
@@ -234,8 +238,8 @@ MainThread mainThread;
                 //soundtrackManager.mediaPlayer.stop();
                 //soundtrackManager.mediaPlayer.release();
 
-                coins += Constants.PERK_3_STACK;
-                coins += (coins/100)* Constants.PERK_4_LVL;
+                coins += perkManager.setPerk_3_stack(getContext());
+                coins += (coins/100)* perkManager.setPerk_4_stack(getContext());
 
             }
 

@@ -34,6 +34,7 @@ public class ItemManager extends ObjectLogic {
     public boolean updateScore = false;
 
     Preferences highScoreActivity;
+    PassivePerkManager perkManager;
     private ObjectLogic objectLogic;
 
 
@@ -46,6 +47,7 @@ public class ItemManager extends ObjectLogic {
         this.colour = colour;
 
         highScoreActivity = new Preferences();
+        perkManager = new PassivePerkManager();
         objectLogic = new ObjectLogic();
 
 
@@ -234,7 +236,7 @@ public class ItemManager extends ObjectLogic {
         startTime = System.currentTimeMillis();
 
         speed = (float) (Math.sqrt(1 + (startTime - initTime) / 2000.0)) * Constants.SCREEN_HEIGHT / 10000.0f;
-        mps = (((float) elapsedTime / 50) * speed * (Constants.MPS_MULTIPLIER));
+        mps = (((float) elapsedTime / 50) * speed * (perkManager.setPerk_2_mps(Constants.CURRENT_CONTEXT)));
         metres += (mps);
 
         updateScore = true;
