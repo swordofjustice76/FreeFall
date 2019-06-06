@@ -91,7 +91,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         //soundtrackManager = new SoundtrackManager(context);
 
 
-
         //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(0, 0, perkManager.setPerk_1_player_size(context), perkManager.setPerk_1_player_size(context)), Color.rgb(216, 0, 0));
         shopButton = new ShopButton(new RectF(0, 0, 450, 150), Color.BLACK);
@@ -113,8 +112,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         coins = highScoreHandler.setCoinAmount(getContext());
 
 
-
-
         //make gamePanel focusable so it can handle events
         setFocusable(true);
 
@@ -126,7 +123,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
         obstacleManager = new ObstacleManager((int) perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
-        itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int)perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
+        itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int) perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
 
@@ -144,17 +141,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
         //while (true) {
-            try {
-                thread.setRunning(false);
-                thread.join();
+        try {
+            thread.setRunning(false);
+            thread.join();
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            retry = false;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        retry = false;
+    }
 
-   // }
+    // }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -164,13 +161,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //we can safely start the game loop
 
-            thread.setRunning(true);
-            thread.start();
-            thread.setStop(false);
+        thread.setRunning(true);
+        thread.start();
+        thread.setStop(false);
     }
 
     @Override
-    public boolean  onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
 
             case MotionEvent.ACTION_DOWN:
@@ -182,7 +179,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
 
-                  //  thread.setRunning(false);
+                    //  thread.setRunning(false);
 
                     surfaceDestroyed(getHolder());
                     Intent intent = new Intent(getContext(), Shop.class);
@@ -193,7 +190,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                     //  thread.setRunning(false);
 
-                   reset();
+                    reset();
                     gameOver = false;
                 }
 
@@ -213,7 +210,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-       // float speedBuffer =
+        // float speedBuffer =
 
         if (!playing) {
 
@@ -239,7 +236,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 //soundtrackManager.mediaPlayer.release();
 
                 coins += perkManager.setPerk_3_stack(getContext());
-                coins += (coins/100)* perkManager.setPerk_4_stack(getContext());
+                coins += (coins / 100) * perkManager.setPerk_4_stack(getContext());
 
             }
 
@@ -386,7 +383,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             //bM.draw(canvas);
 
 
-
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
             highScoreHandler.getCoinAmount(getContext(), coins);
 
@@ -427,10 +423,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         paint2.setTextSize(150);
         paint2.getTextBounds(text, 0, text.length(), retryText);
         int x = (Constants.SCREEN_WIDTH / 2) - (retryText.width() / 2);
-        int y = 6 * Constants.SCREEN_HEIGHT / 9 -200;
+        int y = 6 * Constants.SCREEN_HEIGHT / 9 - 200;
 
         canvas.drawText(text, x, y, paint2);
-
 
 
     }
@@ -443,7 +438,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int cWidth = r.width();
         paint.getTextBounds(text, 0, text.length(), r);
         float x = cWidth / 2f - r.width() / 2f - r.left;
-        int y = Constants.SCREEN_HEIGHT/3;//cHeight / 2f + r.height() / 2f - r.bottom;
+        int y = Constants.SCREEN_HEIGHT / 3;//cHeight / 2f + r.height() / 2f - r.bottom;
         canvas.drawText(text, x, y, paint);
     }
 
@@ -455,7 +450,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int cWidth = highScore.width();
         paint.getTextBounds(text, 0, text.length(), highScore);
         float x = cWidth / 2f - highScore.width() / 2f - highScore.left;
-        int y = 3*Constants.SCREEN_HEIGHT/7;
+        int y = 3 * Constants.SCREEN_HEIGHT / 7;
         canvas.drawText(text, x, y, paint);
     }
 
@@ -479,8 +474,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int y = 6 * Constants.SCREEN_HEIGHT / 9;
 
         canvas.drawText(text, x, y, paint);
-
-
 
 
     }

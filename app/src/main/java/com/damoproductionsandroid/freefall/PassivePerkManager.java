@@ -50,7 +50,7 @@ public class PassivePerkManager extends Activity {
         SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
         perk_1_lvl = pref.getInt("perk_1_lvl", 0);
 
-       return perk_1_lvl;
+        return perk_1_lvl;
     }
 
     public double getPerk_1_stack(Context context, double perk_1_stack) {
@@ -101,7 +101,6 @@ public class PassivePerkManager extends Activity {
         return perk_1_player_size;
     }
 
-
     public int getPerk_2_lvl(Context context, int perk_2_lvl) {
         SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
@@ -143,8 +142,6 @@ public class PassivePerkManager extends Activity {
         return perk_2_cost;
     }
 
-
-
     public int setPerk_2_cost(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
         perk_2_cost = pref.getInt("perk_2_cost", 0);
@@ -160,8 +157,6 @@ public class PassivePerkManager extends Activity {
         editor.apply();
         return perk_2_mps;
     }
-
-
 
     public float setPerk_2_mps(Context context) {
         SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
