@@ -54,7 +54,6 @@ MainThread mainThread;
     private RetryButton retryButton;
     private SoundtrackManager soundtrackManager;
 
-    private ItemSpawner itemSpawner;
     private ObjectLogic gravity;
     private BigGapUpgrade bigGapUpgrade;
 
