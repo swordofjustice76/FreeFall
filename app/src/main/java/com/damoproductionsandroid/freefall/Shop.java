@@ -105,15 +105,15 @@ public class Shop extends Activity {
     }
 
     private void loadSave() {
-
+        Log.i(TAG, "onClick: " + perkManager.setPerk_5_player_gap(getApplicationContext()));
        // perkManager.getPerk_2_stack(getApplicationContext(), 0);
         //perkManager.getPerk_2_lvl(getApplicationContext(), 0);
         //perkManager.getPerk_2_cost(getApplicationContext(), 0);
         //perkManager.getPerk_2_mps(getApplicationContext(), 0);
 
-        //perkManager.getPerk_1_stack(getApplicationContext(), 0);
-        //perkManager.getPerk_1_lvl(getApplicationContext(), 0);
-        //perkManager.getPerk_1_cost(getApplicationContext(), 0);
+       // perkManager.getPerk_5_stack(getApplicationContext(), 0);
+        //perkManager.getPerk_5_lvl(getApplicationContext(), 0);
+        //perkManager.getPerk_5_cost(getApplicationContext(), 0);
 
 
         coins = highScore.setCoinAmount(getApplicationContext());
@@ -162,6 +162,28 @@ public class Shop extends Activity {
             upgrade4CostTextView.setText("MAX");
             upgrade4LevelBtn.setText("MAX");
             upgrade4StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_4_stack(getApplicationContext()) + "%"));
+        }
+
+        if (perkManager.setPerk_5_lvl(getApplicationContext()) != Constants.PERK_5_MAX_LVL) {
+            upgrade5LevelBtn.setText(String.valueOf(perkManager.setPerk_5_lvl(getApplicationContext()) + "/" + Constants.PERK_5_MAX_LVL));
+            upgrade5StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_5_stack(getApplicationContext()) + "%"));
+            upgrade5CostTextView.setText(String.valueOf(format((long) perkManager.setPerk_5_cost(getApplicationContext()))));
+        } else {
+            upgrade5LevelBtn.setEnabled(false);
+            upgrade5CostTextView.setText("MAX");
+            upgrade5LevelBtn.setText("MAX");
+            upgrade5StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_5_stack(getApplicationContext()) + "%"));
+        }
+
+        if (perkManager.setPerk_6_lvl(getApplicationContext()) != Constants.PERK_6_MAX_LVL) {
+            upgrade6LevelBtn.setText(String.valueOf(perkManager.setPerk_6_lvl(getApplicationContext()) + "/" + Constants.PERK_6_MAX_LVL));
+            upgrade6StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_6_stack(getApplicationContext()) + " coins"));
+            upgrade6CostTextView.setText(String.valueOf(format((long) perkManager.setPerk_6_cost(getApplicationContext()))));
+        } else {
+            upgrade6LevelBtn.setEnabled(false);
+            upgrade6CostTextView.setText("MAX");
+            upgrade6LevelBtn.setText("MAX");
+            upgrade6StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_6_stack(getApplicationContext()) + " coins"));
         }
     }
 
@@ -462,11 +484,26 @@ public class Shop extends Activity {
                     String formattedCost = format(Constants.PERK_5_COST);
                     Constants.PERK_5_LVL++;
                     Constants.PERK_5_STACK += 2.5;
-                    Constants.PLAYER_GAP += (Constants.PLAYER_ORIGINAL_GAP / 100) * 2.5;
-                    upgrade5CostTextView.setText(String.valueOf(formattedCost));
-                    upgrade5LevelBtn.setText(Constants.PERK_5_LVL + "/" + Constants.PERK_5_MAX_LVL);
-                    upgrade5StackTextView.setText("Stack: +" + Constants.PERK_5_STACK + "%");
-                    Log.d(TAG, "onClick: " + Constants.OBSTACLE_GAP);
+                    //Constants.PLAYER_GAP += (Constants.PLAYER_ORIGINAL_GAP / 100) * 2.5;
+
+                    Constants.PERK_5_LVL = (perkManager.setPerk_5_lvl(getApplicationContext()) + 1);
+                    Constants.PERK_5_STACK = (perkManager.setPerk_5_stack(getApplicationContext()) + 2.5f);
+                    Constants.PERK_5_COST =  (int)(perkManager.setPerk_5_cost(getApplicationContext()) * 1.5f);
+                    Constants.PLAYER_GAP =  (int)(Constants.PLAYER_GAP += ((Constants.PLAYER_ORIGINAL_GAP / 100) * 2.5));
+
+                    //long formattedCost = Integer.valueOf(format((long)Constants.PERK_3_COST));
+
+                    perkManager.getPerk_5_lvl(getApplicationContext(), Constants.PERK_5_LVL);
+                    perkManager.getPerk_5_stack(getApplicationContext(), Constants.PERK_5_STACK);
+                    perkManager.getPerk_5_cost(getApplicationContext(), Constants.PERK_5_COST);
+                    perkManager.getPerk_5_player_gap(getApplicationContext(), Constants.PLAYER_GAP);
+
+
+
+                    upgrade5CostTextView.setText(String.valueOf(format((long)perkManager.setPerk_5_cost(getApplicationContext()))));
+                    upgrade5LevelBtn.setText(perkManager.setPerk_5_lvl(getApplicationContext()) + "/" + Constants.PERK_5_MAX_LVL);
+                    upgrade5StackTextView.setText("Stack: +" + perkManager.setPerk_5_stack(getApplicationContext()) + "%");
+                    //Log.d(TAG, "onClick: " + Constants.OBSTACLE_GAP);
                 }
                 if (Constants.PERK_5_LVL == Constants.PERK_5_MAX_LVL) {
                     upgrade5LevelBtn.setText("MAX");
@@ -486,13 +523,27 @@ public class Shop extends Activity {
                     highScore.getCoinAmount(getApplicationContext(), coins);
 
                     Constants.PERK_6_COST *= 1.5;
-                    String formattedCost = format(Constants.PERK_6_COST);
                     Constants.PERK_6_LVL++;
                     Constants.PERK_6_STACK += 1;
-                    Constants.COLLECT_AMOUNT++;
-                    upgrade6CostTextView.setText(String.valueOf(formattedCost));
-                    upgrade6LevelBtn.setText(Constants.PERK_6_LVL + "/" + Constants.PERK_6_MAX_LVL);
-                    upgrade6StackTextView.setText("Stack: +" + Constants.PERK_6_STACK);
+                    //Constants.COLLECT_AMOUNT++;
+
+                    String formattedCost = format(Constants.PERK_6_COST);
+
+                    Constants.PERK_6_LVL = (perkManager.setPerk_6_lvl(getApplicationContext()) + 1);
+                    Constants.PERK_6_STACK = (perkManager.setPerk_6_stack(getApplicationContext()) + 1);
+                    Constants.PERK_6_COST =  (int)(perkManager.setPerk_6_cost(getApplicationContext()) * 1.5f);
+                    Constants.COLLECT_AMOUNT =  (perkManager.setPerk_6_collect_amount(getApplicationContext()) + 1);
+
+                    //long formattedCost = Integer.valueOf(format((long)Constants.PERK_3_COST));
+
+                    perkManager.getPerk_6_lvl(getApplicationContext(), Constants.PERK_6_LVL);
+                    perkManager.getPerk_6_stack(getApplicationContext(), Constants.PERK_6_STACK);
+                    perkManager.getPerk_6_cost(getApplicationContext(), Constants.PERK_6_COST);
+                    perkManager.getPerk_6_collect_amount(getApplicationContext(), Constants.COLLECT_AMOUNT);
+
+                    upgrade6CostTextView.setText(String.valueOf(format((long)perkManager.setPerk_6_cost(getApplicationContext()))));
+                    upgrade6LevelBtn.setText(perkManager.setPerk_6_lvl(getApplicationContext()) + "/" + Constants.PERK_6_MAX_LVL);
+                    upgrade6StackTextView.setText("Stack: +" + perkManager.setPerk_6_stack(getApplicationContext()) + " coins");
                     Log.d(TAG, "onClick: " + Constants.OBSTACLE_GAP);
                 }
                 if (Constants.PERK_6_LVL == Constants.PERK_6_MAX_LVL) {

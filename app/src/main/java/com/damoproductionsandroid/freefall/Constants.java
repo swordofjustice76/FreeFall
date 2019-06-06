@@ -11,7 +11,7 @@ public class Constants {
     public static int OBSTACLE_HEIGHT = 75;
 
     public static int PLAYER_ORIGINAL_GAP = 325;
-    public static int PLAYER_GAP = 325;
+    public static float PLAYER_GAP = 325;
 
     public static int PLAYER_ORIGINAL_SIZE = 150;
     public static int PLAYER_SIZE = 150;
@@ -47,5 +47,5 @@ public class Constants {
     public static int PERK_5_COST= 7500;
     public static int PERK_5_LVL = 0;
     public static int PERK_5_MAX_LVL = 4;
-    public static double PERK_5_STACK = 0;
+    public static float PERK_5_STACK = 0;
 }

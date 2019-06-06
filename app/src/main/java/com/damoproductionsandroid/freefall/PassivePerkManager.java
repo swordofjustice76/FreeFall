@@ -27,8 +27,14 @@ public class PassivePerkManager extends Activity {
     public int perk_4_cost;
 
     public int perk_5_lvl;
-    public int perk_6_lvl;
+    public float perk_5_stack;
+    public int perk_5_cost;
+    public float perk_5_player_gap;
 
+    public int perk_6_lvl;
+    public int perk_6_stack;
+    public int perk_6_cost;
+    public int perk_6_collect_amount;
 
 
     public int getPerk_1_lvl(Context context, int perk_1_lvl) {
@@ -260,20 +266,132 @@ public class PassivePerkManager extends Activity {
         return perk_4_cost;
     }
 
-    public int getPerk_5_lvl() {
+    public int getPerk_5_lvl(Context context, int perk_5_lvl) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_5_lvl", Constants.PERK_5_LVL);
+        editor.apply();
         return perk_5_lvl;
     }
 
-    public void setPerk_5_lvl(int perk_5_lvl) {
-        this.perk_5_lvl = perk_5_lvl;
+    public int setPerk_5_lvl(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_5_lvl = pref.getInt("perk_5_lvl", 0);
+
+        return perk_5_lvl;
     }
 
-    public int getPerk_6_lvl() {
+    public float getPerk_5_stack(Context context, float perk_5_stack) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putFloat("perk_5_stack", Constants.PERK_5_STACK);
+        editor.apply();
+        return perk_5_stack;
+    }
+
+    public float setPerk_5_stack(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_5_stack = pref.getFloat("perk_5_stack", 0);
+
+        return perk_5_stack;
+    }
+
+    public int getPerk_5_cost(Context context, int perk_5_cost) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_5_cost", Constants.PERK_5_COST);
+        editor.apply();
+        return perk_5_cost;
+    }
+
+    public int setPerk_5_cost(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_5_cost = pref.getInt("perk_5_cost", Constants.PERK_5_COST);
+
+        return perk_5_cost;
+    }
+
+    public float getPerk_5_player_gap(Context context, float perk_5_player_gap) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putFloat("perk_5_player_gap", Constants.PLAYER_GAP);
+        editor.apply();
+        return perk_5_player_gap;
+    }
+
+    public float setPerk_5_player_gap(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_5_player_gap = pref.getFloat("perk_5_player_gap", Constants.PLAYER_GAP);
+
+        return perk_5_player_gap;
+    }
+
+    public int getPerk_6_lvl(Context context, int perk_6_lvl) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_6_lvl", Constants.PERK_6_LVL);
+        editor.apply();
         return perk_6_lvl;
     }
 
-    public void setPerk_6_lvl(int perk_6_lvl) {
-        this.perk_6_lvl = perk_6_lvl;
+    public int setPerk_6_lvl(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_6_lvl = pref.getInt("perk_6_lvl", 0);
+
+        return perk_6_lvl;
+    }
+
+    public int getPerk_6_stack(Context context, int perk_6_stack) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_6_stack", Constants.PERK_6_STACK);
+        editor.apply();
+        return perk_6_stack;
+    }
+
+    public int setPerk_6_stack(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_6_stack = pref.getInt("perk_6_stack", 0);
+
+        return perk_6_stack;
+    }
+
+    public int getPerk_6_cost(Context context, int perk_6_cost) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_6_cost", Constants.PERK_6_COST);
+        editor.apply();
+        return perk_6_cost;
+    }
+
+    public int setPerk_6_cost(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_6_cost = pref.getInt("perk_6_cost", Constants.PERK_6_COST);
+
+        return perk_6_cost;
+    }
+
+    public int getPerk_6_collect_amount(Context context, int perk_6_collect_amount) {
+        SharedPreferences pref = Constants.CURRENT_CONTEXT.getSharedPreferences(PERKS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putInt("perk_6_collect_amount", Constants.COLLECT_AMOUNT);
+        editor.apply();
+        return perk_6_collect_amount;
+    }
+
+    public int setPerk_6_collect_amount(Context context) {
+        SharedPreferences pref = context.getSharedPreferences(PERKS, MODE_PRIVATE);
+        perk_6_collect_amount = pref.getInt("perk_6_collect_amount", Constants.COLLECT_AMOUNT);
+
+        return perk_6_collect_amount;
     }
 
 }

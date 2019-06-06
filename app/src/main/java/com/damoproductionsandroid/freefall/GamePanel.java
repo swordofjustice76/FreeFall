@@ -104,8 +104,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         shopButton.update();
         retryButton.update();
 
-        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
-        itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
+        obstacleManager = new ObstacleManager((int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
+        itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
 
 
         highScoreHandler.setHighScore(getContext());
@@ -125,8 +125,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public void reset() {
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
         player.update(playerPoint);
-        obstacleManager = new ObstacleManager(Constants.PLAYER_GAP, Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
-        itemManager = new ItemManager(Constants.OBSTACLE_GAP, Constants.PLAYER_GAP, Constants.OBSTACLE_HEIGHT, Color.YELLOW);
+        obstacleManager = new ObstacleManager((int) perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
+        itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int)perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
 
@@ -245,13 +245,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
-                coins += Constants.COLLECT_AMOUNT;
+                coins += perkManager.setPerk_6_collect_amount(getContext());
                 highScoreHandler.getCoinAmount(getContext(), coins);
                 highScoreHandler.setCoinAmount(getContext());
                 coinSave = true;
             }
             if (itemManager.playerCollectPlayerGapUpgrade(player)) {
-                obstacleManager.playerGap = (int) (Constants.PLAYER_GAP * 1.5);
+                obstacleManager.playerGap = (int) (perkManager.setPerk_5_player_gap(getContext()) * 1.5);
                 soundManager.playPowerUpSound();
                 bigPlayerGapUpgradeTimer();
 
@@ -291,7 +291,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             @Override
             public void run() {
 
-                obstacleManager.playerGap = Constants.PLAYER_GAP;
+                obstacleManager.playerGap = (int) perkManager.setPerk_5_player_gap(getContext());
             }
         };
         timer.schedule(powerUpTimerTask, 5000);
