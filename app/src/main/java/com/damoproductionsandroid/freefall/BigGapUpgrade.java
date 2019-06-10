@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.CountDownTimer;
+import android.os.Looper;
 
 public class BigGapUpgrade implements GameObject {
 
@@ -11,6 +13,8 @@ public class BigGapUpgrade implements GameObject {
     private int colour;
     public BigGapAnimation animation;
     private AnimationManager animManager;
+    private BigGapUpgradeHandler bigGapUpgradeHandler;
+
 
 
 
@@ -31,11 +35,17 @@ public class BigGapUpgrade implements GameObject {
         Bitmap frame1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.upgrade_frame_1);
 
         animation = new BigGapAnimation(new Bitmap[]{frame1}, 0.2f);
+        bigGapUpgradeHandler = new BigGapUpgradeHandler();
 
         animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{animation}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{}, new DoubleScoreAnimation[]{});
     }
 
    public boolean playerCollectUpgrade(Player player){
+       if(Rect.intersects(rectangle, player.getRectangle())){
+
+           //bigGapUpgradeHandler.start();
+       }
+
         return Rect.intersects(rectangle, player.getRectangle());
    }
 
@@ -64,5 +74,7 @@ public class BigGapUpgrade implements GameObject {
     public void setPlayerGap(int playerGap) {
         this.playerGap = playerGap;
     }
+
+
 
 }

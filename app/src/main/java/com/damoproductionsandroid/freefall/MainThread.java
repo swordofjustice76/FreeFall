@@ -1,6 +1,7 @@
 package com.damoproductionsandroid.freefall;
 
 import android.graphics.Canvas;
+import android.os.Looper;
 import android.view.SurfaceHolder;
 
 public class MainThread extends Thread {

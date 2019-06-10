@@ -2,6 +2,8 @@ package com.damoproductionsandroid.freefall;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,13 +11,22 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
+import android.os.Looper;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.ContentValues.TAG;
+import static android.os.Parcelable.CONTENTS_FILE_DESCRIPTOR;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -27,6 +38,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public Rect retryText = new Rect();
 
     public Rect highScore = new Rect();
+    public Rect upgradeText = new Rect();
+
+    public long millis;
 
     MainThread mainThread;
     MainActivity mainActivity;
@@ -35,6 +49,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Rect r = new Rect();
 
     private MainThread thread;
+
+    private GamePanel gamePanel;
 
     private Player player;
     private Point playerPoint;
@@ -66,6 +82,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private int meters;
     private boolean playing = false;
+
+    private boolean bigGapUpgradeFlag = false;
 
 
     public GamePanel(Context context) {
@@ -107,7 +125,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         //make gamePanel focusable so it can handle events
         setFocusable(true);
-
 
     }
 
@@ -244,6 +261,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 obstacleManager.playerGap = (int) (perkManager.setPerk_5_player_gap(getContext()) * 1.5);
                 soundManager.playPowerUpSound();
                 bigPlayerGapUpgradeTimer();
+                bigGapUpgradeFlag = true;
 
             }
             if (itemManager.playerCollectDistanceUpgrade(player)) {
@@ -282,6 +300,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             public void run() {
 
                 obstacleManager.playerGap = (int) perkManager.setPerk_5_player_gap(getContext());
+                bigGapUpgradeFlag = false;
+
             }
         };
         timer.schedule(powerUpTimerTask, 5000);
@@ -337,6 +357,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
+
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
@@ -351,7 +372,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
         if (gameOver) {
-
             Paint paint = new Paint();
             paint.setTextSize(150);
             paint.setColor(Color.GRAY);
@@ -408,6 +428,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             paint.setTypeface(typeface);
             drawCoinsText(canvas, paint, "Coins: " + (highScoreHandler.setCoinAmount(getContext())));
         }
+
+        if (bigGapUpgradeFlag){
+            Paint paint = new Paint();
+            paint.setTextSize(75);
+            paint.setColor(Color.WHITE);
+            paint.setTypeface(typeface);
+            drawBigGapTimer(canvas, paint, String.valueOf(setSecsLeft()));
+        }
     }
 
     private void drawRetryText(Canvas canvas, Paint paint2, String text) {
@@ -457,7 +485,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawText(text, x, y, paint);
     }
 
-
     private void drawShopText(Canvas canvas, Paint paint, String text) {
         paint.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(shopText);
@@ -467,8 +494,42 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         int y = 6 * Constants.SCREEN_HEIGHT / 9;
 
         canvas.drawText(text, x, y, paint);
+    }
 
 
+
+    private void drawBigGapTimer(Canvas canvas, Paint paint, String text) {
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.upgrade_frame_1);
+        bitmap = (Bitmap.createScaledBitmap(bitmap, 75, 50, false));
+        Rect source = new Rect(0, 0, 150, 150);
+        Rect bitmapRect = new Rect(50, 300, 250, 500);
+
+
+
+        canvas.drawBitmap(bitmap, source, bitmapRect, new Paint());
+
+        drawTimerText(canvas, paint, text);
+
+     //countDown();
+
+    }
+
+    private long setSecsLeft() {
+        return millis;
+    }
+
+    private long getSecsLeft(long millisUntilFinished){
+        millis = millisUntilFinished;
+        return millis;
+    }
+
+    private void drawTimerText(Canvas canvas, Paint paint, String text) {
+        paint.setTextAlign(Paint.Align.LEFT);
+
+        float x = 100;
+        int y = 100;
+        canvas.drawText(text, x, y, paint);
     }
 
 }

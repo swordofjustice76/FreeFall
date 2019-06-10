@@ -40,6 +40,16 @@
         android:scaleY="1.5"
         android:scaleX="1.5"/>
 
+
+  <!--  <fragment
+        android:name="com.damoproductionsandroid.freefall.Shop"
+        android:layout_below="@+id/shop_txt"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+   -->
+
     <TableLayout
         android:id="@+id/column_desc"
         android:layout_width="match_parent"
@@ -603,7 +613,7 @@
                         android:layout_marginTop="20sp"
                         android:layout_weight="75"
                         android:fontFamily="@font/pixel_font"
-                        android:text="Jack open to obstacles to create a bigger gap, make the gap 2.5% wider"
+                        android:text="Jack open obstacles to create a bigger gap, make the gap 2.5% wider"
                         android:textColor="#ffffff"
                         android:paddingRight="10dp"
                         android:textSize="20dp" />
