@@ -125,13 +125,34 @@ public class Shop extends FragmentActivity {
             }
         });
 
+        itemsTabBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                highScore.getCoinAmount(getApplicationContext(), coins);
 
+                ShopItemsFragment shopItemsFragment = new ShopItemsFragment();
+                shopItemsFragment.setArguments(getIntent().getExtras());
+
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, shopItemsFragment).commit();
+
+
+            }
+        });
+
+    }
+
+    public void setCoinsTextView(String coinsTextView, int coins) {
+
+        this.coins = coins;
     }
 
     private void loadSave() {
 
         coins = highScore.setCoinAmount(getApplicationContext());
         coinsTextView.setText(String.valueOf("Coins: " + highScore.setCoinAmount(getApplicationContext())));
+
+
 
      /**   if (perkManager.setPerk_1_lvl(getApplicationContext()) != Constants.PERK_1_MAX_LVL) {
             upgrade1LevelBtn.setText(String.valueOf(perkManager.setPerk_1_lvl(getApplicationContext()) + "/" + Constants.PERK_1_MAX_LVL));

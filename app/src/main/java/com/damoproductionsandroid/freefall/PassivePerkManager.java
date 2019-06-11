@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
-public class PassivePerkManager extends Activity {
+public class PassivePerkManager extends FragmentActivity {
 
     public static String PERKS = "perkSaveFile";
     public int perk_1_lvl;
