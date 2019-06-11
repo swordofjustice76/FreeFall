@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
@@ -21,12 +24,18 @@ import java.util.TreeMap;
 import static android.content.ContentValues.TAG;
 import static android.os.Parcelable.CONTENTS_FILE_DESCRIPTOR;
 
-public class Shop extends Activity {
+public class Shop extends FragmentActivity {
 
     Preferences highScore;
     PassivePerkManager perkManager;
 
+    View fragmentContainer;
+
     TextView shopTextView;
+    Button itemsTabBtn;
+    Button perksTabBtn;
+
+
     TextView coinsTextView;
     TextView upgradeTextView;
     TextView costTextView;
@@ -87,7 +96,7 @@ public class Shop extends Activity {
         perkManager = new PassivePerkManager();
 
         inializeView();
-        setView();
+       // setView();
         loadSave();
 
 
@@ -101,6 +110,21 @@ public class Shop extends Activity {
             }
         });
 
+        perksTabBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                highScore.getCoinAmount(getApplicationContext(), coins);
+
+                ShopUpgradesFragment shopUpgradesFragment = new ShopUpgradesFragment();
+                shopUpgradesFragment.setArguments(getIntent().getExtras());
+
+                // Add the fragment to the 'fragment_container' FrameLayout
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_container, shopUpgradesFragment).commit();
+
+
+            }
+        });
+
 
     }
 
@@ -109,7 +133,7 @@ public class Shop extends Activity {
         coins = highScore.setCoinAmount(getApplicationContext());
         coinsTextView.setText(String.valueOf("Coins: " + highScore.setCoinAmount(getApplicationContext())));
 
-        if (perkManager.setPerk_1_lvl(getApplicationContext()) != Constants.PERK_1_MAX_LVL) {
+     /**   if (perkManager.setPerk_1_lvl(getApplicationContext()) != Constants.PERK_1_MAX_LVL) {
             upgrade1LevelBtn.setText(String.valueOf(perkManager.setPerk_1_lvl(getApplicationContext()) + "/" + Constants.PERK_1_MAX_LVL));
             upgrade1StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_1_stack(getApplicationContext()) + "%"));
             upgrade1CostTextView.setText(String.valueOf(perkManager.setPerk_1_cost(getApplicationContext())));
@@ -173,7 +197,7 @@ public class Shop extends Activity {
             upgrade6CostTextView.setText("MAX");
             upgrade6LevelBtn.setText("MAX");
             upgrade6StackTextView.setText(String.valueOf("Stack: +" + perkManager.setPerk_6_stack(getApplicationContext()) + " coins"));
-        }
+        } **/
 
     }
 
@@ -183,8 +207,13 @@ public class Shop extends Activity {
 
         Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
 
+        //fragmentContainer = findViewById(R.id.fragment_container);
+
         shopTextView = findViewById(R.id.shop_txt);
+        itemsTabBtn = findViewById(R.id.items_btn);
+        perksTabBtn = findViewById(R.id.perks_btn);
         coinsTextView = findViewById(R.id.coins_txt);
+       /**
         upgradeTextView = findViewById(R.id.upgrade_txt);
         costTextView = findViewById(R.id.cost_txt);
         levelTextView = findViewById(R.id.level_txt);
@@ -226,10 +255,15 @@ public class Shop extends Activity {
         upgrade6DescTextView = findViewById(R.id.upgrade6_desc_txt);
         upgrade6StackTextView = findViewById(R.id.upgrade6_stack_txt);
 
+        **/
         backBtn = findViewById(R.id.back_btn);
 
         shopTextView.setTypeface(typeface);
         coinsTextView.setTypeface(typeface);
+        itemsTabBtn.setTypeface(typeface);
+        perksTabBtn.setTypeface(typeface);
+        /**
+
         upgradeTextView.setTypeface(typeface);
         costTextView.setTypeface(typeface);
         levelTextView.setTypeface(typeface);
@@ -273,11 +307,8 @@ public class Shop extends Activity {
         upgrade6LevelBtn.setTypeface(typeface);
         upgrade6DescTextView.setTypeface(typeface);
         upgrade6StackTextView.setTypeface(typeface);
-
-
-        initialiseOnClick();
-
-
+**/
+        //initialiseOnClick();
     }
 
     private void setView() {

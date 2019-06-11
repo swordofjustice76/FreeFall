@@ -1,17 +1,17 @@
 package com.damoproductionsandroid.freefall;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.service.autofill.TextValueSanitizer;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ShopItemsFragment extends Activity {
+public class ShopItemsFragment extends Fragment {
 
     ImageView pickup1Img;
     Button pickup1Btn;
@@ -34,41 +34,41 @@ public class ShopItemsFragment extends Activity {
     TextView pickup4Desc;
 
 
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.shop_items_fragment);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.shop_items_fragment, container, false);
 
-        initialiseView();
+        Typeface typeface = ResourcesCompat.getFont(getActivity(), R.font.pixel_font);
+
+        pickup1Img = view.findViewById(R.id.pickup1_img);
+        pickup1Btn = view.findViewById(R.id.pickup1_btn);
+        pickup1Duration = view.findViewById(R.id.pickup1_duration_txt);
+        pickup1Desc = view.findViewById(R.id.pickup1_desc_txt);
+
+        pickup2Img = view.findViewById(R.id.pickup2_img);
+        pickup2Btn = view.findViewById(R.id.pickup2_btn);
+        pickup2Duration = view.findViewById(R.id.pickup2_duration_txt);
+        pickup2Desc = view.findViewById(R.id.pickup2_desc_txt);
+
+        pickup3Img = view.findViewById(R.id.pickup3_img);
+        pickup3Btn = view.findViewById(R.id.pickup3_btn);
+        pickup3Duration = view.findViewById(R.id.pickup3_duration_txt);
+        pickup3Desc = view.findViewById(R.id.pickup3_desc_txt);
+
+        pickup4Img = view.findViewById(R.id.pickup4_img);
+        pickup4Btn = view.findViewById(R.id.pickup4_btn);
+        pickup4Duration = view.findViewById(R.id.pickup4_duration_txt);
+        pickup4Desc = view.findViewById(R.id.pickup4_desc_txt);
+
+        initialiseView(typeface);
+
+        return view;
+
     }
 
-    private void initialiseView() {
-        Typeface typeface = ResourcesCompat.getFont(getApplicationContext(), R.font.pixel_font);
 
-        pickup1Img = findViewById(R.id.pickup1_img);
-        pickup1Btn = findViewById(R.id.pickup1_btn);
-        pickup1Duration = findViewById(R.id.pickup1_duration_txt);
-        pickup1Desc = findViewById(R.id.pickup1_desc_txt);
-
-        pickup2Img = findViewById(R.id.pickup2_img);
-        pickup2Btn = findViewById(R.id.pickup2_btn);
-        pickup2Duration = findViewById(R.id.pickup2_duration_txt);
-        pickup2Desc = findViewById(R.id.pickup2_desc_txt);
-
-        pickup3Img = findViewById(R.id.pickup3_img);
-        pickup3Btn = findViewById(R.id.pickup3_btn);
-        pickup3Duration = findViewById(R.id.pickup3_duration_txt);
-        pickup3Desc = findViewById(R.id.pickup3_desc_txt);
-
-        pickup4Img = findViewById(R.id.pickup4_img);
-        pickup4Btn = findViewById(R.id.pickup4_btn);
-        pickup4Duration = findViewById(R.id.pickup4_duration_txt);
-        pickup4Desc = findViewById(R.id.pickup4_desc_txt);
-
+    private void initialiseView(Typeface typeface) {
         pickup1Btn.setTypeface(typeface);
         pickup1Duration.setTypeface(typeface);
         pickup1Desc.setTypeface(typeface);
