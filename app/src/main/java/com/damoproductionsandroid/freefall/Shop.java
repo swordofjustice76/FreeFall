@@ -104,6 +104,7 @@ public class Shop extends FragmentActivity {
             public void onClick(View v) {
                 highScore.getCoinAmount(getApplicationContext(), coins);
 
+                finish();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
 

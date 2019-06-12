@@ -11,22 +11,16 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.content.ContentValues.TAG;
-import static android.os.Parcelable.CONTENTS_FILE_DESCRIPTOR;
 
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
@@ -43,7 +37,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public long millis;
 
     MainThread mainThread;
-    MainActivity mainActivity;
 
 
     private Rect r = new Rect();
@@ -60,6 +53,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private SoundManager soundManager;
     private ShopButton shopButton;
     private RetryButton retryButton;
+    private MainActivity mainActivity;
 
     private Preferences highScoreHandler;
     private PassivePerkManager perkManager;
@@ -116,6 +110,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacleManager = new ObstacleManager((int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
         itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
+
+       mainActivity = new MainActivity();
 
 
         highScoreHandler.setHighScore(getContext());
@@ -192,8 +188,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                     //  thread.setRunning(false);
 
                     surfaceDestroyed(getHolder());
+
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
+                    //mainActivity.finish();
                 }
 
                 if (gameOver && retryButton.getRectangle().contains(touchX, touchY)) {
@@ -305,6 +303,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
         };
         timer.schedule(powerUpTimerTask, 5000);
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                CountDownTimer cdt5  = new CountDownTimer(5000,100) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                        millis = millisUntilFinished/100;
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }.start();
+            }
+        });
     }
 
     public void bigObstacleDistanceUpgradeTimer() {
@@ -438,6 +454,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    private long setSecsLeft() {
+        //DecimalFormat precision = new DecimalFormat("0.0");
+        //return String.valueOf(precision.format(millis));
+        return millis;
+    }
+
     private void drawRetryText(Canvas canvas, Paint paint2, String text) {
         paint2.setTextAlign(Paint.Align.LEFT);
         canvas.getClipBounds(retryText);
@@ -504,32 +526,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         bitmap = (Bitmap.createScaledBitmap(bitmap, 75, 50, false));
         Rect source = new Rect(0, 0, 150, 150);
         Rect bitmapRect = new Rect(50, 300, 250, 500);
-
-
-
         canvas.drawBitmap(bitmap, source, bitmapRect, new Paint());
-
-        drawTimerText(canvas, paint, text);
-
-     //countDown();
-
-    }
-
-    private long setSecsLeft() {
-        return millis;
-    }
-
-    private long getSecsLeft(long millisUntilFinished){
-        millis = millisUntilFinished;
-        return millis;
-    }
-
-    private void drawTimerText(Canvas canvas, Paint paint, String text) {
-        paint.setTextAlign(Paint.Align.LEFT);
-
-        float x = 100;
-        int y = 100;
+        float x = 175;
+        int y = 350;
         canvas.drawText(text, x, y, paint);
     }
-
 }

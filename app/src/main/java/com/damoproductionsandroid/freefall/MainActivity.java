@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -35,13 +36,13 @@ public class MainActivity extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
-
-
         setContentView(new GamePanel(this));
-
 
     }
 
 
+    public void finish() {
+        this.finish();
+    }
 }
 
