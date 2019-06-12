@@ -179,14 +179,14 @@ public class ShopUpgradesFragment extends Fragment {
     private void loadSave() {
 
         coins = highScore.setCoinAmount(getContext());
-        ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+        ((Shop) getActivity()).setCoinsTextView(coins);
 
         PassivePerkManager perkManager = new PassivePerkManager();
 
-        //perkManager.getPerk_1_lvl(getContext(), 0);
-        //perkManager.getPerk_1_cost(getContext(), 0);
-        //perkManager.getPerk_1_player_size(getContext(), 0);
-        //perkManager.getPerk_1_stack(getContext(), 0);
+        perkManager.getPerk_1_lvl(getContext(), 0);
+        perkManager.getPerk_1_cost(getContext(), 0);
+        perkManager.getPerk_1_player_size(getContext(), 0);
+        perkManager.getPerk_1_stack(getContext(), 0);
 
 
         if (perkManager.setPerk_1_lvl(getContext()) != Constants.PERK_1_MAX_LVL) {
@@ -260,6 +260,8 @@ public class ShopUpgradesFragment extends Fragment {
         perkManager = new PassivePerkManager();
         highScore = new Preferences();
         shop = new Shop();
+        coins = highScore.setCoinAmount(getContext());
+
 
         upgrade1LevelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -268,9 +270,11 @@ public class ShopUpgradesFragment extends Fragment {
 
                     coins -= Constants.PERK_1_COST;
 
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     //coinsTextView.setText("Coins: " + coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
+                    Log.i(TAG, "onClick: " + coins);
+
                     Constants.PLAYER_SIZE -= (Constants.PLAYER_ORIGINAL_SIZE / 100) * 2.5;
 
                     Constants.PERK_1_LVL = (perkManager.setPerk_1_lvl(Constants.CURRENT_CONTEXT) + 1);
@@ -302,7 +306,7 @@ public class ShopUpgradesFragment extends Fragment {
                 if (highScore.setCoinAmount(Constants.CURRENT_CONTEXT) >= Constants.PERK_2_COST && Constants.PERK_2_LVL < Constants.PERK_2_MAX_LVL) {
 
                     coins -= Constants.PERK_2_COST;
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
 
                     //Constants.MPS_MULTIPLIER *= 1.1;
@@ -340,7 +344,7 @@ public class ShopUpgradesFragment extends Fragment {
                 if (highScore.setCoinAmount(Constants.CURRENT_CONTEXT) >= Constants.PERK_3_COST && Constants.PERK_3_LVL < Constants.PERK_3_MAX_LVL) {
 
                     coins -= Constants.PERK_3_COST;
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
 
                     Constants.PERK_3_COST *= 1.5;
@@ -375,7 +379,7 @@ public class ShopUpgradesFragment extends Fragment {
                 if (highScore.setCoinAmount(Constants.CURRENT_CONTEXT) >= Constants.PERK_4_COST && Constants.PERK_4_LVL < Constants.PERK_4_MAX_LVL) {
 
                     coins -= Constants.PERK_4_COST;
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
 
                     Constants.PERK_4_COST *= 1.5;
@@ -410,7 +414,7 @@ public class ShopUpgradesFragment extends Fragment {
                 if (highScore.setCoinAmount(Constants.CURRENT_CONTEXT) >= Constants.PERK_5_COST && Constants.PERK_5_LVL < Constants.PERK_5_MAX_LVL) {
 
                     coins -= Constants.PERK_5_COST;
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
 
                     Constants.PERK_5_COST *= 1.5;
@@ -451,7 +455,7 @@ public class ShopUpgradesFragment extends Fragment {
                 if (highScore.setCoinAmount(Constants.CURRENT_CONTEXT) >= Constants.PERK_6_COST && Constants.PERK_6_LVL < Constants.PERK_6_MAX_LVL) {
 
                     coins -= Constants.PERK_6_COST;
-                    ((Shop) getActivity()).setCoinsTextView("Coins: ",   coins);
+                    ((Shop) getActivity()).setCoinsTextView(coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
 
                     Constants.PERK_6_COST *= 1.5;

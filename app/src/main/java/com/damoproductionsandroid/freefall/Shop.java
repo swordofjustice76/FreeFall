@@ -142,9 +142,9 @@ public class Shop extends FragmentActivity {
 
     }
 
-    public void setCoinsTextView(String coinsTextView, int coins) {
-
+    public void setCoinsTextView(int coins) {
         this.coins = coins;
+        coinsTextView.setText(String.valueOf("Coins " + coins));
     }
 
     private void loadSave() {
