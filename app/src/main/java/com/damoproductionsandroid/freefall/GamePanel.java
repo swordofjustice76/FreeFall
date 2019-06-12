@@ -27,41 +27,31 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private Rect coinsText = new Rect();
-    public Rect metersText = new Rect();
     public Rect shopText = new Rect();
     public Rect retryText = new Rect();
 
     public Rect highScore = new Rect();
-    public Rect upgradeText = new Rect();
 
     public long millis;
-
-    MainThread mainThread;
 
 
     private Rect r = new Rect();
 
     private MainThread thread;
 
-    private GamePanel gamePanel;
 
     private Player player;
     private Point playerPoint;
-    private Point shopButtonPoint;
     private ObstacleManager obstacleManager;
     private ItemManager itemManager;
     private SoundManager soundManager;
     private ShopButton shopButton;
     private RetryButton retryButton;
-    private MainActivity mainActivity;
 
     private Preferences highScoreHandler;
     private PassivePerkManager perkManager;
 
     private SoundtrackManager soundtrackManager;
-
-    private ObjectLogic gravity;
-    private BigGapUpgrade bigGapUpgrade;
 
     private boolean movingPlayer = false;
 
@@ -71,8 +61,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean coinSave = false;
     public int coins;
 
-
-    private Canvas canvas;
 
     private int meters;
     private boolean playing = false;
@@ -95,14 +83,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         soundManager = new SoundManager(context);
         //soundtrackManager = new SoundtrackManager(context);
 
-
-        //itemSpawner = new ItemSpawner(325, 400, 75, Color.YELLOW);
         player = new Player(new Rect(0, 0, perkManager.setPerk_1_player_size(context), perkManager.setPerk_1_player_size(context)), Color.rgb(216, 0, 0));
         shopButton = new ShopButton(new RectF(0, 0, 450, 150), Color.BLACK);
         retryButton = new RetryButton(new RectF(0, 0, 450, 150), Color.BLACK);
         playerPoint = new Point(Constants.SCREEN_WIDTH / 2, 3 * Constants.SCREEN_HEIGHT / 4);
-        //shopButtonPoint = new Point(Constants.SCREEN_WIDTH / 2, 6 * Constants.SCREEN_HEIGHT / 9);
-        //bM = new bm(getContext());
+
 
         player.update(playerPoint);
         shopButton.update();
@@ -110,9 +95,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         obstacleManager = new ObstacleManager((int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_GAP, Constants.OBSTACLE_HEIGHT, Color.WHITE);
         itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int) perkManager.setPerk_5_player_gap(context), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
-
-       mainActivity = new MainActivity();
-
 
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
@@ -185,18 +167,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
                 if (gameOver && shopButton.getRectangle().contains(touchX, touchY)) {
 
-                    //  thread.setRunning(false);
-
                     surfaceDestroyed(getHolder());
 
                     Intent intent = new Intent(getContext(), Shop.class);
                     getContext().startActivity(intent);
-                    //mainActivity.finish();
                 }
 
                 if (gameOver && retryButton.getRectangle().contains(touchX, touchY)) {
-
-                    //  thread.setRunning(false);
 
                     reset();
                     gameOver = false;
@@ -218,14 +195,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update() {
 
-        // float speedBuffer =
-
         if (!playing) {
 
             playing = true;
             soundtrackManager.mediaPlayer.start();
-
-
         }
 
         if (!gameOver) {
@@ -234,7 +207,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             itemManager.update();
             coinSave = true;
 
-            //metres++;
             if (obstacleManager.playerCollide(player)) {
                 gameOver = true;
                 gameOverTime = System.currentTimeMillis();
@@ -250,7 +222,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
             if (itemManager.playerCollect(player)) {
                 soundManager.playCoinCollectSound();
-                coins += perkManager.setPerk_6_collect_amount(getContext());
+                coins += perkManager.setPerk_6_collect_amount(getContext()) * Constants.COLLECT_AMOUNT;
                 highScoreHandler.getCoinAmount(getContext(), coins);
                 highScoreHandler.setCoinAmount(getContext());
                 coinSave = true;
@@ -409,8 +381,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             drawRetryText(canvas, paint2, "RETRY");
             shopButton.draw(canvas);
             retryButton.draw(canvas);
-            //bM.draw(canvas);
-
 
             highScoreHandler.getCurrentScore(getContext(), itemManager.getHighScore());
             highScoreHandler.getCoinAmount(getContext(), coins);
@@ -519,9 +489,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-
     private void drawBigGapTimer(Canvas canvas, Paint paint, String text) {
-
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.upgrade_frame_1);
         bitmap = (Bitmap.createScaledBitmap(bitmap, 75, 50, false));
         Rect source = new Rect(0, 0, 150, 150);

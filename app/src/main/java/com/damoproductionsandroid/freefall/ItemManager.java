@@ -230,7 +230,6 @@ public class ItemManager extends ObjectLogic {
 
 
     public void update() {
-
         elapsedTime = (int) (System.currentTimeMillis() - startTime);
         startTime = System.currentTimeMillis();
 
@@ -239,7 +238,6 @@ public class ItemManager extends ObjectLogic {
         metres += (mps);
 
         updateScore = true;
-
 
         for (Coin coin : coins) {
             coin.incrementY(speed * elapsedTime);
@@ -298,19 +296,15 @@ public class ItemManager extends ObjectLogic {
 
 
     public void spawnNewCoin() {
-
-
         xStartCoin = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
-        int yStart = getSpawnPoint();
         coins.add(0, new Coin(obstacleHeight, colour, xStartCoin, coins.get(0).getRectangle().top - Constants.OBSTACLE_GAP + Constants.OBSTACLE_HEIGHT));
         coins.remove(coins.size() - 1);
-        //Log.i(TAG, "update: " + obstacles.get(0).getRectangle().top);
 
     }
 
 
     public void spawnGapUpgrade() {
-        //int currY = (-5 * Constants.SCREEN_HEIGHT / 4) - (obstacleGap / 2) + (obstacleHeight + 25);
+
         int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
         if (xStart < (coins.get(0).getRectangle().left - obstacleHeight) || xStart > (coins.get(0).getRectangle().right + obstacleHeight)) {
             bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top));
@@ -319,8 +313,6 @@ public class ItemManager extends ObjectLogic {
             xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - obstacleHeight));
 
         }
-        //bigGapUpgrades.add(new BigGapUpgrade(obstacleHeight, colour, xStart, coins.get(0).getRectangle().top));
-
     }
 
     private void spawnDistanceUpgrade() {
@@ -389,8 +381,6 @@ public class ItemManager extends ObjectLogic {
             Paint paint = new Paint();
             paint.setTextSize(100);
             paint.setColor(Color.WHITE);
-
-
             drawMetersText(canvas, paint, String.valueOf((int) metres));
             setHighScore((int) metres);
         }

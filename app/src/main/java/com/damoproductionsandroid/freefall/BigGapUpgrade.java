@@ -15,12 +15,6 @@ public class BigGapUpgrade implements GameObject {
     private AnimationManager animManager;
 
 
-
-
-
-    ObstacleManager obstacleManager;
-    private int playerGap;
-
     public Rect getRectangle() {
         return rectangle;
     }
@@ -34,15 +28,11 @@ public class BigGapUpgrade implements GameObject {
         Bitmap frame1 = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.upgrade_frame_1);
 
         animation = new BigGapAnimation(new Bitmap[]{frame1}, 0.2f);
-
-
         animManager = new AnimationManager(new CoinAnimation[]{}, new BigGapAnimation[]{animation}, new ShrinkPlayerAnimation[]{}, new DoubleCoinsAnimation[]{}, new DoubleScoreAnimation[]{});
     }
 
    public boolean playerCollectUpgrade(Player player){
        if(Rect.intersects(rectangle, player.getRectangle())){
-
-           //bigGapUpgradeHandler.start();
        }
 
         return Rect.intersects(rectangle, player.getRectangle());
@@ -55,11 +45,7 @@ public class BigGapUpgrade implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-       // Paint paint = new Paint();
-       // paint.setColor(Color.BLUE);
-        //canvas.drawRect(rectangle, paint);
        animManager.draw(canvas, rectangle);
-
     }
 
 
@@ -69,11 +55,4 @@ public class BigGapUpgrade implements GameObject {
        animManager.playAnim(state);
        animManager.update();
     }
-
-    public void setPlayerGap(int playerGap) {
-        this.playerGap = playerGap;
-    }
-
-
-
 }

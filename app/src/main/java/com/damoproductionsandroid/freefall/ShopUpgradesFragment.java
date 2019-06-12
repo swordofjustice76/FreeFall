@@ -273,7 +273,6 @@ public class ShopUpgradesFragment extends Fragment {
                     ((Shop) getActivity()).setCoinsTextView(coins);
                     //coinsTextView.setText("Coins: " + coins);
                     highScore.getCoinAmount(Constants.CURRENT_CONTEXT, coins);
-                    Log.i(TAG, "onClick: " + coins);
 
                     Constants.PLAYER_SIZE -= (Constants.PLAYER_ORIGINAL_SIZE / 100) * 2.5;
 
