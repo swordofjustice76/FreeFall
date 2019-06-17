@@ -183,10 +183,10 @@ public class ShopUpgradesFragment extends Fragment {
 
         PassivePerkManager perkManager = new PassivePerkManager();
 
-        perkManager.getPerk_1_lvl(getContext(), 0);
-        perkManager.getPerk_1_cost(getContext(), 0);
-        perkManager.getPerk_1_player_size(getContext(), 0);
-        perkManager.getPerk_1_stack(getContext(), 0);
+        //perkManager.getPerk_1_lvl(getContext(), 0);
+        //perkManager.getPerk_1_cost(getContext(), 0);
+        //perkManager.getPerk_1_player_size(getContext(), 0);
+        //perkManager.getPerk_1_stack(getContext(), 0);
 
 
         if (perkManager.setPerk_1_lvl(getContext()) != Constants.PERK_1_MAX_LVL) {

@@ -37,6 +37,7 @@ public class Shop extends FragmentActivity {
     GamePanel gamePanel;
 
     int coins;
+    int highscore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,10 +103,13 @@ public class Shop extends FragmentActivity {
         coinsTextView.setText(String.valueOf("Coins: " + coins));
     }
 
-    private void loadSave() {
 
+
+    private void loadSave() {
+        highscore = highScore.setHighScore(getApplicationContext());
         coins = highScore.setCoinAmount(getApplicationContext());
         coinsTextView.setText(String.valueOf("Coins: " + highScore.setCoinAmount(getApplicationContext())));
+       ;
     }
 
 

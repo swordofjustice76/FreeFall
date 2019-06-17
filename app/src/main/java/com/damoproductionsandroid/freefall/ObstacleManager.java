@@ -42,9 +42,7 @@ public class ObstacleManager extends ObjectLogic {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
             obstacles.add(new Obstacle(obstacleHeight, colour, xStart, currY, playerGap));
             currY += obstacleHeight + obstacleGap;
-
         }
-
     }
 
     public void update() {

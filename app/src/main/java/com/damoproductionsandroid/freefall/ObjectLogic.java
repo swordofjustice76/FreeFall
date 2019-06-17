@@ -95,7 +95,7 @@ public class ObjectLogic extends AppCompatActivity {
 
         if (obstacles.get(obstacles.size() - 1).getRectangle().top >= Constants.SCREEN_HEIGHT) {
             int xStart = (int) (Math.random() * (Constants.SCREEN_WIDTH - playerGap));
-            obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - obstacleHeight - obstacleGap, playerGap));
+            obstacles.add(0, new Obstacle(obstacleHeight, colour, xStart, obstacles.get(0).getRectangle().top - Constants.OBSTACLE_HEIGHT - Constants.OBSTACLE_GAP, (int)Constants.PLAYER_GAP));
             obstacles.remove(obstacles.size() - 1);
 
 

@@ -32,7 +32,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public Rect highScore = new Rect();
 
-    public long millis;
+    public long millisBigGap;
 
 
     private Rect r = new Rect();
@@ -66,6 +66,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private boolean playing = false;
 
     private boolean bigGapUpgradeFlag = false;
+    private boolean shrinkPlayerUpgradeFlag = false;
 
 
     public GamePanel(Context context) {
@@ -114,6 +115,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         itemManager = new ItemManager(Constants.OBSTACLE_GAP, (int) perkManager.setPerk_5_player_gap(getContext()), Constants.OBSTACLE_HEIGHT, Color.YELLOW);
         highScoreHandler.setHighScore(getContext());
         highScoreHandler.setCoinAmount(getContext());
+
 
         //soundManager.playSoundTrack();
         movingPlayer = false;
@@ -228,6 +230,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
                 coinSave = true;
             }
             if (itemManager.playerCollectPlayerGapUpgrade(player)) {
+                Constants.PERKS_PICKED_UP++;
                 obstacleManager.playerGap = (int) (perkManager.setPerk_5_player_gap(getContext()) * 1.5);
                 soundManager.playPowerUpSound();
                 bigPlayerGapUpgradeTimer();
@@ -243,9 +246,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
 
             if (itemManager.playerCollectShrinkPlayerUpgrade(player)) {
+                Constants.PERKS_PICKED_UP++;
                 soundManager.playPowerUpSound();
                 player.getRectangle().inset(25, 25);
                 shrinkPlayerUpgradeTimer();
+                shrinkPlayerUpgradeFlag = true;
             }
 
             if (itemManager.playerCollectDoubleCoinsUpgrade(player)) {
@@ -264,33 +269,49 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void bigPlayerGapUpgradeTimer() {
-        Timer timer = new Timer();
+        final Timer timer = new Timer();
         TimerTask powerUpTimerTask = new TimerTask() {
+
             @Override
             public void run() {
-
                 obstacleManager.playerGap = (int) perkManager.setPerk_5_player_gap(getContext());
                 bigGapUpgradeFlag = false;
+                if (Constants.PERKS_PICKED_UP == 1) {
+                    Constants.PERK_SLOT_1_FLAG = false;
+                } else if (Constants.PERKS_PICKED_UP == 2) {
+                    Constants.PERK_SLOT_2_FLAG = false;
+                }
+                Constants.PERKS_PICKED_UP--;
+
 
             }
         };
         timer.schedule(powerUpTimerTask, 5000);
 
+        if (gameOver) {
+            timer.cancel();
+        }
+
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                CountDownTimer cdt5  = new CountDownTimer(5000,100) {
+                CountDownTimer countDownTimer = new CountDownTimer(5000, 100) {
                     @Override
                     public void onTick(long millisUntilFinished) {
 
-                        millis = millisUntilFinished/100;
+                        millisBigGap = millisUntilFinished / 100;
+
                     }
+
 
                     @Override
                     public void onFinish() {
 
                     }
                 }.start();
+                if (gameOver) {
+                    countDownTimer.cancel();
+                }
             }
         });
     }
@@ -315,6 +336,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             public void run() {
 
                 player.getRectangle().inset(-25, -25);
+                shrinkPlayerUpgradeFlag = false;
+
+                if (Constants.PERKS_PICKED_UP == 1) {
+                    Constants.PERK_SLOT_1_FLAG = false;
+                } else if (Constants.PERKS_PICKED_UP == 2) {
+                    Constants.PERK_SLOT_2_FLAG = false;
+                }
+
+                Constants.PERKS_PICKED_UP--;
             }
         };
         timer.schedule(powerUpTimerTask, 4000);
@@ -343,7 +373,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         };
         timer.schedule(powerUpTimerTask, 5000);
     }
-
 
 
     @Override
@@ -415,20 +444,23 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             drawCoinsText(canvas, paint, "Coins: " + (highScoreHandler.setCoinAmount(getContext())));
         }
 
-        if (bigGapUpgradeFlag){
+        if (bigGapUpgradeFlag && !gameOver) {
             Paint paint = new Paint();
             paint.setTextSize(75);
             paint.setColor(Color.WHITE);
             paint.setTypeface(typeface);
-            drawBigGapTimer(canvas, paint, String.valueOf(setSecsLeft()));
+            //drawBigGapTimer(canvas, paint, String.valueOf(setSecsLeftBigGap()));
+        }
+
+        if (shrinkPlayerUpgradeFlag && !gameOver) {
+            Paint paint = new Paint();
+            paint.setTextSize(75);
+            paint.setColor(Color.WHITE);
+            paint.setTypeface(typeface);
+            //drawShrinkPlayerTimer(canvas, paint, String.valueOf(setSecsLeftBigGap()));
         }
     }
 
-    private long setSecsLeft() {
-        //DecimalFormat precision = new DecimalFormat("0.0");
-        //return String.valueOf(precision.format(millis));
-        return millis;
-    }
 
     private void drawRetryText(Canvas canvas, Paint paint2, String text) {
         paint2.setTextAlign(Paint.Align.LEFT);
@@ -490,13 +522,85 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
 
     private void drawBigGapTimer(Canvas canvas, Paint paint, String text) {
+        int xL = 0;
+        int xT = 0;
+        int xR = 0;
+        int xB = 0;
+        int xX = 0;
+        int xY = 0;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.upgrade_frame_1);
         bitmap = (Bitmap.createScaledBitmap(bitmap, 75, 50, false));
-        Rect source = new Rect(0, 0, 150, 150);
-        Rect bitmapRect = new Rect(50, 300, 250, 500);
+        Rect source = new Rect(0, 0, 75, 50);
+        if (Constants.PERKS_PICKED_UP == 1) {
+            Constants.PERK_SLOT_1_FLAG = true;
+        }
+        if (Constants.PERK_SLOT_1_FLAG) {
+            xL = Constants.UPGRADE_PICKUP_SLOT_1_L;
+            xR = Constants.UPGRADE_PICKUP_SLOT_1_R;
+            xT = Constants.UPGRADE_PICKUP_SLOT_1_T;
+            xB = Constants.UPGRADE_PICKUP_SLOT_1_B;
+
+            xX = Constants.UPGRADE_PICKUP_SLOT_1_X;
+            xY = Constants.UPGRADE_PICKUP_SLOT_1_Y;
+
+        } else if (Constants.PERKS_PICKED_UP == 2) {
+            Constants.PERK_SLOT_2_FLAG = true;
+        }
+        if (Constants.PERK_SLOT_2_FLAG) {
+            xL = Constants.UPGRADE_PICKUP_SLOT_2_L;
+            xR = Constants.UPGRADE_PICKUP_SLOT_2_R;
+            xT = Constants.UPGRADE_PICKUP_SLOT_2_T;
+            xB = Constants.UPGRADE_PICKUP_SLOT_2_B;
+
+            xX = Constants.UPGRADE_PICKUP_SLOT_2_X;
+            xY = Constants.UPGRADE_PICKUP_SLOT_2_Y;
+        }
+
+        Rect bitmapRect = new Rect(xL, xT, xR, xB);
         canvas.drawBitmap(bitmap, source, bitmapRect, new Paint());
-        float x = 175;
-        int y = 350;
-        canvas.drawText(text, x, y, paint);
+        canvas.drawText(text, xX, xY, paint);
+    }
+
+    private void drawShrinkPlayerTimer(Canvas canvas, Paint paint, String text) {
+        int xL = 0;
+        int xT = 0;
+        int xR = 0;
+        int xB = 0;
+        int xX = 0;
+        int xY = 0;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.shrink_player_frame_1);
+        bitmap = (Bitmap.createScaledBitmap(bitmap, 50, 75, false));
+        Rect source = new Rect(0, 0, 50, 75);
+        if (Constants.PERKS_PICKED_UP == 1) {
+            Constants.PERK_SLOT_1_FLAG = true;
+        }
+        if (Constants.PERK_SLOT_1_FLAG) {
+            xL = Constants.UPGRADE_PICKUP_SLOT_1_L;
+            xR = Constants.UPGRADE_PICKUP_SLOT_1_R;
+            xT = Constants.UPGRADE_PICKUP_SLOT_1_T;
+            xB = Constants.UPGRADE_PICKUP_SLOT_1_B;
+
+            xX = Constants.UPGRADE_PICKUP_SLOT_1_X;
+            xY = Constants.UPGRADE_PICKUP_SLOT_1_Y;
+
+        } else if (Constants.PERKS_PICKED_UP == 2) {
+            Constants.PERK_SLOT_2_FLAG = true;
+        }
+        if (Constants.PERK_SLOT_2_FLAG) {
+            xL = Constants.UPGRADE_PICKUP_SLOT_2_L;
+            xR = Constants.UPGRADE_PICKUP_SLOT_2_R;
+            xT = Constants.UPGRADE_PICKUP_SLOT_2_T;
+            xB = Constants.UPGRADE_PICKUP_SLOT_2_B;
+
+            xX = Constants.UPGRADE_PICKUP_SLOT_2_X;
+            xY = Constants.UPGRADE_PICKUP_SLOT_2_Y;
+        }
+        Rect bitmapRect = new Rect(xL, xT, xR, xB);
+        canvas.drawBitmap(bitmap, source, bitmapRect, new Paint());
+        canvas.drawText(text, xX, xY, paint);
+    }
+
+    private long setSecsLeftBigGap() {
+        return millisBigGap;
     }
 }

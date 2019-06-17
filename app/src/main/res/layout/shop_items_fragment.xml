@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.damoproductionsandroid.freefall.ShopItemsFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colourBackground"
-    >
+    tools:context="com.damoproductionsandroid.freefall.ShopItemsFragment">
 
-    <ScrollView
-        android:layout_below="@+id/column_desc"
+    <TextView
+        android:id="@+id/highscore_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0sp"
-        >
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/pixel_font"
+        android:paddingRight="10dp"
+        android:text="HighScore: --"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/highscore_txt"
+        android:layout_marginTop="0sp">
 
         <RelativeLayout
-            android:layout_below="@+id/column_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            >
+            android:layout_below="@+id/column_desc">
 
 
             <RelativeLayout
@@ -28,9 +37,7 @@
 
                 android:layout_marginTop="20sp"
                 android:background="@drawable/upgrade_style"
-                android:padding="20sp"
-                >
-
+                android:padding="20sp">
 
 
                 <TableLayout
@@ -50,16 +57,15 @@
                             />
 
 
-
                         <Button
                             android:id="@+id/pickup1_btn"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="60"
+                            android:background="@drawable/shop_lvl_btn_style"
                             android:fontFamily="@font/pixel_font"
                             android:text="UNLOCKED"
                             android:textAlignment="center"
-                            android:background="@drawable/shop_lvl_btn_style"
                             android:textColor="#ffffff"
                             android:textSize="30dp" />
 
@@ -72,25 +78,25 @@
                             android:id="@+id/pickup1_duration_txt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:textAlignment="center"
                             android:layout_marginTop="20sp"
                             android:layout_weight="25"
                             android:fontFamily="@font/pixel_font"
                             android:text="Duration: 5secs"
+                            android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textSize="16sp" />
 
                         <TextView
-                        android:id="@+id/pickup1_desc_txt"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20sp"
-                        android:layout_weight="60"
-                        android:fontFamily="@font/pixel_font"
-                        android:text="Makes the gap 150% wider"
-                        android:paddingRight="10dp"
-                        android:textColor="#ffffff"
-                        android:textSize="20dp" />
+                            android:id="@+id/pickup1_desc_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20sp"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/pixel_font"
+                            android:paddingRight="10dp"
+                            android:text="Makes the gap 150% wider"
+                            android:textColor="#ffffff"
+                            android:textSize="20dp" />
 
                     </TableRow>
 
@@ -107,9 +113,7 @@
                 android:layout_below="@+id/upgradebox1_txt"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/upgrade_style"
-                android:padding="20sp"
-                >
-
+                android:padding="20sp">
 
 
                 <TableLayout
@@ -123,11 +127,10 @@
                             android:id="@+id/pickup2_img"
                             android:layout_width="0dp"
                             android:layout_height="50sp"
-                            android:src="@drawable/shrink_player_frame_1"
                             android:layout_weight="25"
+                            android:src="@drawable/shrink_player_frame_1"
 
                             />
-
 
 
                         <Button
@@ -135,10 +138,10 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="60"
+                            android:background="@drawable/shop_lvl_btn_style"
                             android:fontFamily="@font/pixel_font"
                             android:text="UNLOCKED"
                             android:textAlignment="center"
-                            android:background="@drawable/shop_lvl_btn_style"
                             android:textColor="#ffffff"
                             android:textSize="30dp" />
 
@@ -150,24 +153,25 @@
                             android:id="@+id/pickup2_duration_txt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:textAlignment="center"
                             android:layout_marginTop="20sp"
                             android:layout_weight="25"
                             android:fontFamily="@font/pixel_font"
                             android:text="Duration: 4secs"
+                            android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textSize="16sp" />
+
                         <TextView
-                        android:id="@+id/pickup2_desc_txt"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="20sp"
-                        android:layout_weight="60"
-                        android:fontFamily="@font/pixel_font"
-                        android:paddingRight="10dp"
-                        android:text="Shrinks your player by 25% "
-                        android:textColor="#ffffff"
-                        android:textSize="20dp" />
+                            android:id="@+id/pickup2_desc_txt"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="20sp"
+                            android:layout_weight="60"
+                            android:fontFamily="@font/pixel_font"
+                            android:paddingRight="10dp"
+                            android:text="Shrinks your player by 25% "
+                            android:textColor="#ffffff"
+                            android:textSize="20dp" />
 
                     </TableRow>
 
@@ -184,8 +188,7 @@
                 android:layout_below="@+id/upgradebox6_txt"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/upgrade_style"
-                android:padding="20sp"
-                >
+                android:padding="20sp">
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -208,25 +211,26 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="60"
+                            android:background="@drawable/shop_lvl_btn_style"
                             android:fontFamily="@font/pixel_font"
                             android:text="UNLOCKED"
                             android:textAlignment="center"
                             android:textColor="#ffffff"
-                            android:background="@drawable/shop_lvl_btn_style"
                             android:textSize="30dp" />
 
                     </TableRow>
 
                     <TableRow>
+
                         <TextView
                             android:id="@+id/pickup3_duration_txt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:textAlignment="center"
                             android:layout_marginTop="20sp"
                             android:layout_weight="25"
                             android:fontFamily="@font/pixel_font"
                             android:text="Duration: 10secs"
+                            android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textSize="16sp" />
 
@@ -237,11 +241,10 @@
                             android:layout_marginTop="20sp"
                             android:layout_weight="60"
                             android:fontFamily="@font/pixel_font"
+                            android:paddingRight="10dp"
                             android:text="Double the amount of coins you pick up"
                             android:textColor="#ffffff"
-                            android:paddingRight="10dp"
                             android:textSize="20dp" />
-
 
 
                     </TableRow>
@@ -258,8 +261,7 @@
                 android:layout_below="@+id/upgradebox2_txt"
                 android:layout_marginTop="20sp"
                 android:background="@drawable/upgrade_style"
-                android:padding="20sp"
-                >
+                android:padding="20sp">
 
                 <TableLayout
                     android:layout_width="match_parent"
@@ -273,9 +275,7 @@
                             android:layout_width="0dp"
                             android:layout_height="50dp"
                             android:layout_weight="25"
-                           android:src="@drawable/double_score_frame_1"
-                            />
-
+                            android:src="@drawable/double_score_frame_1" />
 
 
                         <Button
@@ -283,9 +283,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="60"
+                            android:background="@drawable/shop_lvl_btn_style"
                             android:fontFamily="@font/pixel_font"
                             android:text="UNLOCKED"
-                            android:background="@drawable/shop_lvl_btn_style"
                             android:textColor="#ffffff"
                             android:textSize="30dp" />
 
@@ -297,11 +297,11 @@
                             android:id="@+id/pickup4_duration_txt"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:textAlignment="center"
                             android:layout_marginTop="20sp"
                             android:layout_weight="25"
                             android:fontFamily="@font/pixel_font"
                             android:text="Duration: 5secs"
+                            android:textAlignment="center"
                             android:textColor="#ffffff"
                             android:textSize="16sp" />
 
@@ -312,8 +312,8 @@
                             android:layout_marginTop="20sp"
                             android:layout_weight="60"
                             android:fontFamily="@font/pixel_font"
-                            android:text="Multiply your score per second x2"
                             android:paddingRight="10dp"
+                            android:text="Multiply your score per second x2"
                             android:textColor="#ffffff"
                             android:textSize="20dp" />
 
